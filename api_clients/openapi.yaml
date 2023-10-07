@@ -1,0 +1,198 @@
+---
+openapi: 3.0.3
+info:
+  title: car-wash-backend API
+  version: 1.0-SNAPSHOT
+paths:
+  /cars/all:
+    get:
+      tags:
+        - Car Endpoint
+      responses:
+        "200":
+          description: OK
+  /cars/create:
+    post:
+      tags:
+        - Car Endpoint
+      parameters:
+        - name: id
+          in: query
+          schema:
+            format: int64
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Car'
+      responses:
+        "200":
+          description: OK
+  /cars/update:
+    put:
+      tags:
+        - Car Endpoint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Car'
+      responses:
+        "200":
+          description: OK
+  /cars/{id}:
+    delete:
+      tags:
+        - Car Endpoint
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        "200":
+          description: OK
+  /cars/{ownerId}/cars:
+    get:
+      tags:
+        - Car Endpoint
+      parameters:
+        - name: ownerId
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        "200":
+          description: OK
+  /owners/all:
+    get:
+      tags:
+        - Owner Endpoint
+      responses:
+        "200":
+          description: OK
+  /owners/insert:
+    post:
+      tags:
+        - Owner Endpoint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Owner'
+      responses:
+        "200":
+          description: OK
+  /owners/update:
+    put:
+      tags:
+        - Owner Endpoint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Owner'
+      responses:
+        "200":
+          description: OK
+  /owners/{id}/delete:
+    delete:
+      tags:
+        - Owner Endpoint
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        "200":
+          description: OK
+  /user/login:
+    post:
+      tags:
+        - User Endpoint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        "200":
+          description: OK
+  /user/signUp:
+    post:
+      tags:
+        - User Endpoint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        "200":
+          description: OK
+components:
+  schemas:
+    Car:
+      type: object
+      properties:
+        id:
+          format: int64
+          type: integer
+        model:
+          type: string
+        year:
+          format: int32
+          type: integer
+        owner:
+          $ref: '#/components/schemas/Owner'
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    Owner:
+      type: object
+      properties:
+        id:
+          format: int64
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        phoneNumber:
+          type: string
+        age:
+          format: int32
+          type: integer
+        cars:
+          type: array
+          items:
+            $ref: '#/components/schemas/Car'
+    User:
+      type: object
+      properties:
+        id:
+          format: int64
+          type: integer
+        username:
+          type: string
+        password:
+          type: string
+        role:
+          $ref: '#/components/schemas/UserRole'
+    UserRole:
+      enum:
+        - ADMIN
+        - USER
+      type: string
