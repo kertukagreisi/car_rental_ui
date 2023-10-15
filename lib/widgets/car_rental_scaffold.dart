@@ -1,4 +1,4 @@
-import 'package:car_wash_ui/shared/extensions.dart';
+import 'package:car_rental_ui/shared/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -15,8 +15,8 @@ const _railItemUnselectedColor = AppColors.darkBlue;
 const _railBackgroundSelectedColor = AppColors.darkBlue;
 const _railBackgroundUnselectedColor = Colors.white;
 
-class CarWashScaffold extends StatefulWidget {
-  const CarWashScaffold({
+class CarRentalScaffold extends StatefulWidget {
+  const CarRentalScaffold({
     Key? key,
     required this.body,
   }) : super(key: key);
@@ -24,10 +24,10 @@ class CarWashScaffold extends StatefulWidget {
   final Widget body;
 
   @override
-  State<CarWashScaffold> createState() => _CarWashScaffoldState();
+  State<CarRentalScaffold> createState() => _CarRentalScaffoldState();
 }
 
-class _CarWashScaffoldState extends State<CarWashScaffold> {
+class _CarRentalScaffoldState extends State<CarRentalScaffold> {
   final _isRailExtended = ValueNotifier(false);
   int? _railSelectedIndex;
 

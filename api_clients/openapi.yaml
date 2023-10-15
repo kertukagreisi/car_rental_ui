@@ -1,9 +1,93 @@
 ---
 openapi: 3.0.3
 info:
-  title: car-wash-backend API
+  title: car_rental_backend API
   version: 1.0-SNAPSHOT
 paths:
+  /bookings/all:
+    get:
+      tags:
+        - Booking Endpoint
+      responses:
+        "200":
+          description: OK
+  /bookings/car/{carId}:
+    get:
+      tags:
+        - Booking Endpoint
+      parameters:
+        - name: carId
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        "200":
+          description: OK
+  /bookings/create:
+    post:
+      tags:
+        - Booking Endpoint
+      parameters:
+        - name: carId
+          in: query
+          schema:
+            format: int64
+            type: integer
+        - name: userId
+          in: query
+          schema:
+            format: int64
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Booking'
+      responses:
+        "200":
+          description: OK
+  /bookings/update:
+    put:
+      tags:
+        - Booking Endpoint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Booking'
+      responses:
+        "200":
+          description: OK
+  /bookings/user/{userId}:
+    get:
+      tags:
+        - Booking Endpoint
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        "200":
+          description: OK
+  /bookings/{id}:
+    delete:
+      tags:
+        - Booking Endpoint
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        "200":
+          description: OK
   /cars/all:
     get:
       tags:
@@ -15,12 +99,6 @@ paths:
     post:
       tags:
         - Car Endpoint
-      parameters:
-        - name: id
-          in: query
-          schema:
-            format: int64
-            type: integer
       requestBody:
         content:
           application/json:
@@ -45,65 +123,6 @@ paths:
     delete:
       tags:
         - Car Endpoint
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        "200":
-          description: OK
-  /cars/{ownerId}/cars:
-    get:
-      tags:
-        - Car Endpoint
-      parameters:
-        - name: ownerId
-          in: path
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        "200":
-          description: OK
-  /owners/all:
-    get:
-      tags:
-        - Owner Endpoint
-      responses:
-        "200":
-          description: OK
-  /owners/insert:
-    post:
-      tags:
-        - Owner Endpoint
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Owner'
-      responses:
-        "200":
-          description: OK
-  /owners/update:
-    put:
-      tags:
-        - Owner Endpoint
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Owner'
-      responses:
-        "200":
-          description: OK
-  /owners/{id}/delete:
-    delete:
-      tags:
-        - Owner Endpoint
       parameters:
         - name: id
           in: path
@@ -140,6 +159,36 @@ paths:
           description: OK
 components:
   schemas:
+    Booking:
+      type: object
+      properties:
+        id:
+          format: int64
+          type: integer
+        startDate:
+          $ref: '#/components/schemas/Date'
+        endDate:
+          $ref: '#/components/schemas/Date'
+        price:
+          format: int64
+          type: integer
+        car:
+          $ref: '#/components/schemas/Car'
+        user:
+          $ref: '#/components/schemas/User'
+    Brand:
+      enum:
+        - ALFA_ROMEO
+        - AUDI
+        - BMW
+        - BUGATTI
+        - FERRARI
+        - FIAT
+        - FORD
+        - MERCEDES_BENZ
+        - TOYOTA
+        - VOLKSWAGEN
+      type: string
     Car:
       type: object
       properties:
@@ -148,11 +197,50 @@ components:
           type: integer
         model:
           type: string
+        brand:
+          $ref: '#/components/schemas/Brand'
+        engine:
+          type: string
+        fuelType:
+          $ref: '#/components/schemas/FuelType'
+        doors:
+          format: int32
+          type: integer
+        color:
+          $ref: '#/components/schemas/Color'
+        transmission:
+          $ref: '#/components/schemas/Transmission'
+        seats:
+          format: int32
+          type: integer
         year:
           format: int32
           type: integer
-        owner:
-          $ref: '#/components/schemas/Owner'
+        licencePlate:
+          type: string
+    Color:
+      enum:
+        - BEIGE
+        - BLACK
+        - CHROME
+        - GRAY
+        - GREEN
+        - RED
+        - YELLOW
+        - WHITE
+      type: string
+    Date:
+      format: date
+      type: string
+      example: 2022-03-10
+    FuelType:
+      enum:
+        - ELECTRIC
+        - GAS
+        - GASOLINE
+        - GASOLINE_GAS
+        - PETROL
+      type: string
     LoginRequest:
       type: object
       properties:
@@ -160,25 +248,11 @@ components:
           type: string
         password:
           type: string
-    Owner:
-      type: object
-      properties:
-        id:
-          format: int64
-          type: integer
-        firstName:
-          type: string
-        lastName:
-          type: string
-        phoneNumber:
-          type: string
-        age:
-          format: int32
-          type: integer
-        cars:
-          type: array
-          items:
-            $ref: '#/components/schemas/Car'
+    Transmission:
+      enum:
+        - MANUAL
+        - AUTOMATIC
+      type: string
     User:
       type: object
       properties:

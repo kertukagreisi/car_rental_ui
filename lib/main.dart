@@ -1,9 +1,9 @@
-import 'package:car_wash_ui/navigation/nav_controller.dart';
-import 'package:car_wash_ui/resources/app_colors.dart';
-import 'package:car_wash_ui/resources/dimens.dart';
-import 'package:car_wash_ui/shared/extensions.dart';
-import 'package:car_wash_ui/shared/globals.dart';
-import 'package:car_wash_ui/shared/locator.dart';
+import 'package:car_rental_ui/navigation/nav_controller.dart';
+import 'package:car_rental_ui/resources/app_colors.dart';
+import 'package:car_rental_ui/resources/dimens.dart';
+import 'package:car_rental_ui/shared/extensions.dart';
+import 'package:car_rental_ui/shared/globals.dart';
+import 'package:car_rental_ui/shared/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logging/logging.dart';
@@ -15,11 +15,11 @@ Future<void> main() async {
   await dotenv.load();
   setupLogger();
   setupLocator();
-  runApp(CarWashApp());
+  runApp(CarRentalApp());
 }
 
-class CarWashApp extends StatelessWidget {
-  CarWashApp({super.key});
+class CarRentalApp extends StatelessWidget {
+  CarRentalApp({super.key});
 
   final NavController _navController = getIt.get<NavController>();
 
@@ -27,7 +27,7 @@ class CarWashApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: _navController.router,
-      title: 'Car Wash',
+      title: 'Car Rental',
       debugShowCheckedModeBanner: false,
       scaffoldMessengerKey: Globals.snackBarKey,
       theme: ThemeData(

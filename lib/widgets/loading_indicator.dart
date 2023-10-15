@@ -1,4 +1,4 @@
-import 'package:car_wash_ui/resources/images.dart';
+import 'package:car_rental_ui/resources/images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

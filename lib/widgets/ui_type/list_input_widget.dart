@@ -1,5 +1,5 @@
-import 'package:car_wash_ui/resources/fonts.dart';
-import 'package:car_wash_ui/widgets/text_container.dart';
+import 'package:car_rental_ui/resources/fonts.dart';
+import 'package:car_rental_ui/widgets/text_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 

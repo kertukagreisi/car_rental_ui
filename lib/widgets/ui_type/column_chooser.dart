@@ -1,4 +1,4 @@
-import 'package:car_wash_ui/shared/snackbar_service.dart';
+import 'package:car_rental_ui/shared/snackbar_service.dart';
 import 'package:flutter/material.dart';
 
 class ColumnChooser extends StatefulWidget {

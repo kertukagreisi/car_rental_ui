@@ -1,11 +1,12 @@
 import 'dart:convert';
 
+import 'package:car_rental_ui/generated_code/lib/api.dart';
+
 import '../../api-client/api_client.dart';
 import '../../shared/mvvm/view_model.dart';
 
 class HomeViewModel extends ViewModel {
-  late List<dynamic> owners;
-  Map<String, String> columnNames = {'id': 'Id', 'firstName': 'First Name', 'lastName': 'Last Name', 'phoneNumber': 'Phone Number', 'age': 'Age'};
+  late List<dynamic> cars;
 
   @override
   Future<void> init() async {
@@ -16,8 +17,8 @@ class HomeViewModel extends ViewModel {
   }
 
   Future<void> loadData() async {
-    await CarWashApi.ownerEndpointApi.ownersAllGetWithHttpInfo().then((response) {
-      owners = json.decode(response.body);
+    await CarRentalApi.carEndpointApi.carsAllGetWithHttpInfo().then((response) {
+      cars = json.decode(response.body);
     });
   }
 }

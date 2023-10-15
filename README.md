@@ -1,6 +1,6 @@
-# car_wash_ui
+# car_rental_ui
 
-Flutter application for car wash which does calls on the backend.
+Flutter application for car rental which does calls on the backend.
 
 ## Openapi code generator
 
@@ -17,7 +17,7 @@ npm install @openapitools/openapi-generator-cli -g
 2. Run the command to generate the code:
 
 ```shell script
-npx @openapitools/openapi-generator-cli generate -i api_clients/openapi.yaml -g dart -o generated_code
+npx @openapitools/openapi-generator-cli generate -i api_clients/openapi.yaml -g dart -o lib/generated_code
 ```
 
 Flutter

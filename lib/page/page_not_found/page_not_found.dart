@@ -1,4 +1,4 @@
-import 'package:car_wash_ui/navigation/nav_extensions.dart';
+import 'package:car_rental_ui/navigation/nav_extensions.dart';
 import 'package:flutter/material.dart';
 
 import '../../navigation/nav_route.dart';

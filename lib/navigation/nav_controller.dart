@@ -4,13 +4,13 @@ import 'package:go_router/go_router.dart';
 import '../page/cars/cars_page.dart';
 import '../page/home/home_page.dart';
 import '../page/page_not_found/page_not_found.dart';
-import '../widgets/car_wash_scaffold.dart';
+import '../widgets/car_rental_scaffold.dart';
 import 'nav_route.dart';
 
 class NavController {
   late final GoRouter _router = GoRouter(debugLogDiagnostics: true, initialLocation: NavRoute.home.path, errorPageBuilder: _pageBuilder, routes: [
     ShellRoute(
-      builder: (_, __, child) => CarWashScaffold(body: child),
+      builder: (_, __, child) => CarRentalScaffold(body: child),
       routes: [
         GoRoute(
           path: NavRoute.home.path,

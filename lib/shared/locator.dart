@@ -1,4 +1,4 @@
-import 'package:car_wash_ui/page/cars/cars_view_model.dart';
+import 'package:car_rental_ui/page/cars/cars_view_model.dart';
 import 'package:get_it/get_it.dart';
 
 import '../navigation/nav_controller.dart';
