@@ -16,8 +16,8 @@ class CarCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 150,
-      height: 200,
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
+      height: 180,
+      padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: const BorderRadius.all(
@@ -25,19 +25,21 @@ class CarCardWidget extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: AppColors.gray.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: const Offset(0, 3),
+            color: AppColors.lightBlue.withOpacity(0.5),
+            spreadRadius: 3,
+            blurRadius: 5,
+            offset: const Offset(1, 3),
           )
         ],
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
-            height: 120,
-            width: 120,
+            margin: const EdgeInsets.only(bottom: 10.0),
+            height: 100,
+            width: 140,
             color: AppColors.darkCyan,
             child: Image.asset(Images.ragnarImage, alignment: Alignment.center, fit: BoxFit.fill),
           ),
@@ -47,6 +49,7 @@ class CarCardWidget extends StatelessWidget {
               Text(
                 '${car['brand']} ${car['model']}',
                 style: Dimens.smallHeadTextStyle,
+                overflow: TextOverflow.ellipsis,
               ),
               Text(
                 car['engine'],

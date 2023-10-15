@@ -30,8 +30,8 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
             ),
             Wrap(
               alignment: WrapAlignment.start,
-              spacing: 12.0,
-              runSpacing: 12.0,
+              spacing: 20.0,
+              runSpacing: 16.0,
               children: [
                 ...viewModel.cars.map((car) => CarCardWidget(car: car)),
               ],
