@@ -18,8 +18,8 @@ class NavController {
           pageBuilder: _pageBuilder,
         ),
         GoRoute(
-          path: NavRoute.cars.path,
-          name: NavRoute.cars.name,
+          path: NavRoute.booking.path,
+          name: NavRoute.booking.name,
           pageBuilder: _pageBuilder,
         ),
         GoRoute(
@@ -49,10 +49,13 @@ class NavController {
     switch (navRoute) {
       case NavRoute.home:
         return const HomePage();
-      case NavRoute.cars:
-        return const CarsPage();
+      case NavRoute.booking:
+        final args = state.uri.queryParameters;
+        final extra = state.extra;
+        return BookingPage(args: args, carFromExtraParameters: extra);
+      /*todo - implement login page
       case NavRoute.login:
-        return const CarsPage();
+        return const LoginPage();*/
       //todo - check how can we navigate with extra parameters
       /* case NavRoute.jobcardmainpage:
         final args = state.uri.queryParameters;

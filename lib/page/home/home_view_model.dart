@@ -7,6 +7,7 @@ import '../../shared/mvvm/view_model.dart';
 
 class HomeViewModel extends ViewModel {
   late List<dynamic> cars;
+  List<Brand> brandFiltersValues = [];
 
   @override
   Future<void> init() async {
@@ -14,6 +15,12 @@ class HomeViewModel extends ViewModel {
     loadDataAsync(() async {
       await loadData();
     });
+  }
+
+  set addBrandFilter(Brand brand) {
+    brandFiltersValues.add(brand);
+    cars = cars.where((car) => brandFiltersValues.contains(brand)).toList(growable: false);
+    notifyListeners();
   }
 
   Future<void> loadData() async {

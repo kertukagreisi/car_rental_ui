@@ -107,19 +107,7 @@ paths:
       responses:
         "200":
           description: OK
-  /cars/update:
-    put:
-      tags:
-        - Car Endpoint
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Car'
-      responses:
-        "200":
-          description: OK
-  /cars/{id}:
+  /cars/delete/{id}:
     delete:
       tags:
         - Car Endpoint
@@ -130,6 +118,32 @@ paths:
           schema:
             format: int64
             type: integer
+      responses:
+        "200":
+          description: OK
+  /cars/get/{id}:
+    get:
+      tags:
+        - Car Endpoint
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        "200":
+          description: OK
+  /cars/update:
+    put:
+      tags:
+        - Car Endpoint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Car'
       responses:
         "200":
           description: OK

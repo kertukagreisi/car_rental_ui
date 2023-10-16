@@ -13,8 +13,10 @@ void setupLocator() {
 
 void _setupViewModels() {
   getIt.registerFactory(() => HomeViewModel());
-  getIt.registerFactory(() => CarsViewModel());
-  //todo - implement code when we to got the cars overview
+  getIt.registerFactoryParam<BookingViewModel, Map<String, String>, dynamic>(
+    (args, car) => BookingViewModel(args: args, carFromExtraParameters: car),
+  );
+  //todo - implement code when we to got the cars overview or other lists
   /*getIt.registerFactoryParam<CarsOverviewViewModel, Map<String, String>, Owner?>(
     (args, layover) => CarsOverviewViewModel(args: args, layover: layover),
   );*/

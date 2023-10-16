@@ -45,7 +45,7 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
         _NavigationElement(
           imagePath: Images.carIcon,
           label: 'Cars',
-          route: NavRoute.cars,
+          route: NavRoute.booking,
         ),
       ];
 

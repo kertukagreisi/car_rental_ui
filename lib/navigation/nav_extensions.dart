@@ -69,9 +69,9 @@ extension NavControllerHelper on BuildContext {
 
     switch (navRoute) {
       case NavRoute.home:
-        return 'Owners';
-      case NavRoute.cars:
-        return 'Cars';
+        return 'Home';
+      case NavRoute.booking:
+        return 'Booking';
       case NavRoute.login:
         return 'Login';
       default:
@@ -83,7 +83,7 @@ extension NavControllerHelper on BuildContext {
     var list = NavRoute.values.where((element) => element.path == currentRoute).toList();
     var navRoute = list.isNotEmpty ? list[0] : 'default';
 
-    if (navRoute == NavRoute.cars) {
+    if (navRoute == NavRoute.booking) {
       goNamedRoute(NavRoute.home, queryParams: currentRouteQueryParams);
     } else {
       goNamedRoute(NavRoute.home);
