@@ -65,7 +65,11 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
                       (brand) => Padding(
                         padding: const EdgeInsets.only(right: 4.0),
                         child: TextButton(
-                          style: TextButton.styleFrom(padding: EdgeInsets.zero, elevation: 0),
+                          style: TextButton.styleFrom(
+                            minimumSize: Size.zero,
+                            padding: EdgeInsets.zero,
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
                           onPressed: () {
                             viewModel.addBrandFilter = brand;
                           },
