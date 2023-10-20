@@ -1,6 +1,7 @@
 enum NavRoute {
   home('/'),
   booking('/booking'),
+  user('/user'),
   login('/login'),
   pageNotFound('/not-found');
 

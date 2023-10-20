@@ -11,13 +11,13 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/car_card_widget.dart';
-import 'home_view_model.dart';
+import 'user_view_model.dart';
 
-class HomePage extends ViewModelWidget<HomeViewModel> {
-  const HomePage({super.key});
+class UserPage extends ViewModelWidget<UserViewModel> {
+  const UserPage({super.key});
 
   @override
-  Widget builder(BuildContext context, HomeViewModel viewModel, Widget? child) {
+  Widget builder(BuildContext context, UserViewModel viewModel, Widget? child) {
     final TextEditingController searchController = TextEditingController();
 
     return Container(
@@ -46,7 +46,7 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
                   enlargeCenterPage: true,
                   autoPlay: true,
                 ),
-                items: viewModel.cars.map((car) {
+                items: viewModel.user.map((car) {
                   return Builder(
                     builder: (BuildContext context) {
                       return SizedBox(
@@ -124,7 +124,7 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
   }
 
   @override
-  HomeViewModel viewModelBuilder() {
-    return getIt.get<HomeViewModel>();
+  UserViewModel viewModelBuilder() {
+    return getIt.get<UserViewModel>();
   }
 }

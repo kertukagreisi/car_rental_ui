@@ -1,4 +1,6 @@
-import 'package:car_rental_ui/page/cars/cars_view_model.dart';
+import 'package:car_rental_ui/generated_code/lib/api.dart';
+import 'package:car_rental_ui/page/bookings/bookings_view_model.dart';
+import 'package:car_rental_ui/page/user/user_view_model.dart';
 import 'package:get_it/get_it.dart';
 
 import '../navigation/nav_controller.dart';
@@ -13,13 +15,10 @@ void setupLocator() {
 
 void _setupViewModels() {
   getIt.registerFactory(() => HomeViewModel());
-  getIt.registerFactoryParam<BookingViewModel, Map<String, String>, dynamic>(
+  getIt.registerFactoryParam<BookingViewModel, Map<String, String>, Car?>(
     (args, car) => BookingViewModel(args: args, carFromExtraParameters: car),
   );
-  //todo - implement code when we to got the cars overview or other lists
-  /*getIt.registerFactoryParam<CarsOverviewViewModel, Map<String, String>, Owner?>(
-    (args, layover) => CarsOverviewViewModel(args: args, layover: layover),
-  );*/
+  getIt.registerFactory(() => UserViewModel());
 }
 
 void _setupSingletons() {

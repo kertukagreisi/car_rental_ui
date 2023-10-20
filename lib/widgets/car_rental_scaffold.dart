@@ -38,14 +38,14 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
 
   List<_NavigationElement> get _navElements => [
         _NavigationElement(
-          imagePath: Images.ownerIcon,
-          label: 'Owners',
+          imagePath: Images.carIcon,
+          label: 'Cars',
           route: NavRoute.home,
         ),
         _NavigationElement(
-          imagePath: Images.carIcon,
-          label: 'Cars',
-          route: NavRoute.booking,
+          imagePath: Images.ownerIcon,
+          label: 'User',
+          route: NavRoute.user,
         ),
       ];
 

@@ -35,3 +35,6 @@ dontnv is used to read properties from .env file
 On the main.dart, we set up files to use the colors defined there by default and also the font that
 is there.
 
+To get the width of the screen, put this code:
+MediaQuery.of(context).size.width
+

@@ -1,7 +1,9 @@
+import 'package:car_rental_ui/generated_code/lib/api.dart';
+import 'package:car_rental_ui/page/user/user_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../page/cars/cars_page.dart';
+import '../page/bookings/bookings_page.dart';
 import '../page/home/home_page.dart';
 import '../page/page_not_found/page_not_found.dart';
 import '../widgets/car_rental_scaffold.dart';
@@ -20,6 +22,11 @@ class NavController {
         GoRoute(
           path: NavRoute.booking.path,
           name: NavRoute.booking.name,
+          pageBuilder: _pageBuilder,
+        ),
+        GoRoute(
+          path: NavRoute.user.path,
+          name: NavRoute.user.name,
           pageBuilder: _pageBuilder,
         ),
         GoRoute(
@@ -52,14 +59,12 @@ class NavController {
       case NavRoute.booking:
         final args = state.uri.queryParameters;
         final extra = state.extra;
-        return BookingPage(args: args, carFromExtraParameters: extra);
+        return BookingPage(args: args, carFromExtraParameters: extra as Car?);
+      case NavRoute.user:
+        return const UserPage();
       /*todo - implement login page
       case NavRoute.login:
         return const LoginPage();*/
-      //todo - check how can we navigate with extra parameters
-      /* case NavRoute.jobcardmainpage:
-        final args = state.uri.queryParameters;
-        return JobCardMainPage(args: args, layover: state.extra as Layover?);*/
       default:
         return const PageNotFound();
     }

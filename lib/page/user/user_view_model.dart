@@ -3,10 +3,8 @@ import 'package:car_rental_ui/generated_code/lib/api.dart';
 import '../../api-client/api_client.dart';
 import '../../shared/mvvm/view_model.dart';
 
-class HomeViewModel extends ViewModel {
-  late List<Car> cars = [];
-  late List<Car> displayedCars = [];
-  List<Brand> brandFiltersValues = [];
+class UserViewModel extends ViewModel {
+  late User user;
 
   @override
   Future<void> init() async {
@@ -17,14 +15,14 @@ class HomeViewModel extends ViewModel {
   }
 
   Future<void> loadData() async {
-    cars = (await CarRentalApi.carEndpointApi.carsAllGet())!;
-    displayedCars = cars;
+    user = await CarRentalApi.userEndpointApi.userLoginPost(LoginRequest('greisi', '123'))!;
+    displayedCars = user;
   }
 
   set addBrandFilter(Brand brand) {
     if (brandFiltersValues.length == 1 && brandFiltersValues.first == brand) {
       brandFiltersValues = [];
-      displayedCars = cars;
+      displayedCars = user;
     } else {
       if (brandFiltersValues.contains(brand)) {
         brandFiltersValues.remove(brand);
@@ -32,13 +30,14 @@ class HomeViewModel extends ViewModel {
         brandFiltersValues.add(brand);
       }
       displayedCars =
-          cars.where((car) => brandFiltersValues.contains(Brand.values.firstWhere((brand) => brand == car.brand))).toList(growable: false);
+          user.where((car) => brandFiltersValues.contains(Brand.values.firstWhere((brand) => brand == car.brand))).toList(growable: false);
     }
     notifyListeners();
   }
 
   Future<void> onSearch(String value) async {
-    displayedCars = cars.where((car) => car.model!.contains(value.toUpperCase()) || car.brand!.value.contains(value.toUpperCase())).toList(growable: false);
+    displayedCars =
+        user.where((car) => car.model!.contains(value.toUpperCase()) || car.brand!.value.contains(value.toUpperCase())).toList(growable: false);
     notifyListeners();
   }
 }

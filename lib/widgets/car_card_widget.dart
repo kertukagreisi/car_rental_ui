@@ -1,3 +1,4 @@
+import 'package:car_rental_ui/generated_code/lib/api.dart';
 import 'package:car_rental_ui/resources/app_colors.dart';
 import 'package:car_rental_ui/resources/images.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../resources/dimens.dart';
 
 class CarCardWidget extends StatelessWidget {
-  final dynamic car;
+  final Car car;
   final Function(int jobcardId) onCarCardItemClick;
 
   const CarCardWidget({
@@ -20,7 +21,7 @@ class CarCardWidget extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       child: InkWell(
         onTap: () {
-          onCarCardItemClick(car['id']);
+          onCarCardItemClick(car.id!);
         },
         child: Container(
           width: 150,
@@ -55,17 +56,17 @@ class CarCardWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${car['brand']} ${car['model']}',
+                    '${car.brand!} ${car.model!}',
                     style: Dimens.smallHeadTextStyle,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    car['engine'],
+                    car.engine!,
                     style: Dimens.smallTextStyle,
                   ),
-                  const Text(
-                    '${'2400'} ALL',
-                    style: Dimens.extraSmallHeadTextStyle,
+                  Text(
+                    '${car.price ?? 0} €',
+                    style: Dimens.smallHeadTextStyle,
                   ),
                 ],
               ),

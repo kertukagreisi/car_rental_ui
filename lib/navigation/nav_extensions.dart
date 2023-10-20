@@ -72,6 +72,8 @@ extension NavControllerHelper on BuildContext {
         return 'Home';
       case NavRoute.booking:
         return 'Booking';
+      case NavRoute.user:
+        return 'User';
       case NavRoute.login:
         return 'Login';
       default:

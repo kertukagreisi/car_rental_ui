@@ -10,7 +10,13 @@ paths:
         - Booking Endpoint
       responses:
         "200":
-          description: OK
+          description: List of bookings found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Booking'
   /bookings/car/{carId}:
     get:
       tags:
@@ -24,7 +30,13 @@ paths:
             type: integer
       responses:
         "200":
-          description: OK
+          description: List of bookings found for a car
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Booking'
   /bookings/create:
     post:
       tags:
@@ -48,6 +60,26 @@ paths:
       responses:
         "200":
           description: OK
+  /bookings/get/{id}:
+    get:
+      tags:
+        - Booking Endpoint
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        "200":
+          description: Booking found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+        "404":
+          description: Booking not found
   /bookings/update:
     put:
       tags:
@@ -73,7 +105,13 @@ paths:
             type: integer
       responses:
         "200":
-          description: OK
+          description: List of bookings found for a user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Booking'
   /bookings/{id}:
     delete:
       tags:
@@ -94,7 +132,13 @@ paths:
         - Car Endpoint
       responses:
         "200":
-          description: OK
+          description: List of cars found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
   /cars/create:
     post:
       tags:
@@ -134,7 +178,13 @@ paths:
             type: integer
       responses:
         "200":
-          description: OK
+          description: Car found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+        "404":
+          description: Car not found
   /cars/update:
     put:
       tags:
@@ -144,6 +194,133 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Car'
+      responses:
+        "200":
+          description: OK
+  /ratings/all:
+    get:
+      tags:
+        - Rating Endpoint
+      responses:
+        "200":
+          description: List of ratings found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Rating'
+  /ratings/car/{carId}:
+    get:
+      tags:
+        - Rating Endpoint
+      parameters:
+        - name: carId
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        "200":
+          description: List of ratings found for a car
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Rating'
+  /ratings/create:
+    post:
+      tags:
+        - Rating Endpoint
+      parameters:
+        - name: bookingId
+          in: query
+          schema:
+            format: int64
+            type: integer
+        - name: carId
+          in: query
+          schema:
+            format: int64
+            type: integer
+        - name: userId
+          in: query
+          schema:
+            format: int64
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Rating'
+      responses:
+        "200":
+          description: OK
+  /ratings/get/{id}:
+    get:
+      tags:
+        - Rating Endpoint
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        "200":
+          description: Rating found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+        "404":
+          description: Rating not found
+  /ratings/update:
+    put:
+      tags:
+        - Rating Endpoint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Rating'
+      responses:
+        "200":
+          description: OK
+  /ratings/user/{userId}:
+    get:
+      tags:
+        - Rating Endpoint
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        "200":
+          description: List of ratings found for a user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Rating'
+  /ratings/{id}:
+    delete:
+      tags:
+        - Rating Endpoint
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
       responses:
         "200":
           description: OK
@@ -158,7 +335,13 @@ paths:
               $ref: '#/components/schemas/LoginRequest'
       responses:
         "200":
-          description: OK
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "401":
+          description: Please check your password!
   /user/signUp:
     post:
       tags:
@@ -170,7 +353,13 @@ paths:
               $ref: '#/components/schemas/User'
       responses:
         "200":
-          description: OK
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "409":
+          description: This username already exists!
 components:
   schemas:
     Booking:
@@ -183,9 +372,10 @@ components:
           $ref: '#/components/schemas/Date'
         endDate:
           $ref: '#/components/schemas/Date'
-        price:
-          format: int64
-          type: integer
+        timeStamp:
+          $ref: '#/components/schemas/Date'
+        rating:
+          $ref: '#/components/schemas/Rating'
         car:
           $ref: '#/components/schemas/Car'
         user:
@@ -232,6 +422,9 @@ components:
           type: integer
         licencePlate:
           type: string
+        price:
+          format: double
+          type: number
     Color:
       enum:
         - BEIGE
@@ -262,6 +455,23 @@ components:
           type: string
         password:
           type: string
+    Rating:
+      type: object
+      properties:
+        id:
+          format: int64
+          type: integer
+        rating:
+          format: int32
+          type: integer
+        comment:
+          type: string
+        timeStamp:
+          $ref: '#/components/schemas/Date'
+        car:
+          $ref: '#/components/schemas/Car'
+        user:
+          $ref: '#/components/schemas/User'
     Transmission:
       enum:
         - MANUAL

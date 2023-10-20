@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
@@ -10,6 +12,7 @@ class DatePickerWidget extends StatefulWidget {
   final bool mandatory;
   final Function(dynamic) onChange;
   final String? toolTip;
+  final bool? startsFromToday;
   final dynamic initialValue;
 
   const DatePickerWidget({
@@ -17,6 +20,7 @@ class DatePickerWidget extends StatefulWidget {
     required this.mandatory,
     required this.onChange,
     this.toolTip,
+    this.startsFromToday,
     Key? key,
     this.initialValue,
   }) : super(key: key);
@@ -38,6 +42,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
             child: FormBuilderDateTimePicker(
               name: widget.label,
               initialValue: widget.initialValue ?? DateTime.now(),
+              firstDate: (widget.startsFromToday ?? false) ? DateTime.now() : null,
               inputType: InputType.date,
               format: DateFormat('yyyy-MM-dd'),
               decoration: _buildDatePickerInputDecoration(widget.label),
