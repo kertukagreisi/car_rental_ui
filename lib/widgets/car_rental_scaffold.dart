@@ -11,8 +11,8 @@ import '../resources/images.dart';
 const _railIconSize = 56.0;
 const _railLabelSize = 192.0;
 const _railItemSelectedColor = Colors.white;
-const _railItemUnselectedColor = AppColors.darkBlue;
-const _railBackgroundSelectedColor = AppColors.darkBlue;
+const _railItemUnselectedColor = AppColors.darkCyan;
+const _railBackgroundSelectedColor = AppColors.darkCyan;
 const _railBackgroundUnselectedColor = Colors.white;
 
 class CarRentalScaffold extends StatefulWidget {

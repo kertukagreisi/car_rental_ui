@@ -7,6 +7,8 @@ class HomeViewModel extends ViewModel {
   late List<Car> cars = [];
   late List<Car> displayedCars = [];
   List<Brand> brandFiltersValues = [];
+  String searchValue = '';
+  bool hasBothFilters = false;
 
   @override
   Future<void> init() async {
@@ -34,11 +36,23 @@ class HomeViewModel extends ViewModel {
       displayedCars =
           cars.where((car) => brandFiltersValues.contains(Brand.values.firstWhere((brand) => brand == car.brand))).toList(growable: false);
     }
+    displayedCars = displayedCars
+        .where((car) => car.model!.contains(searchValue.toUpperCase()) || car.brand!.value.contains(searchValue.toUpperCase()))
+        .toList(growable: false);
     notifyListeners();
   }
 
   Future<void> onSearch(String value) async {
-    displayedCars = cars.where((car) => car.model!.contains(value.toUpperCase()) || car.brand!.value.contains(value.toUpperCase())).toList(growable: false);
+    searchValue = value;
+    if (brandFiltersValues.isNotEmpty) {
+      displayedCars = displayedCars
+          .where((car) => car.model!.contains(searchValue.toUpperCase()) || car.brand!.value.contains(searchValue.toUpperCase()))
+          .toList(growable: false);
+    } else {
+      displayedCars = cars
+          .where((car) => car.model!.contains(searchValue.toUpperCase()) || car.brand!.value.contains(searchValue.toUpperCase()))
+          .toList(growable: false);
+    }
     notifyListeners();
   }
 }

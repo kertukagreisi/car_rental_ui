@@ -18,7 +18,7 @@ class PageNotFound extends StatelessWidget {
               const Text(
                 '404',
                 style: TextStyle(
-                  color: AppColors.darkBlue,
+                  color: AppColors.darkCyan,
                   fontWeight: FontWeight.bold,
                   fontSize: 300.0,
                 ),
@@ -45,7 +45,7 @@ class PageNotFound extends StatelessWidget {
                   icon: const Icon(Icons.arrow_back),
                   label: Text(
                     'GO TO HOME',
-                    style: Dimens.titleTextStyle.copyWith(color: AppColors.darkBlue, fontWeight: FontWeight.bold),
+                    style: Dimens.titleTextStyle.copyWith(color: AppColors.darkCyan, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),

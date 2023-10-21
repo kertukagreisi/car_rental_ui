@@ -17,62 +17,83 @@ class CarCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      clipBehavior: Clip.hardEdge,
-      child: InkWell(
-        onTap: () {
-          onCarCardItemClick(car.id!);
-        },
-        child: Container(
-          width: 150,
-          height: 180,
-          padding: const EdgeInsets.all(10.0),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: const BorderRadius.all(
-              Radius.circular(4.0),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.lightBlue.withOpacity(0.5),
-                spreadRadius: 3,
-                blurRadius: 5,
-                offset: const Offset(1, 3),
-              )
-            ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(bottom: 10.0),
-                height: 100,
-                width: 140,
-                color: AppColors.darkCyan,
-                child: Image.asset(Images.ragnarImage, alignment: Alignment.center, fit: BoxFit.fill),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '${car.brand!} ${car.model!}',
-                    style: Dimens.smallHeadTextStyle,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    car.engine!,
-                    style: Dimens.smallTextStyle,
-                  ),
-                  Text(
-                    '${car.price ?? 0} €',
-                    style: Dimens.smallHeadTextStyle,
-                  ),
-                ],
-              ),
-            ],
-          ),
+    return Container(
+      width: 174,
+      height: 207,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: const BorderRadius.all(
+          Radius.circular(4.0),
         ),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.gray.withOpacity(0.5),
+            spreadRadius: 1,
+            blurRadius: 1,
+            offset: const Offset(0, 1),
+          )
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.only(top: 8.0, left: 6.0, right: 6.0, bottom: 8.0),
+            height: 120,
+            width: 160,
+            child: Image.asset(Images.aurisImage, alignment: Alignment.center, fit: BoxFit.fitWidth),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 12.0, left: 6.0, right: 6.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${car.brand!.value.replaceAll('_', ' ')} ${car.model!} ${car.year}',
+                  style: Dimens.smallTextStyle,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  '${car.price ?? 0} €',
+                  style: Dimens.mediumHeadTextStyle,
+                ),
+              ],
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              onCarCardItemClick(car.id!);
+            },
+            style: TextButton.styleFrom(
+              minimumSize: Size.zero,
+              padding: EdgeInsets.zero,
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            ),
+            child: ColoredBox(
+              color: AppColors.darkCyan,
+              child: Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'More details',
+                            style: Dimens.mediumTextStyle.copyWith(color: Colors.white),
+                          ),
+                          const Icon(Icons.navigate_next_outlined, color: Colors.white, size: 18),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

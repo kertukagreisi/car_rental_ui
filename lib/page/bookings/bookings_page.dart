@@ -33,7 +33,7 @@ class BookingPage extends ViewModelWidget<BookingViewModel> {
             Padding(
               padding: const EdgeInsets.only(bottom: 12.0),
               child: Row(
-                children: _buildRatingWidget(4),
+                children: _buildRatingWidget(viewModel.car.averageRating!, viewModel.car.reviewsCount!),
               ),
             ),
             Padding(
@@ -63,7 +63,7 @@ class BookingPage extends ViewModelWidget<BookingViewModel> {
                         child: Center(
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width,
-                            child: Image.asset(Images.ragnarImage, alignment: Alignment.center, fit: BoxFit.fill),
+                            child: Image.asset(Images.aurisImage, alignment: Alignment.center, fit: BoxFit.fill),
                           ),
                         ),
                       );
@@ -126,7 +126,7 @@ class BookingPage extends ViewModelWidget<BookingViewModel> {
                         Padding(
                           padding: const EdgeInsets.only(right: 8.0),
                           child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(backgroundColor: AppColors.darkGray, padding: const EdgeInsets.all(8.0)),
+                            style: ElevatedButton.styleFrom(backgroundColor: AppColors.darkCyan, padding: const EdgeInsets.all(8.0)),
                             onPressed: viewModel.datesDifference > 0
                                 ? () async {
                                     formKey.currentState?.save();
@@ -145,7 +145,7 @@ class BookingPage extends ViewModelWidget<BookingViewModel> {
                           onPressed: () {
                             context.goNamedRoute(NavRoute.home);
                           },
-                          child: Text('Cancel', style: Dimens.mediumTextStyle.copyWith(color: AppColors.darkGray)),
+                          child: Text('Cancel', style: Dimens.mediumTextStyle.copyWith(color: AppColors.darkCyan)),
                         ),
                       ],
                     ),
@@ -164,14 +164,21 @@ class BookingPage extends ViewModelWidget<BookingViewModel> {
     return getIt.get<BookingViewModel>(param1: args, param2: carFromExtraParameters);
   }
 
-  List<Widget> _buildRatingWidget(int rating) {
-    List<Widget> stars = [];
+  List<Widget> _buildRatingWidget(double averageRating, int reviewsCount) {
+    List<Widget> ratingWidgets = [];
     for (var index = 4; index >= 0; index--) {
-      stars.add(Padding(
+      ratingWidgets.add(Padding(
         padding: const EdgeInsets.all(2.0),
-        child: Icon(index > 4 - rating ? Icons.star : Icons.star_border_outlined, color: AppColors.yellow),
+        child: Icon(index > 4 - averageRating.floor() ? Icons.star : Icons.star_border_outlined, color: AppColors.yellow),
       ));
     }
-    return stars;
+    ratingWidgets.add(
+      Padding(
+        padding: const EdgeInsets.only(left: 10.0, top: 2.0),
+        child: Text('($reviewsCount)', style: Dimens.headTextStyle.copyWith(color: AppColors.yellow)),
+      ),
+    );
+
+    return ratingWidgets;
   }
 }

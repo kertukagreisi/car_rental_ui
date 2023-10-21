@@ -425,6 +425,12 @@ components:
         price:
           format: double
           type: number
+        averageRating:
+          format: double
+          type: number
+        reviewsCount:
+          format: int32
+          type: integer
     Color:
       enum:
         - BEIGE

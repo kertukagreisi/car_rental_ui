@@ -14,8 +14,9 @@ class AppColors {
   static const darkRed = Color(0xffb72f31);
   static const red = Color(0xffe03153);
 
-  static const darkCyan = Color(0xff207178);
+  static const darkCyan = Color(0xff042a2f);
   static const cyan = Color(0xff53868b);
+  static const lightCyan = Color(0xffc1e8ef);
 
   static const darkPurple = Color(0xff54074c);
   static const lightPurple = Color(0xffd3ccff);

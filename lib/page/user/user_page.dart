@@ -28,7 +28,7 @@ class UserPage extends ViewModelWidget<UserViewModel> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text('Username', style: Dimens.mediumHeadTextStyle),
-                        Text(viewModel.user.username ?? '', style: Dimens.mediumTextStyle.copyWith(color: AppColors.darkGray)),
+                        Text(viewModel.user.username ?? '', style: Dimens.mediumTextStyle.copyWith(color: AppColors.darkCyan)),
                       ],
                     ),
                   ),
@@ -36,7 +36,7 @@ class UserPage extends ViewModelWidget<UserViewModel> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text('Role', style: Dimens.mediumHeadTextStyle),
-                      Text(viewModel.user.role?.value ?? '', style: Dimens.mediumTextStyle.copyWith(color: AppColors.darkGray)),
+                      Text(viewModel.user.role?.value ?? '', style: Dimens.mediumTextStyle.copyWith(color: AppColors.darkCyan)),
                     ],
                   ),
                 ],

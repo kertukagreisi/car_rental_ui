@@ -38,3 +38,11 @@ is there.
 To get the width of the screen, put this code:
 MediaQuery.of(context).size.width
 
+To create a TextButton without padding on the sides, use:
+TextButton(
+onPressed: () {},
+style: TextButton.styleFrom(
+minimumSize: Size.zero,
+padding: EdgeInsets.zero,
+tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+),

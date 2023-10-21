@@ -32,8 +32,8 @@ class CarRentalApp extends StatelessWidget {
       scaffoldMessengerKey: Globals.snackBarKey,
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
-        primarySwatch: AppColors.darkBlue.toMaterialColor(),
-        primaryColor: AppColors.darkBlue,
+        primarySwatch: AppColors.darkCyan.toMaterialColor(),
+        primaryColor: AppColors.darkCyan,
         shadowColor: AppColors.gray,
         hoverColor: AppColors.lightBlue,
         snackBarTheme:
