@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../page/bookings/bookings_page.dart';
 import '../page/home/home_page.dart';
+import '../page/login/login_page.dart';
 import '../page/page_not_found/page_not_found.dart';
 import '../widgets/car_rental_scaffold.dart';
 import 'nav_route.dart';
@@ -62,9 +63,8 @@ class NavController {
         return BookingPage(args: args, carFromExtraParameters: extra as Car?);
       case NavRoute.user:
         return const UserPage();
-      /*todo - implement login page
       case NavRoute.login:
-        return const LoginPage();*/
+        return const LoginPage();
       default:
         return const PageNotFound();
     }

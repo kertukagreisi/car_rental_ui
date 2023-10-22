@@ -40,13 +40,14 @@ class BookingViewModel extends ViewModel {
 
   Future<void> renatCar(Map<String, dynamic> value, BuildContext context) async {
     Booking booking = Booking(
-      user: User(id: 3),
+      user: User(id: 1),
       car: Car(id: car.id),
       startDate: value['Start Date'],
       endDate: value['End Date'],
+      timeStamp: DateTime.now(),
     );
     await CarRentalApi.bookingEndpointApi
-        .bookingsCreatePostWithHttpInfo(carId: car.id, userId: 3, booking: booking)
+        .bookingsCreatePostWithHttpInfo(carId: car.id, userId: 1, booking: booking)
         .then((value) => showSnackBar(SnackBarLevel.success, 'The booking was saved!'))
         .onError((error, stackTrace) => showSnackBar(SnackBarLevel.error, error.toString()));
   }

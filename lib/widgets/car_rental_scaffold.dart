@@ -199,7 +199,7 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
           child: Text(
             context.getAppBarTitle(),
             style: Dimens.extraSmallHeadTextStyle.copyWith(
-              fontSize: 16,
+              fontSize: 14,
               color: Colors.white,
               fontWeight: FontWeight.w700,
               letterSpacing: 0.01 * 12,

@@ -1,46 +1,55 @@
-import '../../api-client/api_client.dart';
+import 'dart:async';
+
+import 'package:car_rental_ui/api-client/api_client.dart';
+import 'package:car_rental_ui/generated_code/lib/api.dart';
+import 'package:car_rental_ui/shared/snackbar_service.dart';
+
 import '../../shared/mvvm/view_model.dart';
 
 class LoginViewModel extends ViewModel {
-  String username = '';
-  String password = '';
-  String errorMessage = '';
+  late User user;
+  bool isOnLoginForm = true;
 
-  void updateUsername(String value) {
-    username = value;
+  set setForm(bool value) {
+    isOnLoginForm = value;
     notifyListeners();
   }
 
-  void updatePassword(String value) {
-    password = value;
-    notifyListeners();
+  Future<void> login(String username, String password) async {
+    await CarRentalApi.userEndpointApi
+        .userLoginPost(loginRequest: LoginRequest(username: username, password: password))
+        .then((response) => user = response!)
+        .onError((error, stackTrace) => onError(error, stackTrace));
+    if (user.id != null) {
+      showSnackBar(SnackBarLevel.success, 'Logged in successfully');
+    }
   }
 
-  Future<void> login() async {
-    // Implement your login logic here, making an HTTP request to the backend
-    // Set _isLoading to true while the request is in progress
+  Future<void> signUp(Map<String, dynamic> formValues) async {
+    if (formValues['Password'] != formValues['Retype Password']) {
+      showSnackBar(SnackBarLevel.error, 'The passwords didn\'t match!');
+    } else {
+      await CarRentalApi.userEndpointApi
+          .userSignUpPost(
+            user: User(
+                name: formValues['Name'],
+                lastName: formValues['Last Name'],
+                email: formValues['Email'],
+                phone: formValues['Phone'],
+                username: formValues['Username'],
+                password: formValues['Password'],
+                role: UserRole.USER),
+          )
+          .then((response) => user = response!)
+          .onError((error, stackTrace) => onError(error, stackTrace));
+      if (user.id != null) {
+        showSnackBar(SnackBarLevel.success, 'Signed up successfully');
+      }
+    }
+  }
 
-    // Example of making an HTTP POST request using the http package
-    // Replace 'your_backend_url' with your actual backend URL
-    // Replace 'body' with your request data
-
-    // final response = await http.post(
-    //   Uri.parse('your_backend_url'),
-    //   body: jsonEncode(<String, String>{
-    //     'username': _username,
-    //     'password': _password,
-    //   }),
-    //   headers: <String, String>{
-    //     'Content-Type': 'application/json',
-    //   },
-    // );
-
-    // Handle the response and set _isLoading back to false
-
-    // if (response.statusCode == 200) {
-    //   // Successful login
-    // } else {
-    //   // Failed login, set error message and handle accordingly
-    // }
+  FutureOr<User> onError(Object? error, StackTrace stackTrace) async {
+    showSnackBar(SnackBarLevel.error, 'Incorrect username of password!');
+    return User(id: null);
   }
 }

@@ -37,6 +37,10 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Booking'
+        "404":
+          description: Car not found
+          content:
+            text/plain: {}
   /bookings/create:
     post:
       tags:
@@ -80,6 +84,8 @@ paths:
                 $ref: '#/components/schemas/Booking'
         "404":
           description: Booking not found
+          content:
+            text/plain: {}
   /bookings/update:
     put:
       tags:
@@ -105,13 +111,17 @@ paths:
             type: integer
       responses:
         "200":
-          description: List of bookings found for a user
+          description: List of bookings found for an user
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Booking'
+        "404":
+          description: User not found
+          content:
+            text/plain: {}
   /bookings/{id}:
     delete:
       tags:
@@ -185,6 +195,8 @@ paths:
                 $ref: '#/components/schemas/Car'
         "404":
           description: Car not found
+          content:
+            text/plain: {}
   /cars/update:
     put:
       tags:
@@ -230,6 +242,10 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Rating'
+        "404":
+          description: Car not found
+          content:
+            text/plain: {}
   /ratings/create:
     post:
       tags:
@@ -278,6 +294,8 @@ paths:
                 $ref: '#/components/schemas/Car'
         "404":
           description: Rating not found
+          content:
+            text/plain: {}
   /ratings/update:
     put:
       tags:
@@ -303,13 +321,17 @@ paths:
             type: integer
       responses:
         "200":
-          description: List of ratings found for a user
+          description: List of ratings found for an user
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Rating'
+        "404":
+          description: User not found
+          content:
+            text/plain: {}
   /ratings/{id}:
     delete:
       tags:
@@ -335,13 +357,19 @@ paths:
               $ref: '#/components/schemas/LoginRequest'
       responses:
         "200":
-          description: Login successful
+          description: Login successful!
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
         "401":
-          description: Please check your password!
+          description: Unauthorized
+          content:
+            text/plain: {}
+        "404":
+          description: User not found
+          content:
+            text/plain: {}
   /user/signUp:
     post:
       tags:
@@ -360,6 +388,8 @@ paths:
                 $ref: '#/components/schemas/User'
         "409":
           description: This username already exists!
+          content:
+            text/plain: {}
 components:
   schemas:
     Booking:
@@ -489,6 +519,14 @@ components:
         id:
           format: int64
           type: integer
+        name:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
         username:
           type: string
         password:

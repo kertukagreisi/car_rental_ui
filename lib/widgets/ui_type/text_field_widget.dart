@@ -14,11 +14,11 @@ class TextFieldWidget extends StatelessWidget {
   final dynamic initialValue;
   final bool? enabled;
   final List<TextInputFormatter>? validations;
-  final bool showHelperText;
   final String placeholder;
   final bool obscureText;
   final bool hideLabel;
   final double height;
+  final double? width;
   final bool? showLabel;
 
   const TextFieldWidget(
@@ -30,11 +30,11 @@ class TextFieldWidget extends StatelessWidget {
       this.initialValue,
       this.enabled,
       this.validations,
-      this.showHelperText = true,
       this.placeholder = 'Placeholder',
       this.obscureText = false,
       this.hideLabel = false,
-      this.height = 91.0,
+      this.width,
+      this.height = 75.0,
       this.showLabel})
       : super(key: key);
 
@@ -52,7 +52,7 @@ class TextFieldWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (!hideLabel)
+        if (showLabel ?? false)
           SizedBox(
             height: 20.0,
             child: Text(
@@ -62,12 +62,11 @@ class TextFieldWidget extends StatelessWidget {
           ),
         Dimens.smallSizedBox,
         SizedBox(
-          width: Dimens.filterButtonWidth,
-          height: height,
+          height: showLabel ?? false ? height + 20 : height,
+          width: width ?? 150,
           child: Column(
             children: [
               Container(
-                height: (showLabel ?? false) ? 60.0 : 40.0,
                 color: Colors.white,
                 child: FormBuilderTextField(
                   obscureText: obscureText,
@@ -81,24 +80,6 @@ class TextFieldWidget extends StatelessWidget {
                   inputFormatters: formatters,
                 ),
               ),
-              const SizedBox(
-                height: 7.0,
-              ),
-              if (showHelperText)
-                SizedBox(
-                  height: 16.0,
-                  child: Text(
-                    allowOnlyNumbers != null && allowOnlyNumbers!
-                        ? 'This is accepting only numbers'
-                        : (showLabel ?? false)
-                            ? ''
-                            : 'Helper text',
-                    style: const TextStyle(
-                      fontSize: 12.0,
-                      color: AppColors.darkBlue,
-                    ),
-                  ),
-                ),
             ],
           ),
         ),
@@ -119,12 +100,6 @@ class TextFieldWidget extends StatelessWidget {
       floatingLabelBehavior: FloatingLabelBehavior.never,
       hintText: placeholder,
       hoverColor: Colors.white,
-      contentPadding: const EdgeInsets.only(
-        left: 16,
-        bottom: 11,
-        top: 11,
-        right: 16,
-      ),
       enabledBorder: outlineInputBorder,
       focusedBorder: outlineInputBorder,
       disabledBorder: outlineInputBorder,

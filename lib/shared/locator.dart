@@ -1,5 +1,6 @@
 import 'package:car_rental_ui/generated_code/lib/api.dart';
 import 'package:car_rental_ui/page/bookings/bookings_view_model.dart';
+import 'package:car_rental_ui/page/login/login_view_model.dart';
 import 'package:car_rental_ui/page/user/user_view_model.dart';
 import 'package:get_it/get_it.dart';
 
@@ -19,6 +20,7 @@ void _setupViewModels() {
     (args, car) => BookingViewModel(args: args, carFromExtraParameters: car),
   );
   getIt.registerFactory(() => UserViewModel());
+  getIt.registerFactory(() => LoginViewModel());
 }
 
 void _setupSingletons() {
