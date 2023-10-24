@@ -10,6 +10,7 @@ import 'package:car_rental_ui/widgets/text_container.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
+import '../../shared/flutter_secure_storage_service.dart';
 import '../../widgets/car_card_widget.dart';
 import 'home_view_model.dart';
 
@@ -27,31 +28,35 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
-              child: CarouselSlider(
-                options: CarouselOptions(
-                  height: 250,
-                  viewportFraction: 300 / MediaQuery.of(context).size.width,
-                  enlargeCenterPage: true,
-                  autoPlay: true,
+            if (viewModel.cars.where((car) => car.averageRating! >= 4.0).isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10.0),
+                child: CarouselSlider(
+                  options: CarouselOptions(
+                    height: 250,
+                    viewportFraction: 300 / MediaQuery.of(context).size.width,
+                    enlargeCenterPage: true,
+                    autoPlay: true,
+                  ),
+                  items: viewModel.cars.where((car) => car.averageRating! >= 4.0).map((car) {
+                    return Builder(
+                      builder: (BuildContext context) {
+                        return SizedBox(
+                          width: 250,
+                          child: CarCarouselWidget(
+                              car: car,
+                              onCarCardItemClick: (id) async {
+                                bool isLoggedIn = await getUserFromSecureStorage() == null;
+                                if (context.mounted) {
+                                  context.goNamedRoute(isLoggedIn ? NavRoute.book : NavRoute.login, queryParams: {'id': '$id'}, extra: car);
+                                }
+                              }),
+                        );
+                      },
+                    );
+                  }).toList(),
                 ),
-                items: viewModel.cars.where((car) => car.averageRating! >= 4.0).map((car) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return SizedBox(
-                        width: 250,
-                        child: CarCarouselWidget(
-                            car: car,
-                            onCarCardItemClick: (id) {
-                              context.goNamedRoute(NavRoute.booking, queryParams: {'id': '$id'}, extra: car);
-                            }),
-                      );
-                    },
-                  );
-                }).toList(),
               ),
-            ),
             Padding(
               padding: const EdgeInsets.only(bottom: 12.0),
               child: TextFormField(
@@ -142,8 +147,12 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
                   ...viewModel.displayedCars.map(
                     (car) => CarCardWidget(
                       car: car,
-                      onCarCardItemClick: (id) {
-                        context.goNamedRoute(NavRoute.booking, queryParams: {'id': '$id'}, extra: car);
+                      onCarCardItemClick: (id) async {
+                        bool isLoggedIn = await getUserFromSecureStorage() != null;
+                        if (context.mounted) {
+                          context.goNamedRoute(isLoggedIn ? NavRoute.book : NavRoute.login,
+                              queryParams: {'id': '$id', 'navRoute': 'booking'}, extra: car);
+                        }
                       },
                     ),
                   ),

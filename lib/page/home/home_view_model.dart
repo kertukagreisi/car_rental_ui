@@ -37,7 +37,7 @@ class HomeViewModel extends ViewModel {
           cars.where((car) => brandFiltersValues.contains(Brand.values.firstWhere((brand) => brand == car.brand))).toList(growable: false);
     }
     displayedCars = displayedCars
-        .where((car) => car.model!.contains(searchValue.toUpperCase()) || car.brand!.value.contains(searchValue.toUpperCase()))
+        .where((car) => car.model.contains(searchValue.toUpperCase()) || car.brand.value.contains(searchValue.toUpperCase()))
         .toList(growable: false);
     notifyListeners();
   }
@@ -46,11 +46,11 @@ class HomeViewModel extends ViewModel {
     searchValue = value;
     if (brandFiltersValues.isNotEmpty) {
       displayedCars = displayedCars
-          .where((car) => car.model!.contains(searchValue.toUpperCase()) || car.brand!.value.contains(searchValue.toUpperCase()))
+          .where((car) => car.model.contains(searchValue.toUpperCase()) || car.brand.value.contains(searchValue.toUpperCase()))
           .toList(growable: false);
     } else {
       displayedCars = cars
-          .where((car) => car.model!.contains(searchValue.toUpperCase()) || car.brand!.value.contains(searchValue.toUpperCase()))
+          .where((car) => car.model.contains(searchValue.toUpperCase()) || car.brand.value.contains(searchValue.toUpperCase()))
           .toList(growable: false);
     }
     notifyListeners();

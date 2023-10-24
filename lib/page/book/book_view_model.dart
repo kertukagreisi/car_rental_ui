@@ -3,13 +3,15 @@ import 'package:car_rental_ui/generated_code/lib/api.dart';
 import 'package:car_rental_ui/shared/snackbar_service.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../shared/flutter_secure_storage_service.dart';
 import '../../shared/mvvm/view_model.dart';
 
-class BookingViewModel extends ViewModel {
+class BookViewModel extends ViewModel {
   final Map<String, String> args;
   final Car? carFromExtraParameters;
+  late User user;
 
-  BookingViewModel({required this.args, required this.carFromExtraParameters});
+  BookViewModel({required this.args, required this.carFromExtraParameters});
 
   late Car car;
 
@@ -17,8 +19,8 @@ class BookingViewModel extends ViewModel {
 
   double totalPrice = 0;
   int datesDifference = 1;
-  DateTime startDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-  DateTime endDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).add(const Duration(days: 1));
+  DateTime startDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 0);
+  DateTime endDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 0).add(const Duration(days: 1));
 
   @override
   Future<void> init() async {
@@ -35,19 +37,21 @@ class BookingViewModel extends ViewModel {
     } else {
       car = carFromExtraParameters!;
     }
-    totalPrice = car.price!;
+    totalPrice = car.price;
+    user = (await getUserFromSecureStorage())!;
   }
 
   Future<void> renatCar(Map<String, dynamic> value, BuildContext context) async {
     Booking booking = Booking(
-      user: User(id: 1),
-      car: Car(id: car.id),
-      startDate: value['Start Date'],
-      endDate: value['End Date'],
+      user: user,
+      car: car,
+      startDate: DateTime(value['Start Date'].year, value['Start Date'].month, value['Start Date'].day).add(const Duration(days: 1)),
+      endDate: DateTime(value['End Date'].year, value['End Date'].month, value['End Date'].day).add(const Duration(days: 1)),
       timeStamp: DateTime.now(),
+      bookingStatus: BookingStatus.PENDING,
     );
     await CarRentalApi.bookingEndpointApi
-        .bookingsCreatePostWithHttpInfo(carId: car.id, userId: 1, booking: booking)
+        .bookingsCreatePost(carId: car.id, userId: 1, booking: booking)
         .then((value) => showSnackBar(SnackBarLevel.success, 'The booking was saved!'))
         .onError((error, stackTrace) => showSnackBar(SnackBarLevel.error, error.toString()));
   }
@@ -60,7 +64,7 @@ class BookingViewModel extends ViewModel {
     }
     // Find the difference between the two dates
     datesDifference = endDate.difference(startDate).inDays;
-    totalPrice = (car.price ?? 0) * datesDifference;
+    totalPrice = car.price * datesDifference;
     notifyListeners();
   }
 }

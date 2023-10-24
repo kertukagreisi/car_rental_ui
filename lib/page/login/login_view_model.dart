@@ -4,11 +4,15 @@ import 'package:car_rental_ui/api-client/api_client.dart';
 import 'package:car_rental_ui/generated_code/lib/api.dart';
 import 'package:car_rental_ui/shared/snackbar_service.dart';
 
+import '../../shared/flutter_secure_storage_service.dart';
 import '../../shared/mvvm/view_model.dart';
 
 class LoginViewModel extends ViewModel {
-  late User user;
+  final Map<String, String> args;
+  late User user = User(id: 0);
   bool isOnLoginForm = true;
+
+  LoginViewModel({required this.args});
 
   set setForm(bool value) {
     isOnLoginForm = value;
@@ -16,12 +20,14 @@ class LoginViewModel extends ViewModel {
   }
 
   Future<void> login(String username, String password) async {
-    await CarRentalApi.userEndpointApi
-        .userLoginPost(loginRequest: LoginRequest(username: username, password: password))
-        .then((response) => user = response!)
-        .onError((error, stackTrace) => onError(error, stackTrace));
-    if (user.id != null) {
+    await CarRentalApi.userEndpointApi.userLoginPost(loginRequest: LoginRequest(username: username, password: password)).then((response) {
+      user = response!;
       showSnackBar(SnackBarLevel.success, 'Logged in successfully');
+    }).onError((error, stackTrace) {
+      onError(error, stackTrace);
+    });
+    if (user.id != null) {
+      await saveUserToSecureStorage(user);
     }
   }
 
@@ -49,7 +55,7 @@ class LoginViewModel extends ViewModel {
   }
 
   FutureOr<User> onError(Object? error, StackTrace stackTrace) async {
-    showSnackBar(SnackBarLevel.error, 'Incorrect username of password!');
+    showSnackBar(SnackBarLevel.error, error.toString().substring(error.toString().indexOf(':'), error.toString().length));
     return User(id: null);
   }
 }

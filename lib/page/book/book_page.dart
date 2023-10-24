@@ -11,16 +11,16 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import '../../resources/app_colors.dart';
 import '../../resources/dimens.dart';
 import '../../resources/images.dart';
-import 'bookings_view_model.dart';
+import 'book_view_model.dart';
 
-class BookingPage extends ViewModelWidget<BookingViewModel> {
+class BookPage extends ViewModelWidget<BookViewModel> {
   final Map<String, String> args;
   final Car? carFromExtraParameters;
 
-  const BookingPage({super.key, required this.args, required this.carFromExtraParameters});
+  const BookPage({super.key, required this.args, required this.carFromExtraParameters});
 
   @override
-  Widget builder(BuildContext context, BookingViewModel viewModel, Widget? child) {
+  Widget builder(BuildContext context, BookViewModel viewModel, Widget? child) {
     final formKey = GlobalKey<FormBuilderState>();
     return Container(
       color: Colors.white,
@@ -160,8 +160,8 @@ class BookingPage extends ViewModelWidget<BookingViewModel> {
   }
 
   @override
-  BookingViewModel viewModelBuilder() {
-    return getIt.get<BookingViewModel>(param1: args, param2: carFromExtraParameters);
+  BookViewModel viewModelBuilder() {
+    return getIt.get<BookViewModel>(param1: args, param2: carFromExtraParameters);
   }
 
   List<Widget> _buildRatingWidget(double averageRating, int reviewsCount) {

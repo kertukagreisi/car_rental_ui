@@ -1,3 +1,5 @@
+import 'package:car_rental_ui/navigation/nav_extensions.dart';
+import 'package:car_rental_ui/navigation/nav_route.dart';
 import 'package:car_rental_ui/resources/app_colors.dart';
 import 'package:car_rental_ui/resources/dimens.dart';
 import 'package:car_rental_ui/shared/locator.dart';
@@ -9,7 +11,9 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'login_view_model.dart';
 
 class LoginPage extends ViewModelWidget<LoginViewModel> {
-  const LoginPage({super.key});
+  final Map<String, String> args;
+
+  const LoginPage({super.key, required this.args});
 
   @override
   Widget builder(BuildContext context, LoginViewModel viewModel, Widget? child) {
@@ -50,6 +54,9 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
                         if (loginFormKey.currentState!.validate()) {
                           await viewModel.login(
                               loginFormKey.currentState?.fields['Username']?.value, loginFormKey.currentState?.fields['Password']?.value);
+                          if (context.mounted) {
+                            context.goNamedRoute(NavRoute.values.firstWhere((value) => value.name == args['navRoute']), queryParams: args);
+                          }
                         }
                       } else {
                         if (signUpFormKey.currentState!.validate()) {
@@ -103,7 +110,7 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
 
   @override
   LoginViewModel viewModelBuilder() {
-    return getIt.get<LoginViewModel>();
+    return getIt.get<LoginViewModel>(param1: args);
   }
 
   List<Widget> _buildInputFields(bool isLoggingIn) {

@@ -393,6 +393,13 @@ paths:
 components:
   schemas:
     Booking:
+      required:
+        - startDate
+        - endDate
+        - timeStamp
+        - bookingStatus
+        - car
+        - user
       type: object
       properties:
         id:
@@ -404,12 +411,21 @@ components:
           $ref: '#/components/schemas/Date'
         timeStamp:
           $ref: '#/components/schemas/Date'
+        bookingStatus:
+          $ref: '#/components/schemas/BookingStatus'
         rating:
           $ref: '#/components/schemas/Rating'
         car:
           $ref: '#/components/schemas/Car'
         user:
           $ref: '#/components/schemas/User'
+    BookingStatus:
+      enum:
+        - PENDING
+        - ACTIVE
+        - COMPLETED
+        - CANCELED
+      type: string
     Brand:
       enum:
         - ALFA_ROMEO
@@ -424,6 +440,18 @@ components:
         - VOLKSWAGEN
       type: string
     Car:
+      required:
+        - model
+        - brand
+        - engine
+        - fuelType
+        - doors
+        - color
+        - transmission
+        - seats
+        - year
+        - licencePlate
+        - price
       type: object
       properties:
         id:
@@ -492,6 +520,11 @@ components:
         password:
           type: string
     Rating:
+      required:
+        - rating
+        - timeStamp
+        - car
+        - user
       type: object
       properties:
         id:

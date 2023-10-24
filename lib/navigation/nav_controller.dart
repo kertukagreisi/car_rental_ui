@@ -1,9 +1,10 @@
 import 'package:car_rental_ui/generated_code/lib/api.dart';
+import 'package:car_rental_ui/page/bookings_overview/bookings_overview_page.dart';
 import 'package:car_rental_ui/page/user/user_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../page/bookings/bookings_page.dart';
+import '../page/book/book_page.dart';
 import '../page/home/home_page.dart';
 import '../page/login/login_page.dart';
 import '../page/page_not_found/page_not_found.dart';
@@ -21,8 +22,13 @@ class NavController {
           pageBuilder: _pageBuilder,
         ),
         GoRoute(
-          path: NavRoute.booking.path,
-          name: NavRoute.booking.name,
+          path: NavRoute.book.path,
+          name: NavRoute.book.name,
+          pageBuilder: _pageBuilder,
+        ),
+        GoRoute(
+          path: NavRoute.bookingsOverview.path,
+          name: NavRoute.bookingsOverview.name,
           pageBuilder: _pageBuilder,
         ),
         GoRoute(
@@ -57,14 +63,17 @@ class NavController {
     switch (navRoute) {
       case NavRoute.home:
         return const HomePage();
-      case NavRoute.booking:
+      case NavRoute.book:
         final args = state.uri.queryParameters;
         final extra = state.extra;
-        return BookingPage(args: args, carFromExtraParameters: extra as Car?);
+        return BookPage(args: args, carFromExtraParameters: extra as Car?);
       case NavRoute.user:
         return const UserPage();
+      case NavRoute.bookingsOverview:
+        return const BookingsOverviewPage();
       case NavRoute.login:
-        return const LoginPage();
+        final args = state.uri.queryParameters;
+        return LoginPage(args: args);
       default:
         return const PageNotFound();
     }
