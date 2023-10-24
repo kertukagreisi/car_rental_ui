@@ -5,6 +5,7 @@ import 'package:car_rental_ui/shared/locator.dart';
 import 'package:car_rental_ui/shared/mvvm/view_model_widgets.dart';
 import 'package:flutter/material.dart';
 
+import '../../widgets/booking_card_widget.dart';
 import 'bookings_overview_view_model.dart';
 
 class BookingsOverviewPage extends ViewModelWidget<BookingsOverviewViewModel> {
@@ -13,10 +14,10 @@ class BookingsOverviewPage extends ViewModelWidget<BookingsOverviewViewModel> {
   @override
   Widget builder(BuildContext context, BookingsOverviewViewModel viewModel, Widget? child) {
     ValueNotifier<BookingStatus> tabNotifier = ValueNotifier(BookingStatus.PENDING);
-    return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.all(24.0),
-      child: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: Container(
+        color: Colors.white,
+        padding: const EdgeInsets.all(18.0),
         child: ValueListenableBuilder(
           valueListenable: tabNotifier,
           builder: (BuildContext context, BookingStatus value, Widget? child) {
@@ -25,18 +26,32 @@ class BookingsOverviewPage extends ViewModelWidget<BookingsOverviewViewModel> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 12.0),
+                  padding: const EdgeInsets.only(bottom: 12.0, left: 4.0, right: 4.0),
                   child: Wrap(
-                    spacing: 30.0,
                     children: BookingStatus.values.map((status) {
                       return TextButton(
-                          style: TextButton.styleFrom(
-                            backgroundColor: value.value == status.value ? AppColors.gray : Colors.white,
+                        style: TextButton.styleFrom(
+                          minimumSize: Size.zero,
+                          padding: EdgeInsets.zero,
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
+                        onPressed: () {
+                          tabNotifier.value = BookingStatus.values.firstWhere((value) => value == status);
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.only(right: 6.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                          decoration: BoxDecoration(
+                              color: value.value == status.value ? AppColors.darkCyan : Colors.white,
+                              boxShadow: const [BoxShadow(color: AppColors.cyan, blurRadius: 1)],
+                              border: Border.all(color: AppColors.cyan),
+                              borderRadius: BorderRadius.circular(4.0)),
+                          child: Text(
+                            status.value,
+                            style: Dimens.extraSmallTextStyle.copyWith(color: value.value == status.value ? Colors.white : AppColors.darkCyan),
                           ),
-                          onPressed: () {
-                            tabNotifier.value = BookingStatus.values.firstWhere((value) => value == status);
-                          },
-                          child: Text(status.value, style: Dimens.smallHeadTextStyle));
+                        ),
+                      );
                     }).toList(growable: false),
                   ),
                 ),
@@ -44,10 +59,13 @@ class BookingsOverviewPage extends ViewModelWidget<BookingsOverviewViewModel> {
                   padding: const EdgeInsets.only(bottom: 12.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: viewModel.bookings
-                        .where((booking) => booking.bookingStatus == value)
-                        .map((booking) => Padding(padding: const EdgeInsets.only(bottom: 8.0), child: Text('${booking.startDate}')))
-                        .toList(growable: false),
+                    children: viewModel.bookings.where((booking) => booking.bookingStatus == value).map((filteredBooking) {
+                      return Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                        padding: const EdgeInsets.only(bottom: 24.0),
+                        child: BookingCardWidget(booking: filteredBooking, onBookingCardItemClick: (bookingId) {}),
+                      );
+                    }).toList(growable: false),
                   ),
                 ),
               ],

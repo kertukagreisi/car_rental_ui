@@ -46,9 +46,10 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
                           child: CarCarouselWidget(
                               car: car,
                               onCarCardItemClick: (id) async {
-                                bool isLoggedIn = await getUserFromSecureStorage() == null;
+                                bool isLoggedIn = await getUserFromSecureStorage() != null;
                                 if (context.mounted) {
-                                  context.goNamedRoute(isLoggedIn ? NavRoute.book : NavRoute.login, queryParams: {'id': '$id'}, extra: car);
+                                  context.goNamedRoute(isLoggedIn ? NavRoute.book : NavRoute.login,
+                                      queryParams: {'id': '$id', 'navRoute': 'book'}, extra: car);
                                 }
                               }),
                         );
@@ -150,8 +151,10 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
                       onCarCardItemClick: (id) async {
                         bool isLoggedIn = await getUserFromSecureStorage() != null;
                         if (context.mounted) {
-                          context.goNamedRoute(isLoggedIn ? NavRoute.book : NavRoute.login,
-                              queryParams: {'id': '$id', 'navRoute': 'booking'}, extra: car);
+                          if (context.mounted) {
+                            context.goNamedRoute(isLoggedIn ? NavRoute.book : NavRoute.login,
+                                queryParams: {'id': '$id', 'navRoute': 'book'}, extra: car);
+                          }
                         }
                       },
                     ),
