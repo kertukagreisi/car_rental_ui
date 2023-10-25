@@ -10,5 +10,7 @@ class CarRentalApi {
 
   static final BookingEndpointApi bookingEndpointApi = BookingEndpointApi(_apiClient);
 
+  static final RatingEndpointApi ratingEndpointApi = RatingEndpointApi(_apiClient);
+
   static final UserEndpointApi userEndpointApi = UserEndpointApi(_apiClient);
 }

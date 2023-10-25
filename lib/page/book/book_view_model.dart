@@ -48,6 +48,7 @@ class BookViewModel extends ViewModel {
       startDate: DateTime(value['Start Date'].year, value['Start Date'].month, value['Start Date'].day).add(const Duration(days: 1)),
       endDate: DateTime(value['End Date'].year, value['End Date'].month, value['End Date'].day).add(const Duration(days: 1)),
       timeStamp: DateTime.now(),
+      total: datesDifference * car.price,
       bookingStatus: BookingStatus.PENDING,
     );
     await CarRentalApi.bookingEndpointApi

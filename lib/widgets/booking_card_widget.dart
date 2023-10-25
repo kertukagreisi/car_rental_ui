@@ -1,7 +1,11 @@
+import 'package:car_rental_ui/api-client/api_client.dart';
 import 'package:car_rental_ui/generated_code/lib/api.dart';
 import 'package:car_rental_ui/resources/app_colors.dart';
 import 'package:car_rental_ui/resources/images.dart';
+import 'package:car_rental_ui/shared/snackbar_service.dart';
+import 'package:car_rental_ui/widgets/ui_type/text_field_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
 
 import '../resources/dimens.dart';
@@ -51,17 +55,22 @@ class BookingCardWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(bottom: 12.0),
-                      child: Text('Toyota Auris', style: Dimens.smallHeadTextStyle),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12.0),
+                      child: Text('${booking.car.brand.value.replaceAll('_', ' ')} ${booking.car.model.toUpperCase()}',
+                          style: Dimens.smallHeadTextStyle),
                     ),
-                    Wrap(
-                      children: [
-                        Text(DateFormat("d MMMM y", 'en_US').format(booking.startDate), style: Dimens.extraSmallTextStyle),
-                        const Text(' - ', style: Dimens.extraSmallTextStyle),
-                        Text(DateFormat("d MMMM y", 'en_US').format(booking.endDate), style: Dimens.extraSmallTextStyle),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Wrap(
+                        children: [
+                          Text(DateFormat('d MMMM y', 'en_US').format(booking.startDate), style: Dimens.smallTextStyle),
+                          Text(DateFormat(' - ').format(booking.startDate), style: Dimens.smallTextStyle),
+                          Text(DateFormat('d MMMM y', 'en_US').format(booking.endDate), style: Dimens.smallTextStyle),
+                        ],
+                      ),
                     ),
+                    if (booking.bookingStatus == BookingStatus.COMPLETED && booking.rating != null) _buildRatingWidget(booking.rating!.rating),
                   ],
                 ),
               ),
@@ -70,6 +79,20 @@ class BookingCardWidget extends StatelessWidget {
           TextButton(
             onPressed: () {
               onBookingCardItemClick(booking.id!);
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      content: Container(
+                        color: Colors.white,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: _buildPopupContentWidgets(context),
+                        ),
+                      ),
+                    );
+                  });
             },
             style: TextButton.styleFrom(
               minimumSize: Size.zero,
@@ -80,20 +103,31 @@ class BookingCardWidget extends StatelessWidget {
               color: AppColors.gray,
               child: Padding(
                 padding: const EdgeInsets.all(6.0),
-                child: Row(
+                child: Stack(
                   children: [
-                    Expanded(
+                    Container(
+                      margin: const EdgeInsets.only(left: 40.0),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            'Leave rating',
-                            style: Dimens.smallTextStyle.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  booking.bookingStatus == BookingStatus.COMPLETED && booking.rating == null ? 'Leave rating' : 'View Details',
+                                  style: Dimens.smallTextStyle.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
+                                ),
+                                const Icon(Icons.navigate_next_outlined, color: Colors.white, size: 18),
+                              ],
+                            ),
                           ),
-                          const Icon(Icons.navigate_next_outlined, color: Colors.white, size: 18),
                         ],
                       ),
                     ),
+                    Text(
+                      '${booking.total} €',
+                      style: Dimens.mediumHeadTextStyle.copyWith(color: Colors.white),
+                    )
                   ],
                 ),
               ),
@@ -102,5 +136,215 @@ class BookingCardWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  List<Widget> _buildPopupContentWidgets(BuildContext context) {
+    final ValueNotifier<int> ratingNotifier = ValueNotifier(0);
+    final ratingFormKey = GlobalKey<FormBuilderState>();
+    List<Widget> popupColumns = [];
+    popupColumns.add(
+      Row(
+        children: [
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+              color: AppColors.gray,
+              margin: const EdgeInsets.only(bottom: 20.0),
+              child: booking.bookingStatus == BookingStatus.COMPLETED && booking.rating == null
+                  ? Text('Leave a rating for yor booking!', style: Dimens.smallHeadTextStyle.copyWith(color: Colors.white))
+                  : Text('Booking Details', style: Dimens.smallHeadTextStyle.copyWith(color: Colors.white)),
+            ),
+          ),
+        ],
+      ),
+    );
+    popupColumns.add(Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Wrap(
+        spacing: 25.0,
+        runSpacing: 30.0,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Text(
+                  'Car Model',
+                  style: Dimens.smallHeadTextStyle.copyWith(color: AppColors.gray),
+                ),
+              ),
+              Text('${booking.car.brand} ${booking.car.model}', style: Dimens.smallTextStyle),
+            ],
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Text(
+                  'Time of ${booking.bookingStatus == BookingStatus.CANCELED ? 'Canceling' : 'Booking'}',
+                  style: Dimens.smallHeadTextStyle.copyWith(color: AppColors.gray),
+                ),
+              ),
+              Text(DateFormat("d MMMM y", 'en_US').format(booking.timeStamp), style: Dimens.smallTextStyle),
+            ],
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Text(
+                  'Start Date',
+                  style: Dimens.smallHeadTextStyle.copyWith(color: AppColors.gray),
+                ),
+              ),
+              Text(DateFormat("d MMMM y", 'en_US').format(booking.startDate), style: Dimens.smallTextStyle),
+            ],
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Text(
+                  'End Date',
+                  style: Dimens.smallHeadTextStyle.copyWith(color: AppColors.gray),
+                ),
+              ),
+              Text(DateFormat("d MMMM y", 'en_US').format(booking.endDate), style: Dimens.smallTextStyle),
+            ],
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Text(
+                  'Total Payed',
+                  style: Dimens.smallHeadTextStyle.copyWith(color: AppColors.gray),
+                ),
+              ),
+              Text('${booking.total} €', style: Dimens.smallTextStyle),
+            ],
+          ),
+        ],
+      ),
+    ));
+
+    if (booking.bookingStatus == BookingStatus.COMPLETED && booking.rating == null) {
+      popupColumns.add(
+        FormBuilder(
+          key: ratingFormKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ValueListenableBuilder(
+                valueListenable: ratingNotifier,
+                builder: (BuildContext context, value, Widget? child) {
+                  List<Widget> starWidgets = [];
+                  for (var index = 4; index >= 0; index--) {
+                    starWidgets.add(TextButton(
+                      onPressed: () {
+                        ratingNotifier.value = 4 - index;
+                      },
+                      style: TextButton.styleFrom(
+                        minimumSize: Size.zero,
+                        padding: EdgeInsets.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: Icon(index > 3 - value ? Icons.star : Icons.star_border_outlined, color: AppColors.yellow),
+                      ),
+                    ));
+                  }
+                  return Wrap(children: starWidgets);
+                },
+              ),
+              TextFieldWidget(label: 'Comment', mandatory: false, placeholder: 'Comment', width: 250, onChange: (value) {}),
+              Wrap(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      right: 8.0,
+                    ),
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0), backgroundColor: AppColors.darkCyan),
+                      onPressed: () async {
+                        ratingFormKey.currentState!.save();
+                        Rating rating = Rating(
+                            rating: ratingNotifier.value + 1,
+                            comment: ratingFormKey.currentState?.value['Comment'],
+                            timeStamp: DateTime.now(),
+                            car: booking.car,
+                            user: booking.user);
+                        await CarRentalApi.ratingEndpointApi
+                            .ratingsCreatePost(bookingId: booking.id, carId: booking.car.id, userId: booking.user.id, rating: rating)
+                            .then((value) => showSnackBar(SnackBarLevel.success, 'Rating saved successfully!'))
+                            .onError((error, stackTrace) => showSnackBar(SnackBarLevel.error, 'Couldn\'t save booking! There was an error!'));
+                        if (context.mounted) {
+                          Navigator.of(context).pop();
+                        }
+                      },
+                      child: Text(
+                        'Save',
+                        style: Dimens.mediumTextStyle.copyWith(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
+                        side: const BorderSide(color: AppColors.darkCyan),
+                        shadowColor: AppColors.darkCyan),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text(
+                      'Cancel',
+                      style: Dimens.mediumTextStyle,
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      );
+    } else {
+      popupColumns.add(
+        Container(
+          margin: const EdgeInsets.only(top: 14.0),
+          child: TextButton(
+            style: TextButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
+                side: const BorderSide(color: AppColors.darkCyan),
+                shadowColor: AppColors.darkCyan),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text(
+              'Close',
+              style: Dimens.mediumTextStyle,
+            ),
+          ),
+        ),
+      );
+    }
+    return popupColumns;
+  }
+
+  Widget _buildRatingWidget(int rating) {
+    List<Widget> starWidgets = [];
+    for (var index = 4; index >= 0; index--) {
+      starWidgets.add(Padding(
+        padding: const EdgeInsets.only(right: 2.0),
+        child: Icon(index > 3 - rating ? Icons.star : Icons.star_border_outlined, color: AppColors.yellow, size: 16.0),
+      ));
+    }
+    return Row(children: starWidgets);
   }
 }

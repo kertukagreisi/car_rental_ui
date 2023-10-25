@@ -398,6 +398,7 @@ components:
         - endDate
         - timeStamp
         - bookingStatus
+        - total
         - car
         - user
       type: object
@@ -413,6 +414,9 @@ components:
           $ref: '#/components/schemas/Date'
         bookingStatus:
           $ref: '#/components/schemas/BookingStatus'
+        total:
+          format: float
+          type: number
         rating:
           $ref: '#/components/schemas/Rating'
         car:

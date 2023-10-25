@@ -27,32 +27,36 @@ class BookingsOverviewPage extends ViewModelWidget<BookingsOverviewViewModel> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(bottom: 12.0, left: 4.0, right: 4.0),
-                  child: Wrap(
-                    children: BookingStatus.values.map((status) {
-                      return TextButton(
-                        style: TextButton.styleFrom(
-                          minimumSize: Size.zero,
-                          padding: EdgeInsets.zero,
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        ),
-                        onPressed: () {
-                          tabNotifier.value = BookingStatus.values.firstWhere((value) => value == status);
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.only(right: 6.0),
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                          decoration: BoxDecoration(
-                              color: value.value == status.value ? AppColors.darkCyan : Colors.white,
-                              boxShadow: const [BoxShadow(color: AppColors.cyan, blurRadius: 1)],
-                              border: Border.all(color: AppColors.cyan),
-                              borderRadius: BorderRadius.circular(4.0)),
-                          child: Text(
-                            status.value,
-                            style: Dimens.extraSmallTextStyle.copyWith(color: value.value == status.value ? Colors.white : AppColors.darkCyan),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: BookingStatus.values.map((status) {
+                        return TextButton(
+                          style: TextButton.styleFrom(
+                            minimumSize: Size.zero,
+                            padding: EdgeInsets.zero,
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
-                        ),
-                      );
-                    }).toList(growable: false),
+                          onPressed: () {
+                            tabNotifier.value = BookingStatus.values.firstWhere((value) => value == status);
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.only(right: 4.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 4.0),
+                            decoration: BoxDecoration(
+                                color: value.value == status.value ? AppColors.darkCyan : Colors.white,
+                                boxShadow: const [BoxShadow(color: AppColors.cyan, blurRadius: 1)],
+                                border: Border.all(color: AppColors.cyan),
+                                borderRadius: BorderRadius.circular(4.0)),
+                            child: Text(
+                              '${status.value} (${viewModel.bookings.where((booking) => booking.bookingStatus == status).length})',
+                              style: Dimens.extraSmallTextStyle
+                                  .copyWith(fontWeight: FontWeight.w600, color: value.value == status.value ? Colors.white : AppColors.darkCyan),
+                            ),
+                          ),
+                        );
+                      }).toList(growable: false),
+                    ),
                   ),
                 ),
                 Padding(
