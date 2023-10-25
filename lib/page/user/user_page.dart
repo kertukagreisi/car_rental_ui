@@ -20,22 +20,67 @@ class UserPage extends ViewModelWidget<UserViewModel> {
           children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 12.0),
-              child: Row(
+              child: Wrap(
+                spacing: 24.0,
+                runSpacing: 32.0,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text('Username', style: Dimens.mediumHeadTextStyle),
-                        Text(viewModel.user.username ?? '', style: Dimens.mediumTextStyle.copyWith(color: AppColors.darkCyan)),
-                      ],
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(bottom: 8.0),
+                        child: Text('Name', style: Dimens.mediumHeadTextStyle),
+                      ),
+                      Text(viewModel.user.name ?? '', style: Dimens.mediumTextStyle.copyWith(color: AppColors.darkCyan)),
+                    ],
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Role', style: Dimens.mediumHeadTextStyle),
+                      const Padding(
+                        padding: EdgeInsets.only(bottom: 8.0),
+                        child: Text('Last Name', style: Dimens.mediumHeadTextStyle),
+                      ),
+                      Text(viewModel.user.lastName ?? '', style: Dimens.mediumTextStyle.copyWith(color: AppColors.darkCyan)),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(bottom: 8.0),
+                        child: Text('Email', style: Dimens.mediumHeadTextStyle),
+                      ),
+                      Text(viewModel.user.email ?? '', style: Dimens.mediumTextStyle.copyWith(color: AppColors.darkCyan)),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(bottom: 8.0),
+                        child: Text('Phone Number', style: Dimens.mediumHeadTextStyle),
+                      ),
+                      Text(viewModel.user.phone ?? '', style: Dimens.mediumTextStyle.copyWith(color: AppColors.darkCyan)),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(bottom: 8.0),
+                        child: Text('Username', style: Dimens.mediumHeadTextStyle),
+                      ),
+                      Text(viewModel.user.username ?? '', style: Dimens.mediumTextStyle.copyWith(color: AppColors.darkCyan)),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(bottom: 8.0),
+                        child: Text('Role', style: Dimens.mediumHeadTextStyle),
+                      ),
                       Text(viewModel.user.role?.value ?? '', style: Dimens.mediumTextStyle.copyWith(color: AppColors.darkCyan)),
                     ],
                   ),
