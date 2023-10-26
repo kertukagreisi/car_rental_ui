@@ -1,5 +1,3 @@
-import 'package:car_rental_ui/navigation/nav_extensions.dart';
-import 'package:car_rental_ui/navigation/nav_route.dart';
 import 'package:car_rental_ui/resources/app_colors.dart';
 import 'package:car_rental_ui/resources/dimens.dart';
 import 'package:car_rental_ui/shared/locator.dart';
@@ -53,10 +51,7 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
                       if (viewModel.isOnLoginForm) {
                         if (loginFormKey.currentState!.validate()) {
                           await viewModel.login(
-                              loginFormKey.currentState?.fields['Username']?.value, loginFormKey.currentState?.fields['Password']?.value);
-                          if (context.mounted) {
-                            context.goNamedRoute(NavRoute.values.firstWhere((value) => value.name == args['navRoute']), queryParams: args);
-                          }
+                              loginFormKey.currentState?.fields['Username']?.value, loginFormKey.currentState?.fields['Password']?.value, context);
                         }
                       } else {
                         if (signUpFormKey.currentState!.validate()) {
