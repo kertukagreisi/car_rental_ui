@@ -52,13 +52,13 @@ class CarCarouselWidget extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 6.0),
                         child: Text(
-                          car.model!,
+                          car.model,
                           style: Dimens.mediumHeadTextStyle,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       Text(
-                        car.brand!.value.replaceAll('_', ' '),
+                        car.brand.value.replaceAll('_', ' '),
                         style: Dimens.smallTextStyle.copyWith(fontSize: 10.0),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -68,9 +68,9 @@ class CarCarouselWidget extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: TextContainer(
-                      text: car.color!.value,
-                      textColor: Helpers.getTextColor(false, car.color!.value),
-                      backgroundColor: Helpers.getTextColor(true, car.color!.value),
+                      text: car.color.value,
+                      textColor: Helpers.getTextColor(false, car.color.value),
+                      backgroundColor: Helpers.getTextColor(true, car.color.value),
                       fontWeight: FontWeight.w400,
                       fontSize: 12.0),
                 ),
@@ -125,7 +125,7 @@ class CarCarouselWidget extends StatelessWidget {
                   child: Image.asset(Images.aurisImage, alignment: Alignment.center, fit: BoxFit.fitWidth),
                 ),
                 Text(
-                  '${car.price ?? 0} €',
+                  '${car.price} €',
                   style: Dimens.headTextStyle,
                 ),
               ],

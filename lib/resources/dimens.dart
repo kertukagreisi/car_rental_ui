@@ -41,7 +41,7 @@ class Dimens {
   );
 
   static const headTextStyle = TextStyle(
-    color: AppColors.darkBlue,
+    color: AppColors.darkCyan,
     fontSize: 24,
     fontFamily: Fonts.trajanHead,
     fontWeight: FontWeight.bold,
@@ -54,28 +54,28 @@ class Dimens {
   );
 
   static const extraSmallHeadTextStyle = TextStyle(
-    color: AppColors.darkBlue,
+    color: AppColors.darkCyan,
     fontSize: 12,
     fontFamily: Fonts.trajanHead,
     fontWeight: FontWeight.bold,
   );
 
   static const smallHeadTextStyle = TextStyle(
-    color: AppColors.darkBlue,
+    color: AppColors.darkCyan,
     fontSize: 14,
     fontFamily: Fonts.trajanHead,
     fontWeight: FontWeight.bold,
   );
 
   static const mediumHeadTextStyle = TextStyle(
-    color: AppColors.darkBlue,
+    color: AppColors.darkCyan,
     fontSize: 16,
     fontFamily: Fonts.trajanHead,
     fontWeight: FontWeight.bold,
   );
 
   static const mediumTextStyle = TextStyle(
-    color: AppColors.darkBlue,
+    color: AppColors.darkCyan,
     fontSize: 16,
     fontFamily: Fonts.trajan,
     fontWeight: FontWeight.normal,
@@ -83,14 +83,14 @@ class Dimens {
   );
 
   static const smallTextStyle = TextStyle(
-    color: AppColors.darkBlue,
+    color: AppColors.darkCyan,
     fontSize: 14,
     fontFamily: Fonts.trajan,
     fontWeight: FontWeight.normal,
   );
 
   static const extraSmallTextStyle = TextStyle(
-    color: AppColors.darkBlue,
+    color: AppColors.darkCyan,
     fontSize: 12,
     fontFamily: Fonts.trajan,
     fontWeight: FontWeight.normal,
@@ -104,7 +104,7 @@ class Dimens {
   );
 
   static const titleTextStyle = TextStyle(
-    color: AppColors.darkBlue,
+    color: AppColors.darkCyan,
     fontSize: 18,
     fontFamily: Fonts.trajanHead,
     fontWeight: FontWeight.normal,

@@ -52,7 +52,7 @@ class _ListInputWidgetState extends State<ListInputWidget> {
                       padding: const EdgeInsets.only(bottom: 8.0),
                       child: TextContainer(
                         text: 'There are no values for ${widget.label} input field!',
-                        textColor: AppColors.darkBlue,
+                        textColor: AppColors.darkCyan,
                         backgroundColor: Colors.white,
                         fontWeight: FontWeight.normal,
                         fontSize: 18.0,
@@ -65,7 +65,7 @@ class _ListInputWidgetState extends State<ListInputWidget> {
                             padding: const EdgeInsets.only(right: 16.0, bottom: 8.0),
                             child: TextContainer(
                               text: input,
-                              textColor: AppColors.darkBlue,
+                              textColor: AppColors.darkCyan,
                               backgroundColor: AppColors.lightBlue,
                               fontWeight: FontWeight.normal,
                               fontSize: 18.0,
@@ -113,7 +113,7 @@ class _ListInputWidgetState extends State<ListInputWidget> {
     const outlineInputBorder = OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(2.0)),
       borderSide: BorderSide(
-        color: AppColors.darkBlue,
+        color: AppColors.darkCyan,
       ),
     );
 

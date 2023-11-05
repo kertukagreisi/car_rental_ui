@@ -8,17 +8,14 @@ import '../resources/dimens.dart';
 class CarCardWidget extends StatelessWidget {
   final Car car;
   final Function(int jobcardId) onCarCardItemClick;
+  final double width;
 
-  const CarCardWidget({
-    Key? key,
-    required this.car,
-    required this.onCarCardItemClick,
-  }) : super(key: key);
+  const CarCardWidget({Key? key, required this.car, required this.onCarCardItemClick, required this.width}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 174,
+      width: width,
       height: 207,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -50,12 +47,12 @@ class CarCardWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${car.brand!.value.replaceAll('_', ' ')} ${car.model!} ${car.year}',
+                  '${car.brand.value.replaceAll('_', ' ')} ${car.model} ${car.year}',
                   style: Dimens.smallTextStyle,
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
-                  '${car.price ?? 0} €',
+                  '${car.price} €',
                   style: Dimens.mediumHeadTextStyle,
                 ),
               ],

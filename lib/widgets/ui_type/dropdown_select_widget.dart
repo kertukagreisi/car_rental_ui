@@ -46,7 +46,7 @@ class _DropDownSelectWidgetState extends State<DropDownSelectWidget> {
                 height: 20.0,
                 child: Text(
                   '${widget.label} ${widget.mandatory ? ' *' : ''}',
-                  style: const TextStyle(fontSize: 16.0, color: AppColors.darkBlue, fontFamily: Fonts.trajan),
+                  style: const TextStyle(fontSize: 16.0, color: AppColors.darkCyan, fontFamily: Fonts.trajan),
                 ),
               ),
             if (widget.showLabel ?? false) Dimens.smallSizedBox,
@@ -60,7 +60,7 @@ class _DropDownSelectWidgetState extends State<DropDownSelectWidget> {
                       initialValue: widget.initialValue,
                       icon: const Icon(
                         Icons.keyboard_arrow_down_outlined,
-                        color: AppColors.darkBlue,
+                        color: AppColors.darkCyan,
                       ),
                       enabled: widget.items.isNotEmpty && (widget.enabled ?? true),
                       iconDisabledColor: AppColors.gray,
@@ -88,7 +88,7 @@ class _DropDownSelectWidgetState extends State<DropDownSelectWidget> {
     const outlineInputBorder = OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(2.0)),
       borderSide: BorderSide(
-        color: AppColors.darkBlue,
+        color: AppColors.darkCyan,
       ),
     );
 

@@ -22,7 +22,7 @@ class Helpers {
         case 'WHITE':
           return Colors.white;
         default:
-          return AppColors.darkBlue;
+          return AppColors.darkCyan;
       }
     } else {
       switch (value) {
@@ -39,9 +39,9 @@ class Helpers {
         case 'RED':
           return Colors.white;
         case 'YELLOW':
-          return AppColors.darkBlue;
+          return AppColors.darkCyan;
         case 'WHITE':
-          return AppColors.darkBlue;
+          return AppColors.darkCyan;
         default:
           return Colors.white;
       }

@@ -58,7 +58,7 @@ class _RadioButtonWidgetState extends State<RadioButtonWidget> {
     const outlineInputBorder = OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(2.0)),
       borderSide: BorderSide(
-        color: AppColors.darkBlue,
+        color: AppColors.darkCyan,
       ),
     );
     return InputDecoration(

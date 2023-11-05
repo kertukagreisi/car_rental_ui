@@ -25,9 +25,10 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
           key: viewModel.isOnLoginForm ? loginFormKey : signUpFormKey,
           child: Container(
             margin: viewModel.isOnLoginForm ? const EdgeInsets.symmetric(horizontal: 24.0) : const EdgeInsets.symmetric(horizontal: 10.0),
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               color: Colors.white,
-              boxShadow: [
+              borderRadius: BorderRadius.circular(28.0),
+              boxShadow: const [
                 BoxShadow(color: AppColors.cyan, spreadRadius: 1.0, blurRadius: 8.0),
               ],
             ),
@@ -162,6 +163,7 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
               mandatory: true,
               onChange: (value) {},
               hideLabel: true,
+              inputType: 'Email',
             ),
             TextFieldWidget(
               width: 128,
@@ -170,6 +172,7 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
               mandatory: true,
               onChange: (value) {},
               hideLabel: true,
+              inputType: 'Phone Number',
             ),
           ],
         ),

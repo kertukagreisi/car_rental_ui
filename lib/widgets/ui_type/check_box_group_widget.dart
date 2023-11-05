@@ -40,7 +40,7 @@ class _CheckBoxGroupWidgetState extends State<CheckBoxGroupWidget> {
   InputDecoration _buildDCheckBoxInputDecoration(String label) {
     const outlineInputBorder = OutlineInputBorder(
       borderSide: BorderSide(
-        color: AppColors.darkBlue,
+        color: AppColors.darkCyan,
       ),
     );
     return InputDecoration(

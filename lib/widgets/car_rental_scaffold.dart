@@ -1,19 +1,11 @@
 import 'package:car_rental_ui/shared/extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../resources/dimens.dart';
 import '../navigation/nav_extensions.dart';
 import '../navigation/nav_route.dart';
 import '../resources/app_colors.dart';
-import '../resources/images.dart';
-
-const _railIconSize = 56.0;
-const _railLabelSize = 192.0;
-const _railItemSelectedColor = Colors.white;
-const _railItemUnselectedColor = AppColors.darkCyan;
-const _railBackgroundSelectedColor = AppColors.darkCyan;
-const _railBackgroundUnselectedColor = Colors.white;
+import '../shared/flutter_secure_storage_service.dart';
 
 class CarRentalScaffold extends StatefulWidget {
   const CarRentalScaffold({
@@ -29,7 +21,7 @@ class CarRentalScaffold extends StatefulWidget {
 
 class _CarRentalScaffoldState extends State<CarRentalScaffold> {
   final _isRailExtended = ValueNotifier(false);
-  int? _railSelectedIndex;
+  int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -38,40 +30,35 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
 
   List<_NavigationElement> get _navElements => [
         _NavigationElement(
-          imagePath: Images.carIcon,
           label: 'Cars',
           route: NavRoute.home,
         ),
         _NavigationElement(
-          imagePath: Images.ownerIcon,
+          label: 'Bookings',
+          route: NavRoute.bookingsOverview,
+        ),
+        _NavigationElement(
           label: 'User',
           route: NavRoute.user,
         ),
       ];
 
-  int? _findRailSelectedIndex() {
-    var currentRoute = context.currentRoute;
-    var index = _navElements.indexWhere((navElement) => navElement.route?.path == currentRoute);
-    return index > -1 ? index : null;
-  }
-
   @override
   Widget build(BuildContext context) {
-    _railSelectedIndex = _findRailSelectedIndex();
     return Scaffold(
         appBar: _buildAppBar(context),
+        bottomNavigationBar: _buildBottomNavBar(context),
         body: Stack(
+          alignment: Alignment.topRight,
           children: [
             Row(
               children: [
                 Expanded(
                   child: widget.body,
                 ),
-                Container(
-                  child: _buildNavigationRail(),
-                ),
               ],
             ),
+            SizedBox(width: 120, child: _buildTopNavPopup()),
           ],
         ));
   }
@@ -97,98 +84,42 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
         toolbarHeight: 48.0,
       );
 
-  ValueListenableBuilder _buildNavigationRail() => ValueListenableBuilder<bool>(
+  ValueListenableBuilder _buildTopNavPopup() => ValueListenableBuilder<bool>(
       valueListenable: _isRailExtended,
       builder: (_, extended, __) {
         return _isRailExtended.value
-            ? NavigationRail(
-                minWidth: _railIconSize,
-                extended: extended,
-                labelType: NavigationRailLabelType.none,
-                selectedIndex: _railSelectedIndex,
-                destinations: [
-                  for (int i = 0; i < _navElements.length; i++) _buildRailDestination(extended, (i == _railSelectedIndex), _navElements[i])
-                ],
-                trailing: Expanded(
-                  child: Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          _buildTrailingWidget(
-                            extended,
-                            'Collapse',
-                            Images.collapseIcon,
-                            null,
-                            () {
-                              _isRailExtended.value = !_isRailExtended.value;
-                            },
-                          ),
-                          Dimens.smallSizedBox,
-                          _buildTrailingWidget(extended, 'Help', Images.helpIcon, null, null),
-                          Dimens.smallSizedBox,
-                        ],
-                      )),
+            ? Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4.0),
+                  color: Colors.white,
                 ),
-                onDestinationSelected: (index) {
-                  _railSelectedIndex = index;
-                  var navElement = _navElements[index];
-                  navElement.route?.let((route) => context.goNamedRoute(route));
-                },
+                padding: const EdgeInsets.all(8.0),
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    minimumSize: Size.zero,
+                    padding: EdgeInsets.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  onPressed: () async {
+                    _isRailExtended.value = false;
+                    await removeUserFromSecureStorage();
+                    if (context.mounted) {
+                      context.goNamedRoute(NavRoute.login);
+                    }
+                  },
+                  child: const Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(right: 4.0),
+                        child: Icon(Icons.logout, color: AppColors.darkCyan, size: 20),
+                      ),
+                      Text('Log Out', style: Dimens.smallHeadTextStyle),
+                    ],
+                  ),
+                ),
               )
             : const SizedBox.shrink();
       });
-
-  NavigationRailDestination _buildRailDestination(bool isExtended, bool isSelected, _NavigationElement element) => NavigationRailDestination(
-        icon: _buildRailIcon(isExtended, isSelected, element),
-        label: _buildRailLabel(isSelected, element.label),
-        padding: EdgeInsets.zero,
-      );
-
-  Widget _buildRailLabel(bool isSelected, String label) => DecoratedBox(
-        decoration: BoxDecoration(
-          color: isSelected ? _railBackgroundSelectedColor : _railBackgroundUnselectedColor,
-        ),
-        child: SizedBox(
-          width: _railLabelSize,
-          height: _railIconSize,
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              label,
-              overflow: TextOverflow.ellipsis,
-              style: Dimens.smallTextStyle.copyWith(color: isSelected ? _railItemSelectedColor : _railItemUnselectedColor),
-            ),
-          ),
-        ),
-      );
-
-  Widget _buildRailIcon(bool isExtended, bool isSelected, _NavigationElement element) {
-    Widget result = DecoratedBox(
-      decoration: BoxDecoration(
-        color: isSelected ? _railBackgroundSelectedColor : _railBackgroundUnselectedColor,
-      ),
-      child: SizedBox(
-        width: _railIconSize,
-        height: _railIconSize,
-        child: SvgPicture.asset(
-          element.imagePath,
-          colorFilter: ColorFilter.mode(isSelected ? _railItemSelectedColor : _railItemUnselectedColor, BlendMode.srcIn),
-          fit: BoxFit.scaleDown,
-          width: 16,
-          height: 16,
-        ),
-      ),
-    );
-
-    if (!isExtended) {
-      result = Tooltip(
-        message: element.label,
-        child: result,
-      );
-    }
-    return result;
-  }
 
   Widget _buildAppBarTitle() {
     return Builder(builder: (context) {
@@ -235,48 +166,39 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
     ];
   }
 
-  Widget _buildTrailingWidget(bool extended, String title, String iconPath, String? extendedIconPath, Function()? onTap) {
-    return SizedBox(
-      width: extended ? _railIconSize + _railLabelSize : _railIconSize,
-      child: GestureDetector(
-        onTap: onTap,
-        child: Row(
-          mainAxisAlignment: extended ? MainAxisAlignment.start : MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 10,
-              height: 10,
-              child: SvgPicture.asset(
-                extendedIconPath != null && extended ? extendedIconPath : iconPath,
-                fit: BoxFit.scaleDown,
-                width: 10,
-                height: 10,
-              ),
-            ),
-            extended
-                ? Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Text(
-                      title,
-                      style: Dimens.smallTextStyle,
-                    ),
-                  )
-                : Container(),
-          ],
+  BottomNavigationBar _buildBottomNavBar(BuildContext context) {
+    return BottomNavigationBar(
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home, size: 30),
+          label: 'Cars',
         ),
-      ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.list_alt_sharp, size: 30),
+          label: 'Bookings',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person, size: 30),
+          label: 'Profile',
+        ),
+      ],
+      currentIndex: _selectedIndex,
+      selectedItemColor: AppColors.darkCyan,
+      onTap: (index) {
+        _selectedIndex = index;
+        var navElement = _navElements[index];
+        navElement.route?.let((route) => context.goNamedRoute(route));
+      },
     );
   }
 }
 
 class _NavigationElement {
   _NavigationElement({
-    required this.imagePath,
     required this.label,
     this.route,
   });
 
-  final String imagePath;
   final String label;
   final NavRoute? route;
 }

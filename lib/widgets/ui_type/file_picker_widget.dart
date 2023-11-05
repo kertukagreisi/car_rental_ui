@@ -81,7 +81,7 @@ class _FilePickerWidgetState extends State<FilePickerWidget> {
     const outlineInputBorder = OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(2.0)),
       borderSide: BorderSide(
-        color: AppColors.darkBlue,
+        color: AppColors.darkCyan,
       ),
     );
     return InputDecoration(
@@ -121,7 +121,7 @@ class _FilePickerWidgetState extends State<FilePickerWidget> {
         );
       },
       separatorBuilder: (context, index) => const Divider(
-        color: AppColors.darkBlue,
+        color: AppColors.darkCyan,
       ),
       itemCount: files.length,
     );

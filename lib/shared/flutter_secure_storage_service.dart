@@ -10,6 +10,11 @@ Future<void> saveUserToSecureStorage(User user) async {
   await storage.write(key: 'user', value: userJson);
 }
 
+Future<void> removeUserFromSecureStorage() async {
+  const FlutterSecureStorage storage = FlutterSecureStorage();
+  await storage.delete(key: 'user');
+}
+
 // Retrieve a user object from secure storage
 Future<User?> getUserFromSecureStorage() async {
   const FlutterSecureStorage storage = FlutterSecureStorage();

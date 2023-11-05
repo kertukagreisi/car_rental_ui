@@ -53,7 +53,7 @@ class _RangeSliderWidgetState extends State<RangeSliderWidget> {
               max: widget.max,
               initialValue: RangeValues(defaultMinValue ?? widget.min, defaultMaxValue ?? widget.max),
               divisions: 10,
-              activeColor: AppColors.darkBlue,
+              activeColor: AppColors.darkCyan,
               inactiveColor: AppColors.lightBlue,
               decoration: _buildRangeSliderInputDecoration(widget.label),
               validator: (value) => widget.mandatory && value == null ? 'Field required' : null,
@@ -68,7 +68,7 @@ class _RangeSliderWidgetState extends State<RangeSliderWidget> {
     const outlineInputBorder = OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(2.0)),
       borderSide: BorderSide(
-        color: AppColors.darkBlue,
+        color: AppColors.darkCyan,
       ),
     );
     return InputDecoration(

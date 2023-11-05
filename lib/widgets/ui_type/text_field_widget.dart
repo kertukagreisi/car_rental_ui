@@ -1,4 +1,5 @@
 import 'package:car_rental_ui/resources/fonts.dart';
+import 'package:car_rental_ui/widgets/ui_type/regex.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -20,6 +21,7 @@ class TextFieldWidget extends StatelessWidget {
   final double height;
   final double? width;
   final bool? showLabel;
+  final String? inputType;
 
   const TextFieldWidget(
       {Key? key,
@@ -35,7 +37,8 @@ class TextFieldWidget extends StatelessWidget {
       this.hideLabel = false,
       this.width,
       this.height = 75.0,
-      this.showLabel})
+      this.showLabel,
+      this.inputType})
       : super(key: key);
 
   @override
@@ -57,7 +60,7 @@ class TextFieldWidget extends StatelessWidget {
             height: 20.0,
             child: Text(
               '$label ${mandatory ? ' *' : ''}',
-              style: const TextStyle(fontSize: 16.0, color: AppColors.darkBlue, fontFamily: Fonts.trajan),
+              style: const TextStyle(fontSize: 16.0, color: AppColors.darkCyan, fontFamily: Fonts.trajan),
             ),
           ),
         Dimens.smallSizedBox,
@@ -76,7 +79,7 @@ class TextFieldWidget extends StatelessWidget {
                   onChanged: onChange,
                   initialValue:
                       (allowOnlyNumbers != null && allowOnlyNumbers!) ? (initialValue != null ? initialValue.toString() : '') : initialValue,
-                  validator: (value) => mandatory && (value == null || value.isEmpty) ? 'Field required' : null,
+                  validator: (value) => _getValidator(value),
                   inputFormatters: formatters,
                 ),
               ),
@@ -91,7 +94,7 @@ class TextFieldWidget extends StatelessWidget {
     const outlineInputBorder = OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(2.0)),
       borderSide: BorderSide(
-        color: AppColors.darkBlue,
+        color: AppColors.darkCyan,
       ),
     );
 
@@ -108,5 +111,14 @@ class TextFieldWidget extends StatelessWidget {
       filled: (enabled != null && !(enabled!)) ? true : null,
       fillColor: (enabled != null && !(enabled!)) ? AppColors.lightBlue : null,
     );
+  }
+
+  String? _getValidator(String? value) {
+    if (inputType == 'Phone Number') {
+      return validateMobile(value ?? '');
+    } else if (inputType == 'Email') {
+      return validateEmail(value ?? '');
+    }
+    return mandatory && (value == null || value.isEmpty) ? 'Required' : null;
   }
 }

@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../model/Number.dart';
+import '../model/number.dart';
 
 class SqliteService {
   static Future<Database> initializeDB() async {
@@ -34,8 +34,7 @@ class SqliteService {
 
   static Future<void> insertNumber(int number) async {
     final db = await SqliteService.initializeDB();
-    Number numberToBeInserted =
-        Number(id: Number.getUniqueId(), number: number);
+    Number numberToBeInserted = Number(id: Number.getUniqueId(), number: number);
     await db.insert(
       'numbers',
       numberToBeInserted.toMap(),

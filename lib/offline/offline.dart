@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 
-import '../model/Number.dart';
+import '../model/number.dart';
 import '../shared/sqlite_service.dart';
 
 class Offline extends StatefulWidget {
@@ -18,7 +18,7 @@ class _OfflineState extends State<Offline> {
   Widget build(BuildContext context) {
     List<Number> numbers = [];
 
-    _getNumbers() async {
+    getNumbers() async {
       log('Get all numbers from database');
       List<Number>? allNumbers = await SqliteService.getNumbers();
       setState(() {
@@ -26,7 +26,7 @@ class _OfflineState extends State<Offline> {
       });
     }
 
-    _insertNumber() async {
+    insertNumber() async {
       log('Insert a number in the database');
       int number;
       if (numbers.isEmpty) {
@@ -35,19 +35,19 @@ class _OfflineState extends State<Offline> {
         number = numbers[numbers.length - 1].number + 1;
       }
       await SqliteService.insertNumber(number);
-      _getNumbers();
+      getNumbers();
     }
 
-    _deleteNumber(String id) async {
+    deleteNumber(String id) async {
       log('Delete a number from the database');
       await SqliteService.deleteNumber(id);
-      _getNumbers();
+      getNumbers();
     }
 
-    _updateNumber(Number number) async {
+    updateNumber(Number number) async {
       log('Update a number in the database');
       await SqliteService.updateNumber(number);
-      _getNumbers();
+      getNumbers();
     }
 
     return Scaffold(
@@ -102,7 +102,7 @@ class _OfflineState extends State<Offline> {
                                       trailing: IconButton(
                                         icon: const Icon(Icons.delete_forever),
                                         onPressed: () async {
-                                          await _deleteNumber(numbers[index].id);
+                                          await deleteNumber(numbers[index].id);
                                         },
                                       ),
                                     ),
@@ -116,7 +116,7 @@ class _OfflineState extends State<Offline> {
                                 child: ElevatedButton(
                                   child: const Text('Get all numbers'),
                                   onPressed: () async {
-                                    await _getNumbers();
+                                    await getNumbers();
                                   },
                                 ),
                               ),
@@ -125,7 +125,7 @@ class _OfflineState extends State<Offline> {
                                 child: ElevatedButton(
                                   child: const Text('Add'),
                                   onPressed: () async {
-                                    await _insertNumber();
+                                    await insertNumber();
                                   },
                                 ),
                               ),

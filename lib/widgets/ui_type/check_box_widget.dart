@@ -42,13 +42,13 @@ class _SingleCheckBoxWidgetState extends State<SingleCheckBoxWidget> {
               name: widget.label,
               title: Text(
                 widget.label,
-                style: TextStyle(fontSize: 14.0, fontFamily: Fonts.trajan, fontWeight: FontWeight.values[3], color: AppColors.darkBlue),
+                style: TextStyle(fontSize: 14.0, fontFamily: Fonts.trajan, fontWeight: FontWeight.values[3], color: AppColors.darkCyan),
               ),
               // decoration: _buildDCheckBoxInputDecoration(widget.label),
               onChanged: widget.onChange,
               initialValue: widget.initialValue,
               side: MaterialStateBorderSide.resolveWith(
-                (states) => const BorderSide(color: AppColors.darkBlue),
+                (states) => const BorderSide(color: AppColors.darkCyan),
               ),
             ),
           ),

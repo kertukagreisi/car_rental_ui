@@ -6,10 +6,11 @@ import 'package:car_rental_ui/resources/dimens.dart';
 import 'package:car_rental_ui/shared/locator.dart';
 import 'package:car_rental_ui/shared/mvvm/view_model_widgets.dart';
 import 'package:car_rental_ui/widgets/car_carousel_widget.dart';
-import 'package:car_rental_ui/widgets/text_container.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
+import '../../resources/images.dart';
 import '../../shared/flutter_secure_storage_service.dart';
 import '../../widgets/car_card_widget.dart';
 import 'home_view_model.dart';
@@ -35,7 +36,6 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
                   options: CarouselOptions(
                     height: 250,
                     viewportFraction: 300 / MediaQuery.of(context).size.width,
-                    enlargeCenterPage: true,
                     autoPlay: true,
                   ),
                   items: viewModel.cars.where((car) => car.averageRating! >= 4.0).map((car) {
@@ -114,10 +114,10 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
               child: Wrap(
                 spacing: 8.0,
                 runSpacing: 12.0,
-                children: [Brand.BMW, Brand.VOLKSWAGEN, Brand.MERCEDES_BENZ, Brand.AUDI]
+                children: [Brand.AUDI, Brand.MERCEDES_BENZ, Brand.BMW, Brand.FORD, Brand.TOYOTA, Brand.VOLKSWAGEN]
                     .map(
                       (brand) => Padding(
-                        padding: const EdgeInsets.only(right: 4.0),
+                        padding: const EdgeInsets.only(right: 6.0),
                         child: TextButton(
                           style: TextButton.styleFrom(
                             minimumSize: Size.zero,
@@ -127,11 +127,7 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
                           onPressed: () {
                             viewModel.addBrandFilter = brand;
                           },
-                          child: TextContainer(
-                              text: brand.value,
-                              textColor: Colors.black,
-                              backgroundColor: viewModel.brandFiltersValues.contains(brand) ? AppColors.lightPurple : AppColors.lightGray,
-                              fontWeight: FontWeight.w300),
+                          child: _getIconButtonForBrand(brand, viewModel.brandFiltersValues.contains(brand)),
                         ),
                       ),
                     )
@@ -157,6 +153,7 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
                           }
                         }
                       },
+                      width: _getWidth(context),
                     ),
                   ),
                 ],
@@ -171,5 +168,124 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
   @override
   HomeViewModel viewModelBuilder() {
     return getIt.get<HomeViewModel>();
+  }
+
+  Widget _getIconButtonForBrand(Brand brand, bool isActive) {
+    switch (brand) {
+      case Brand.AUDI:
+        return Container(
+          width: 60,
+          height: 40,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4.0),
+            color: isActive ? AppColors.darkCyan : AppColors.lightGray,
+          ),
+          padding: const EdgeInsets.all(4.0),
+          child: ColorFiltered(
+            colorFilter: ColorFilter.mode(isActive ? Colors.white : AppColors.darkCyan, BlendMode.srcIn),
+            child: SvgPicture.asset(
+              Images.audiIcon,
+            ),
+          ),
+        );
+      case Brand.MERCEDES_BENZ:
+        return Container(
+          width: 40,
+          height: 40,
+          padding: const EdgeInsets.all(4.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4.0),
+            color: isActive ? AppColors.darkCyan : AppColors.lightGray,
+          ),
+          child: ColorFiltered(
+            colorFilter: ColorFilter.mode(isActive ? Colors.white : AppColors.darkCyan, BlendMode.srcIn),
+            child: SvgPicture.asset(
+              Images.benzIcon,
+            ),
+          ),
+        );
+      case Brand.BMW:
+        return Container(
+          width: 40,
+          height: 40,
+          padding: const EdgeInsets.all(4.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4.0),
+            color: isActive ? AppColors.darkCyan : AppColors.lightGray,
+          ),
+          child: ColorFiltered(
+            colorFilter: ColorFilter.mode(isActive ? Colors.white : AppColors.darkCyan, BlendMode.srcIn),
+            child: SvgPicture.asset(
+              Images.bmwIcon,
+            ),
+          ),
+        );
+      case Brand.FORD:
+        return Container(
+          width: 65,
+          height: 40,
+          padding: const EdgeInsets.all(4.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4.0),
+            color: isActive ? AppColors.darkCyan : AppColors.lightGray,
+          ),
+          child: ColorFiltered(
+            colorFilter: ColorFilter.mode(isActive ? Colors.white : AppColors.darkCyan, BlendMode.srcIn),
+            child: SvgPicture.asset(
+              Images.fordIcon,
+            ),
+          ),
+        );
+      case Brand.TOYOTA:
+        return Container(
+          width: 40,
+          height: 40,
+          padding: const EdgeInsets.all(4.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4.0),
+            color: isActive ? AppColors.darkCyan : AppColors.lightGray,
+          ),
+          child: ColorFiltered(
+            colorFilter: ColorFilter.mode(isActive ? Colors.white : AppColors.darkCyan, BlendMode.srcIn),
+            child: SvgPicture.asset(
+              Images.toyotaIcon,
+            ),
+          ),
+        );
+      case Brand.VOLKSWAGEN:
+        return Container(
+          width: 40,
+          height: 40,
+          padding: const EdgeInsets.all(4.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4.0),
+            color: isActive ? AppColors.darkCyan : AppColors.lightGray,
+          ),
+          child: ColorFiltered(
+            colorFilter: ColorFilter.mode(isActive ? Colors.white : AppColors.darkCyan, BlendMode.srcIn),
+            child: SvgPicture.asset(
+              Images.volkswagenIcon,
+            ),
+          ),
+        );
+      default:
+        return const SizedBox.shrink();
+    }
+  }
+
+  double _getWidth(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
+    if (screenWidth < 300) {
+      return screenWidth;
+    } else if (screenWidth >= 300 && screenWidth < 600) {
+      return MediaQuery.of(context).size.width / 2 - 20;
+    } else if (screenWidth >= 600 && screenWidth < 850) {
+      return MediaQuery.of(context).size.width / 3 - 30;
+    } else if (screenWidth >= 850 && screenWidth < 1200) {
+      return MediaQuery.of(context).size.width / 4 - 40;
+    } else if (screenWidth >= 1200) {
+      return MediaQuery.of(context).size.width / 5 - 50;
+    }
+    return MediaQuery.of(context).size.width / 2 - 20;
   }
 }

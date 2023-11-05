@@ -50,7 +50,7 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
     const outlineInputBorder = OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(2.0)),
       borderSide: BorderSide(
-        color: AppColors.darkBlue,
+        color: AppColors.darkCyan,
       ),
     );
     return InputDecoration(
