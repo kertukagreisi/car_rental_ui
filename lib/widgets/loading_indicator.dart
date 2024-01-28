@@ -6,7 +6,7 @@ const _progressIndicatorSize = 80.0;
 const _strokeWidth = 6.0;
 
 class LoadingIndicator extends StatelessWidget {
-  const LoadingIndicator({Key? key}) : super(key: key);
+  const LoadingIndicator({super.key});
 
   @override
   Widget build(BuildContext context) {

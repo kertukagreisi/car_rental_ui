@@ -15,8 +15,8 @@ class CheckBoxGroupWidget extends StatefulWidget {
     required this.mandatory,
     required this.onChange,
     required this.labels,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<CheckBoxGroupWidget> createState() => _CheckBoxGroupWidgetState();

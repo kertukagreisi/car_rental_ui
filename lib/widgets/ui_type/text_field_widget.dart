@@ -24,7 +24,7 @@ class TextFieldWidget extends StatelessWidget {
   final String? inputType;
 
   const TextFieldWidget(
-      {Key? key,
+      {super.key,
       required this.label,
       required this.mandatory,
       required this.onChange,
@@ -38,8 +38,7 @@ class TextFieldWidget extends StatelessWidget {
       this.width,
       this.height = 75.0,
       this.showLabel,
-      this.inputType})
-      : super(key: key);
+      this.inputType});
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +59,7 @@ class TextFieldWidget extends StatelessWidget {
             height: 20.0,
             child: Text(
               '$label ${mandatory ? ' *' : ''}',
-              style: const TextStyle(fontSize: 16.0, color: AppColors.darkCyan, fontFamily: Fonts.trajan),
+              style: const TextStyle(fontSize: 16.0, color: AppColors.darkCyan, fontFamily: Fonts.openSans),
             ),
           ),
         Dimens.smallSizedBox,

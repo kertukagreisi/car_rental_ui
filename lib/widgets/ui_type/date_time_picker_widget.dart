@@ -16,8 +16,8 @@ class DateTimePickerWidget extends StatefulWidget {
     required this.mandatory,
     required this.onChange,
     this.toolTip,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<DateTimePickerWidget> createState() => _DateTimePickerWidgetState();

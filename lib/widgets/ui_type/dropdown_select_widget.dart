@@ -16,7 +16,7 @@ class DropDownSelectWidget extends StatefulWidget {
   final bool? showLabel;
 
   const DropDownSelectWidget({
-    Key? key,
+    super.key,
     required this.label,
     required this.items,
     required this.onDropDownChange,
@@ -25,7 +25,7 @@ class DropDownSelectWidget extends StatefulWidget {
     this.initialValue,
     this.enabled,
     this.showLabel,
-  }) : super(key: key);
+  });
 
   @override
   State<DropDownSelectWidget> createState() => _DropDownSelectWidgetState();
@@ -46,7 +46,7 @@ class _DropDownSelectWidgetState extends State<DropDownSelectWidget> {
                 height: 20.0,
                 child: Text(
                   '${widget.label} ${widget.mandatory ? ' *' : ''}',
-                  style: const TextStyle(fontSize: 16.0, color: AppColors.darkCyan, fontFamily: Fonts.trajan),
+                  style: const TextStyle(fontSize: 16.0, color: AppColors.darkCyan, fontFamily: Fonts.openSans),
                 ),
               ),
             if (widget.showLabel ?? false) Dimens.smallSizedBox,

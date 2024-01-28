@@ -21,9 +21,9 @@ class DatePickerWidget extends StatefulWidget {
     required this.onChange,
     this.toolTip,
     this.startsFromToday,
-    Key? key,
+    super.key,
     this.initialValue,
-  }) : super(key: key);
+  });
 
   @override
   State<DatePickerWidget> createState() => _DatePickerWidgetState();

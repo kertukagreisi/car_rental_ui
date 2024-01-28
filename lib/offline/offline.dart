@@ -44,15 +44,18 @@ class _OfflineState extends State<Offline> {
       getNumbers();
     }
 
-    updateNumber(Number number) async {
+    /*
+    Method not used
+     updateNumber(Number number) async {
       log('Update a number in the database');
       await SqliteService.updateNumber(number);
       getNumbers();
     }
+    */
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Offline App"),
+        title: const Text('Offline App'),
       ),
       body: OfflineBuilder(
         connectivityBuilder: (

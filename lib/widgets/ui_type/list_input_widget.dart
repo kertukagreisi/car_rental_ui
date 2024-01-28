@@ -14,13 +14,13 @@ class ListInputWidget extends StatefulWidget {
   final List<String>? initialValue;
 
   const ListInputWidget({
-    Key? key,
+    super.key,
     required this.label,
     required this.mandatory,
     required this.onChange,
     this.disabled,
     this.initialValue,
-  }) : super(key: key);
+  });
 
   @override
   State<ListInputWidget> createState() => _ListInputWidgetState();
@@ -83,7 +83,7 @@ class _ListInputWidgetState extends State<ListInputWidget> {
                   height: 40.0,
                   child: FormBuilderTextField(
                     style: const TextStyle(
-                      fontFamily: Fonts.trajan,
+                      fontFamily: Fonts.openSans,
                     ),
                     enabled: (widget.disabled == true) ? false : true,
                     initialValue: '',

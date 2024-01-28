@@ -11,14 +11,14 @@ class TextContainer extends StatelessWidget {
   final double? fontSize;
 
   const TextContainer({
-    Key? key,
+    super.key,
     required this.text,
     required this.textColor,
     required this.backgroundColor,
     required this.fontWeight,
     this.border,
     this.fontSize,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

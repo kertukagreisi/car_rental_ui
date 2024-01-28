@@ -20,8 +20,8 @@ class SingleCheckBoxWidget extends StatefulWidget {
     this.toolTip,
     this.initialValue,
     this.enabled,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<SingleCheckBoxWidget> createState() => _SingleCheckBoxWidgetState();
@@ -42,7 +42,7 @@ class _SingleCheckBoxWidgetState extends State<SingleCheckBoxWidget> {
               name: widget.label,
               title: Text(
                 widget.label,
-                style: TextStyle(fontSize: 14.0, fontFamily: Fonts.trajan, fontWeight: FontWeight.values[3], color: AppColors.darkCyan),
+                style: TextStyle(fontSize: 14.0, fontFamily: Fonts.openSans, fontWeight: FontWeight.values[3], color: AppColors.darkCyan),
               ),
               // decoration: _buildDCheckBoxInputDecoration(widget.label),
               onChanged: widget.onChange,

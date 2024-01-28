@@ -18,8 +18,8 @@ class SwitchWidget extends StatefulWidget {
     this.toolTip,
     this.initialValue,
     this.noSizeConstraints,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<SwitchWidget> createState() => _SwitchWidgetState();

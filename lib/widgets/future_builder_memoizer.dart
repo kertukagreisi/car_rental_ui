@@ -5,12 +5,12 @@ import 'package:flutter/cupertino.dart';
 /// async operation until requested for refresh.
 class FutureBuilderMemoizer<T> extends StatefulWidget {
   const FutureBuilderMemoizer({
-    Key? key,
+    super.key,
     this.initialData,
     this.refreshInstance,
     required this.future,
     required this.builder,
-  }) : super(key: key);
+  });
 
   final Future<T> Function() future;
   final AsyncWidgetBuilder<T> builder;

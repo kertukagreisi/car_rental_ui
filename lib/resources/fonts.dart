@@ -1,6 +1,7 @@
 class Fonts {
   const Fonts._();
-
-  static const trajanHead = 'TrajanPro_Bold.ttf';
-  static const trajan = 'TrajanPro';
+  static const openSansHead = 'OpenSans-Bold.ttf';
+  static const openSans = 'OpenSans-Regular.ttf';
+  static const trajanHead = 'TrajanPro.ttf';
+  static const trajan = 'TrajanPro-Bold.tff';
 }

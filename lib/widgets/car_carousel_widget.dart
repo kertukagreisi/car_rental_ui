@@ -12,10 +12,10 @@ class CarCarouselWidget extends StatelessWidget {
   final Function(int jobcardId) onCarCardItemClick;
 
   const CarCarouselWidget({
-    Key? key,
+    super.key,
     required this.car,
     required this.onCarCardItemClick,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

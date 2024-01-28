@@ -17,8 +17,8 @@ class FilePickerWidget extends StatefulWidget {
     required this.onChange,
     this.toolTip,
     this.allowMultiple,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<FilePickerWidget> createState() => _FilePickerWidgetState();

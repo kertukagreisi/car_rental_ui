@@ -13,13 +13,13 @@ class TextAreaWidget extends StatelessWidget {
   final String? initialValue;
 
   const TextAreaWidget({
-    Key? key,
+    super.key,
     required this.label,
     required this.mandatory,
     required this.onChange,
     this.disabled,
     this.initialValue,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class TextAreaWidget extends StatelessWidget {
           Expanded(
             child: FormBuilderTextField(
               style: const TextStyle(
-                fontFamily: Fonts.trajan,
+                fontFamily: Fonts.openSans,
               ),
               enabled: (disabled == true) ? false : true,
               minLines: 3,

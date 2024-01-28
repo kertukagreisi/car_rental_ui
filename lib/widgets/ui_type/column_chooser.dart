@@ -6,7 +6,7 @@ class ColumnChooser extends StatefulWidget {
   final Function(List<String>) onSubmit;
   final List<String> selectedItems;
 
-  const ColumnChooser({Key? key, required this.items, required this.onSubmit, required this.selectedItems}) : super(key: key);
+  const ColumnChooser({super.key, required this.items, required this.onSubmit, required this.selectedItems});
 
   @override
   State<StatefulWidget> createState() => _ColumnChooserState();

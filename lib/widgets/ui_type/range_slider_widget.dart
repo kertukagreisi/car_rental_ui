@@ -21,8 +21,8 @@ class RangeSliderWidget extends StatefulWidget {
     required this.max,
     this.initialValue,
     this.toolTip,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<RangeSliderWidget> createState() => _RangeSliderWidgetState();
@@ -33,7 +33,8 @@ class _RangeSliderWidgetState extends State<RangeSliderWidget> {
   Widget build(BuildContext context) {
     double? defaultMinValue;
     double? defaultMaxValue;
-    List<String>? ranges = widget.initialValue != null ? widget.initialValue?.split('-') : [];
+    List<String>? ranges =
+        widget.initialValue != null ? widget.initialValue?.split('-') : [];
 
     if (ranges != null && ranges.isNotEmpty && ranges.length == 2) {
       defaultMinValue = double.parse(ranges[0].trim());
@@ -51,12 +52,14 @@ class _RangeSliderWidgetState extends State<RangeSliderWidget> {
               name: widget.label,
               min: widget.min,
               max: widget.max,
-              initialValue: RangeValues(defaultMinValue ?? widget.min, defaultMaxValue ?? widget.max),
+              initialValue: RangeValues(
+                  defaultMinValue ?? widget.min, defaultMaxValue ?? widget.max),
               divisions: 10,
               activeColor: AppColors.darkCyan,
               inactiveColor: AppColors.lightBlue,
               decoration: _buildRangeSliderInputDecoration(widget.label),
-              validator: (value) => widget.mandatory && value == null ? 'Field required' : null,
+              validator: (value) =>
+                  widget.mandatory && value == null ? 'Field required' : null,
             ),
           ),
         ],
@@ -76,7 +79,8 @@ class _RangeSliderWidgetState extends State<RangeSliderWidget> {
       labelStyle: Dimens.extraSmallTextStyle,
       floatingLabelStyle: Dimens.extraSmallTextStyle,
       floatingLabelBehavior: FloatingLabelBehavior.always,
-      errorStyle: const TextStyle(fontSize: 9, backgroundColor: AppColors.lightBlue),
+      errorStyle:
+          const TextStyle(fontSize: 9, backgroundColor: AppColors.lightBlue),
       errorMaxLines: 1,
       enabledBorder: outlineInputBorder,
       focusedBorder: outlineInputBorder,

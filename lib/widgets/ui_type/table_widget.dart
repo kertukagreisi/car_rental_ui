@@ -16,13 +16,13 @@ class TableWidget extends StatefulWidget {
   final List<dynamic>? initialValue;
 
   const TableWidget({
-    Key? key,
+    super.key,
     required this.label,
     required this.columns,
     required this.mandatory,
     required this.onChange,
     this.initialValue,
-  }) : super(key: key);
+  });
 
   @override
   State<TableWidget> createState() => _TableWidgetState();

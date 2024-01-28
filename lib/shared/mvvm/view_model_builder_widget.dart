@@ -11,10 +11,9 @@ class ViewModelBuilderWidget<T extends ViewModel> extends StatefulWidget {
     required this.viewModelBuilder,
     required this.builder,
     this.disposeViewModel = true,
-    Key? key,
+    super.key,
   })  : staticChildBuilder = null,
-        _rebuildOnChange = false,
-        super(key: key);
+        _rebuildOnChange = false;
 
   /// Use to construct a widget that is going to rebuild when [ViewModel.notifyListeners] is called.
   /// The widget returned from the [builder] function is the one that is going to be rebuild.
@@ -24,9 +23,8 @@ class ViewModelBuilderWidget<T extends ViewModel> extends StatefulWidget {
     required this.builder,
     this.staticChildBuilder,
     this.disposeViewModel = true,
-    Key? key,
-  })  : _rebuildOnChange = true,
-        super(key: key);
+    super.key,
+  })  : _rebuildOnChange = true;
 
   /// {@template viewModelBuilder_doc}
   ///

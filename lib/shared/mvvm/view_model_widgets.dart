@@ -6,7 +6,7 @@ import 'view_model_builder_widget.dart';
 
 /// A widget that wraps the [ViewModelBuilderWidget] class in a less boiler plate usage.
 abstract class ViewModelWidget<T extends ViewModel> extends StatelessWidget {
-  const ViewModelWidget({Key? key}) : super(key: key);
+  const ViewModelWidget({super.key});
 
   /// Indicates if the [builder] function should be called when [ViewModel.notifyListeners] is called.
   ///
@@ -57,7 +57,7 @@ abstract class ViewModelWidget<T extends ViewModel> extends StatelessWidget {
 /// A widget that wraps the [ViewModelBuilderWidget] class and uses the [Selector] widget internally to respond to changes in the viewModel.
 abstract class ViewModelSelectorWidget<T extends ViewModel, S>
     extends StatelessWidget {
-  const ViewModelSelectorWidget({Key? key}) : super(key: key);
+  const ViewModelSelectorWidget({super.key});
 
   /// {@macro disposeViewModel_doc}
   @protected

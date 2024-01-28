@@ -36,48 +36,48 @@ class Dimens {
   static const lightTitleTextStyle = TextStyle(
     color: Colors.white,
     fontSize: 18,
-    fontFamily: Fonts.trajanHead,
+    fontFamily: Fonts.openSansHead,
     fontWeight: FontWeight.normal,
   );
 
   static const headTextStyle = TextStyle(
     color: AppColors.darkCyan,
     fontSize: 24,
-    fontFamily: Fonts.trajanHead,
+    fontFamily: Fonts.openSansHead,
     fontWeight: FontWeight.bold,
   );
 
   static const screenTitleStyle = TextStyle(
     color: AppColors.lightGray,
     fontSize: 24,
-    fontFamily: Fonts.trajanHead,
+    fontFamily: Fonts.openSansHead,
   );
 
   static const extraSmallHeadTextStyle = TextStyle(
     color: AppColors.darkCyan,
     fontSize: 12,
-    fontFamily: Fonts.trajanHead,
+    fontFamily: Fonts.openSansHead,
     fontWeight: FontWeight.bold,
   );
 
   static const smallHeadTextStyle = TextStyle(
     color: AppColors.darkCyan,
     fontSize: 14,
-    fontFamily: Fonts.trajanHead,
+    fontFamily: Fonts.openSansHead,
     fontWeight: FontWeight.bold,
   );
 
   static const mediumHeadTextStyle = TextStyle(
     color: AppColors.darkCyan,
     fontSize: 16,
-    fontFamily: Fonts.trajanHead,
+    fontFamily: Fonts.openSansHead,
     fontWeight: FontWeight.bold,
   );
 
   static const mediumTextStyle = TextStyle(
     color: AppColors.darkCyan,
     fontSize: 16,
-    fontFamily: Fonts.trajan,
+    fontFamily: Fonts.openSans,
     fontWeight: FontWeight.normal,
     letterSpacing: 0.01 * 16,
   );
@@ -85,28 +85,28 @@ class Dimens {
   static const smallTextStyle = TextStyle(
     color: AppColors.darkCyan,
     fontSize: 14,
-    fontFamily: Fonts.trajan,
+    fontFamily: Fonts.openSans,
     fontWeight: FontWeight.normal,
   );
 
   static const extraSmallTextStyle = TextStyle(
     color: AppColors.darkCyan,
     fontSize: 12,
-    fontFamily: Fonts.trajan,
+    fontFamily: Fonts.openSans,
     fontWeight: FontWeight.normal,
   );
 
   static const radioLabelTextStyle = TextStyle(
     color: AppColors.gray,
     fontSize: 10,
-    fontFamily: Fonts.trajan,
+    fontFamily: Fonts.openSans,
     fontWeight: FontWeight.normal,
   );
 
   static const titleTextStyle = TextStyle(
     color: AppColors.darkCyan,
     fontSize: 18,
-    fontFamily: Fonts.trajanHead,
+    fontFamily: Fonts.openSansHead,
     fontWeight: FontWeight.normal,
   );
 }

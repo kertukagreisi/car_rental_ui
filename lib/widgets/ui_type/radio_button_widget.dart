@@ -19,8 +19,8 @@ class RadioButtonWidget extends StatefulWidget {
     required this.labels,
     this.toolTip,
     this.initialValue,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<RadioButtonWidget> createState() => _RadioButtonWidgetState();

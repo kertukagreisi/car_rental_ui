@@ -5,14 +5,14 @@ import 'package:car_rental_ui/shared/extensions.dart';
 import 'package:car_rental_ui/shared/globals.dart';
 import 'package:car_rental_ui/shared/locator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logging/logging.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setPathUrlStrategy();
-  await dotenv.load();
+  //comment this out when testing locally
+  //await dotenv.load();
   setupLogger();
   setupLocator();
   runApp(CarRentalApp());
@@ -36,8 +36,10 @@ class CarRentalApp extends StatelessWidget {
         primaryColor: AppColors.darkCyan,
         shadowColor: AppColors.gray,
         hoverColor: AppColors.lightBlue,
-        snackBarTheme:
-            SnackBarThemeData(backgroundColor: AppColors.lightGray, contentTextStyle: Dimens.smallTextStyle.copyWith(color: AppColors.green)),
+        snackBarTheme: SnackBarThemeData(
+            backgroundColor: AppColors.lightGray,
+            contentTextStyle:
+                Dimens.smallTextStyle.copyWith(color: AppColors.green)),
       ),
     );
   }
@@ -45,5 +47,6 @@ class CarRentalApp extends StatelessWidget {
 
 void setupLogger() {
   Logger.root.level = Level.FINE;
-  Logger.root.onRecord.listen((record) => debugPrint('${record.loggerName} ${record.level.name} ${record.time} ${record.message}'));
+  Logger.root.onRecord.listen((record) => debugPrint(
+      '${record.loggerName} ${record.level.name} ${record.time} ${record.message}'));
 }
