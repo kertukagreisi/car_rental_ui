@@ -4,55 +4,70 @@ import 'package:car_rental_ui/page/user/user_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../page/book/book_page.dart';
+import '../page/car-details/car_details_page.dart';
 import '../page/home/home_page.dart';
 import '../page/login/login_page.dart';
 import '../page/page_not_found/page_not_found.dart';
+import '../page/rent/rent_page.dart';
+import '../shared/auth_service.dart';
+import '../shared/helpers.dart';
+import '../shared/locator.dart';
 import '../widgets/car_rental_scaffold.dart';
 import 'nav_route.dart';
 
 class NavController {
-  late final GoRouter _router = GoRouter(debugLogDiagnostics: true, initialLocation: NavRoute.home.path, errorPageBuilder: _pageBuilder, routes: [
-    ShellRoute(
-      builder: (_, __, child) => CarRentalScaffold(body: child),
+  late final GoRouter _router = GoRouter(
+      debugLogDiagnostics: true,
+      initialLocation: NavRoute.home.path,
+      errorPageBuilder: _pageBuilder,
       routes: [
-        GoRoute(
-          path: NavRoute.home.path,
-          name: NavRoute.home.name,
-          pageBuilder: _pageBuilder,
-        ),
-        GoRoute(
-          path: NavRoute.book.path,
-          name: NavRoute.book.name,
-          pageBuilder: _pageBuilder,
-        ),
-        GoRoute(
-          path: NavRoute.bookingsOverview.path,
-          name: NavRoute.bookingsOverview.name,
-          pageBuilder: _pageBuilder,
-        ),
-        GoRoute(
-          path: NavRoute.user.path,
-          name: NavRoute.user.name,
-          pageBuilder: _pageBuilder,
-        ),
-        GoRoute(
-          path: NavRoute.login.path,
-          name: NavRoute.login.name,
-          pageBuilder: _pageBuilder,
-        ),
-        GoRoute(
-          path: NavRoute.pageNotFound.path,
-          name: NavRoute.pageNotFound.name,
-          pageBuilder: _pageBuilder,
+        ShellRoute(
+          builder: (_, __, child) => CarRentalScaffold(body: child),
+          routes: [
+            GoRoute(
+              path: NavRoute.home.path,
+              name: NavRoute.home.name,
+              pageBuilder: _pageBuilder,
+            ),
+            GoRoute(
+              path: NavRoute.carDetails.path,
+              name: NavRoute.carDetails.name,
+              pageBuilder: _pageBuilder,
+            ),
+            GoRoute(
+              path: NavRoute.rent.path,
+              name: NavRoute.rent.name,
+              pageBuilder: _pageBuilder,
+            ),
+            GoRoute(
+              path: NavRoute.bookingsOverview.path,
+              name: NavRoute.bookingsOverview.name,
+              pageBuilder: _pageBuilder,
+            ),
+            GoRoute(
+              path: NavRoute.user.path,
+              name: NavRoute.user.name,
+              pageBuilder: _pageBuilder,
+            ),
+            GoRoute(
+              path: NavRoute.login.path,
+              name: NavRoute.login.name,
+              pageBuilder: _pageBuilder,
+            ),
+            GoRoute(
+              path: NavRoute.pageNotFound.path,
+              name: NavRoute.pageNotFound.name,
+              pageBuilder: _pageBuilder,
+            ),
+          ],
         ),
       ],
-    ),
-  ]);
+      redirect: (context, state) => _guard(context, state));
 
   GoRouter get router => _router;
 
-  Page<void> _pageBuilder(BuildContext context, GoRouterState state) => NoTransitionPage<void>(
+  Page<void> _pageBuilder(BuildContext context, GoRouterState state) =>
+      NoTransitionPage<void>(
         key: state.pageKey,
         restorationId: state.pageKey.value,
         child: _getPageByName(state.name ?? NavRoute.pageNotFound.name, state),
@@ -60,13 +75,16 @@ class NavController {
 
   Widget _getPageByName(String pageName, GoRouterState state) {
     var navRoute = NavRoute.values.byName(pageName);
+    final args = state.uri.queryParameters;
+    final extra = state.extra;
     switch (navRoute) {
       case NavRoute.home:
         return const HomePage();
-      case NavRoute.book:
-        final args = state.uri.queryParameters;
-        final extra = state.extra;
-        return BookPage(args: args, carFromExtraParameters: extra as Car?);
+      case NavRoute.carDetails:
+        return CarDetailsPage(
+            args: args, carFromExtraParameters: extra as Car?);
+      case NavRoute.rent:
+        return RentPage(args: args, carFromExtraParameters: extra as Car?);
       case NavRoute.user:
         return const UserPage();
       case NavRoute.bookingsOverview:
@@ -77,5 +95,30 @@ class NavController {
       default:
         return const PageNotFound();
     }
+  }
+
+  Future<String> _guard(BuildContext context, GoRouterState state) async {
+    final authService = getIt<AuthService>();
+    final isLoggedIn = await authService.isAuthenticated.first;
+    if (noAuthRoutes.contains(state.uri.path)) {
+      return _getFullPath(state);
+    }
+    // Redirect to login if not authenticated (except login route)
+    else if (!isLoggedIn && state.uri.path != NavRoute.login.path) {
+      return NavRoute.login.path;
+    }
+    //Redirect to home if user is authenticated and tries to go to login
+    else if (isLoggedIn && state.uri.path == NavRoute.login.path) {
+      return NavRoute.home.path;
+    } else {
+      return _getFullPath(state);
+    }
+  }
+
+  Future<String> _getFullPath(GoRouterState state) async {
+    if (state.uri.queryParameters.isNotEmpty) {
+      return Future.value('${state.uri.path}?${state.uri.query}');
+    }
+    return Future.value(state.uri.path);
   }
 }

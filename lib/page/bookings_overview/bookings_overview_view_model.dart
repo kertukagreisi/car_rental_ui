@@ -1,7 +1,8 @@
 import 'package:car_rental_ui/api-client/api_client.dart';
 import 'package:car_rental_ui/generated_code/lib/api.dart';
 
-import '../../shared/flutter_secure_storage_service.dart';
+import '../../shared/auth_service.dart';
+import '../../shared/locator.dart';
 import '../../shared/mvvm/view_model.dart';
 
 class BookingsOverviewViewModel extends ViewModel {
@@ -19,7 +20,9 @@ class BookingsOverviewViewModel extends ViewModel {
   }
 
   Future<void> loadData() async {
-    user = (await getUserFromSecureStorage())!;
-    bookings = (await CarRentalApi.bookingEndpointApi.bookingsUserUserIdGet(user.id!))!;
+    final authService = getIt<AuthService>();
+    user = authService.user!;
+    bookings = (await CarRentalApi.bookingEndpointApi
+        .bookingsUserUserIdGet(user.id!))!;
   }
 }

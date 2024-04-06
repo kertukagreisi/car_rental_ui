@@ -32,6 +32,12 @@ class Dimens {
   static const fontSizeMedium = 16.0;
   static const tooltipSize = 20.0;
 
+  static ButtonStyle clearButtonStyle = TextButton.styleFrom(
+    minimumSize: Size.zero,
+    padding: EdgeInsets.zero,
+    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+  );
+
   // text styles
   static const lightTitleTextStyle = TextStyle(
     color: Colors.white,

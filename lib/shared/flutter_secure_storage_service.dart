@@ -3,22 +3,22 @@ import 'dart:convert';
 import 'package:car_rental_ui/generated_code/lib/api.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-Future<void> saveUserToSecureStorage(User user) async {
+Future<void> saveJsonObjectToSecureStorage(dynamic object) async {
   const FlutterSecureStorage storage = FlutterSecureStorage();
-  final userJson = jsonEncode(user.toJson());
+  final userJson = jsonEncode(object.toJson());
 
-  await storage.write(key: 'user', value: userJson);
+  await storage.write(key: 'object', value: userJson);
 }
 
-Future<void> removeUserFromSecureStorage() async {
+Future<void> removeObjectFromSecureStorage() async {
   const FlutterSecureStorage storage = FlutterSecureStorage();
-  await storage.delete(key: 'user');
+  await storage.delete(key: 'object');
 }
 
 // Retrieve a user object from secure storage
-Future<User?> getUserFromSecureStorage() async {
+Future<dynamic> getObjectFromSecureStorage() async {
   const FlutterSecureStorage storage = FlutterSecureStorage();
-  const key = 'user';
+  const key = 'object';
   final userJson = await storage.read(key: key);
 
   if (userJson == null) {
@@ -26,5 +26,7 @@ Future<User?> getUserFromSecureStorage() async {
   }
 
   final userMap = jsonDecode(userJson);
+
+  //replace the return value with object of type you want
   return User.fromJson(userMap);
 }

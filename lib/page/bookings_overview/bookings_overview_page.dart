@@ -32,11 +32,7 @@ class BookingsOverviewPage extends ViewModelWidget<BookingsOverviewViewModel> {
                     child: Row(
                       children: BookingStatus.values.map((status) {
                         return TextButton(
-                          style: TextButton.styleFrom(
-                            minimumSize: Size.zero,
-                            padding: EdgeInsets.zero,
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          ),
+                          style: Dimens.clearButtonStyle,
                           onPressed: () {
                             tabNotifier.value = BookingStatus.values.firstWhere((value) => value == status);
                           },

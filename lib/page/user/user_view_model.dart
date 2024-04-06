@@ -1,6 +1,7 @@
 import 'package:car_rental_ui/generated_code/lib/api.dart';
 
-import '../../api-client/api_client.dart';
+import '../../shared/auth_service.dart';
+import '../../shared/locator.dart';
 import '../../shared/mvvm/view_model.dart';
 
 class UserViewModel extends ViewModel {
@@ -15,6 +16,7 @@ class UserViewModel extends ViewModel {
   }
 
   Future<void> loadData() async {
-    user = (await CarRentalApi.userEndpointApi.userLoginPost(loginRequest: LoginRequest(username: 'greisi', password: '123')))!;
+    final authService = getIt<AuthService>();
+    user = authService.user!;
   }
 }

@@ -17,6 +17,14 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Booking'
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - SecurityScheme:
+            - USER
+            - ADMIN
   /bookings/car/{carId}:
     get:
       tags:
@@ -41,6 +49,13 @@ paths:
           description: Car not found
           content:
             text/plain: {}
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - SecurityScheme:
+            - ADMIN
   /bookings/create:
     post:
       tags:
@@ -64,6 +79,14 @@ paths:
       responses:
         "200":
           description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - SecurityScheme:
+            - USER
+            - ADMIN
   /bookings/get/{id}:
     get:
       tags:
@@ -86,6 +109,14 @@ paths:
           description: Booking not found
           content:
             text/plain: {}
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - SecurityScheme:
+            - USER
+            - ADMIN
   /bookings/update:
     put:
       tags:
@@ -98,6 +129,14 @@ paths:
       responses:
         "200":
           description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - SecurityScheme:
+            - USER
+            - ADMIN
   /bookings/user/{userId}:
     get:
       tags:
@@ -122,6 +161,14 @@ paths:
           description: User not found
           content:
             text/plain: {}
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - SecurityScheme:
+            - USER
+            - ADMIN
   /bookings/{id}:
     delete:
       tags:
@@ -136,6 +183,14 @@ paths:
       responses:
         "200":
           description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - SecurityScheme:
+            - USER
+            - ADMIN
   /cars/all:
     get:
       tags:
@@ -161,6 +216,13 @@ paths:
       responses:
         "200":
           description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - SecurityScheme:
+            - ADMIN
   /cars/delete/{id}:
     delete:
       tags:
@@ -175,6 +237,13 @@ paths:
       responses:
         "200":
           description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - SecurityScheme:
+            - ADMIN
   /cars/get/{id}:
     get:
       tags:
@@ -209,6 +278,13 @@ paths:
       responses:
         "200":
           description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - SecurityScheme:
+            - ADMIN
   /ratings/all:
     get:
       tags:
@@ -222,6 +298,13 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Rating'
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - SecurityScheme:
+            - ADMIN
   /ratings/car/{carId}:
     get:
       tags:
@@ -246,6 +329,13 @@ paths:
           description: Car not found
           content:
             text/plain: {}
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - SecurityScheme:
+            - ADMIN
   /ratings/create:
     post:
       tags:
@@ -274,6 +364,14 @@ paths:
       responses:
         "200":
           description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - SecurityScheme:
+            - USER
+            - ADMIN
   /ratings/get/{id}:
     get:
       tags:
@@ -296,6 +394,14 @@ paths:
           description: Rating not found
           content:
             text/plain: {}
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - SecurityScheme:
+            - USER
+            - ADMIN
   /ratings/update:
     put:
       tags:
@@ -308,6 +414,14 @@ paths:
       responses:
         "200":
           description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - SecurityScheme:
+            - USER
+            - ADMIN
   /ratings/user/{userId}:
     get:
       tags:
@@ -332,6 +446,14 @@ paths:
           description: User not found
           content:
             text/plain: {}
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - SecurityScheme:
+            - USER
+            - ADMIN
   /ratings/{id}:
     delete:
       tags:
@@ -346,6 +468,14 @@ paths:
       responses:
         "200":
           description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - SecurityScheme:
+            - USER
+            - ADMIN
   /user/login:
     post:
       tags:
@@ -361,7 +491,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/LoginResponse'
         "401":
           description: Unauthorized
           content:
@@ -380,12 +510,10 @@ paths:
             schema:
               $ref: '#/components/schemas/User'
       responses:
-        "200":
+        "201":
           description: Login successful
           content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
+            text/plain: {}
         "409":
           description: This username already exists!
           content:
@@ -523,6 +651,11 @@ components:
           type: string
         password:
           type: string
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
     Rating:
       required:
         - rating
@@ -545,6 +678,11 @@ components:
           $ref: '#/components/schemas/Car'
         user:
           $ref: '#/components/schemas/User'
+    Role:
+      enum:
+        - ADMIN
+        - USER
+      type: string
     Transmission:
       enum:
         - MANUAL
@@ -569,9 +707,10 @@ components:
         password:
           type: string
         role:
-          $ref: '#/components/schemas/UserRole'
-    UserRole:
-      enum:
-        - ADMIN
-        - USER
-      type: string
+          $ref: '#/components/schemas/Role'
+  securitySchemes:
+    SecurityScheme:
+      type: http
+      description: Authentication
+      scheme: bearer
+      bearerFormat: JWT

@@ -5,6 +5,7 @@ import 'package:car_rental_ui/shared/extensions.dart';
 import 'package:car_rental_ui/shared/globals.dart';
 import 'package:car_rental_ui/shared/locator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logging/logging.dart';
 import 'package:url_strategy/url_strategy.dart';
 
@@ -15,6 +16,7 @@ Future<void> main() async {
   //await dotenv.load();
   setupLogger();
   setupLocator();
+  await dotenv.load(fileName: '.env');
   runApp(CarRentalApp());
 }
 

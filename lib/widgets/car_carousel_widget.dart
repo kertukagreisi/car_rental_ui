@@ -23,7 +23,8 @@ class CarCarouselWidget extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 10.0),
       padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(colors: [Colors.white, AppColors.lightCyan]),
+        gradient:
+            const LinearGradient(colors: [Colors.white, AppColors.lightCyan]),
         borderRadius: const BorderRadius.all(
           Radius.circular(4.0),
         ),
@@ -69,8 +70,8 @@ class CarCarouselWidget extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: TextContainer(
                       text: car.color.value,
-                      textColor: Helpers.getTextColor(false, car.color.value),
-                      backgroundColor: Helpers.getTextColor(true, car.color.value),
+                      textColor: getTextColor(false, car.color.value),
+                      backgroundColor: getTextColor(true, car.color.value),
                       fontWeight: FontWeight.w400,
                       fontSize: 12.0),
                 ),
@@ -104,25 +105,33 @@ class CarCarouselWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: AppColors.lightGray,
                     borderRadius: BorderRadius.circular(2.0),
-                    boxShadow: const [BoxShadow(color: Colors.white, spreadRadius: 10, blurRadius: 12)],
+                    boxShadow: const [
+                      BoxShadow(
+                          color: Colors.white, spreadRadius: 10, blurRadius: 12)
+                    ],
                   ),
                   padding: const EdgeInsets.all(2.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.end,
-                    children: _buildRatingWidget(car.averageRating!, car.reviewsCount!),
+                    children: _buildRatingWidget(
+                        car.averageRating!, car.reviewsCount!),
                   ),
                 ),
                 Container(
                   decoration: BoxDecoration(
                     color: AppColors.lightGray,
                     borderRadius: BorderRadius.circular(2.0),
-                    boxShadow: const [BoxShadow(color: Colors.white, spreadRadius: 10, blurRadius: 12)],
+                    boxShadow: const [
+                      BoxShadow(
+                          color: Colors.white, spreadRadius: 10, blurRadius: 12)
+                    ],
                   ),
                   margin: const EdgeInsets.only(left: 100),
                   height: 120,
                   width: 150,
-                  child: Image.asset(Images.aurisImage, alignment: Alignment.center, fit: BoxFit.fitWidth),
+                  child: Image.asset(Images.aurisImage,
+                      alignment: Alignment.center, fit: BoxFit.fitWidth),
                 ),
                 Text(
                   '${car.price} €',
@@ -141,13 +150,19 @@ class CarCarouselWidget extends StatelessWidget {
     ratingWidgets.add(
       Padding(
         padding: const EdgeInsets.only(right: 8.0),
-        child:
-            Text('${double.parse(averageRating.toStringAsFixed(1))} ($reviewsCount)', style: Dimens.smallTextStyle.copyWith(color: AppColors.orange)),
+        child: Text(
+            '${double.parse(averageRating.toStringAsFixed(1))} ($reviewsCount)',
+            style: Dimens.smallTextStyle.copyWith(color: AppColors.orange)),
       ),
     );
     for (var index = 4; index >= 0; index--) {
       ratingWidgets.add(
-        Icon(index > 4 - averageRating.floor() ? Icons.star : Icons.star_border_outlined, color: AppColors.orange, size: 15.0),
+        Icon(
+            index > 4 - averageRating.floor()
+                ? Icons.star
+                : Icons.star_border_outlined,
+            color: AppColors.orange,
+            size: 15.0),
       );
     }
     return ratingWidgets;

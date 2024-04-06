@@ -3,16 +3,18 @@ import 'dart:async';
 import 'package:car_rental_ui/api-client/api_client.dart';
 import 'package:car_rental_ui/generated_code/lib/api.dart';
 import 'package:car_rental_ui/navigation/nav_extensions.dart';
+import 'package:car_rental_ui/navigation/nav_route.dart';
 import 'package:car_rental_ui/shared/snackbar_service.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../navigation/nav_route.dart';
-import '../../shared/flutter_secure_storage_service.dart';
+import '../../shared/auth_service.dart';
+import '../../shared/helpers.dart';
+import '../../shared/locator.dart';
 import '../../shared/mvvm/view_model.dart';
 
 class LoginViewModel extends ViewModel {
   final Map<String, String> args;
-  late User user = User(id: 0);
+  late User user;
   bool isOnLoginForm = true;
 
   LoginViewModel({required this.args});
@@ -22,22 +24,16 @@ class LoginViewModel extends ViewModel {
     notifyListeners();
   }
 
-  Future<void> login(String username, String password, BuildContext context) async {
-    await CarRentalApi.userEndpointApi.userLoginPost(loginRequest: LoginRequest(username: username, password: password)).then((response) {
-      user = response!;
-      showSnackBar(SnackBarLevel.success, 'Logged in successfully');
-      if (context.mounted) {
-        context.goNamedRoute(NavRoute.values.firstWhere((value) => value.name == args['navRoute']), queryParams: args);
-      }
-    }).onError((error, stackTrace) {
-      onError(error, stackTrace);
-    });
-    if (user.id != null) {
-      await saveUserToSecureStorage(user);
+  Future<void> login(
+      String username, String password, BuildContext context) async {
+    final authService = getIt<AuthService>();
+    if (await authService.login(username, password) && context.mounted) {
+      context.goNamedRoute(NavRoute.home);
     }
   }
 
-  Future<void> signUp(Map<String, dynamic> formValues) async {
+  Future<void> signUp(
+      Map<String, dynamic> formValues, BuildContext context) async {
     if (formValues['Password'] != formValues['Retype Password']) {
       showSnackBar(SnackBarLevel.error, 'The passwords didn\'t match!');
     } else {
@@ -50,20 +46,14 @@ class LoginViewModel extends ViewModel {
             phone: formValues['Phone'],
             username: formValues['Username'],
             password: formValues['Password'],
-            role: UserRole.USER),
+            role: Role.USER),
       )
           .then((response) {
-        user = response!;
         showSnackBar(SnackBarLevel.success, 'Signed up successfully');
+        setForm = true;
       }).onError((error, stackTrace) {
-        onError(error, stackTrace);
+        showSnackBar(SnackBarLevel.error, getErrorMessage(error));
       });
     }
-  }
-
-  FutureOr<User> onError(Object? error, StackTrace stackTrace) async {
-    showSnackBar(SnackBarLevel.error, error.toString().substring(error.toString().indexOf(':'), error.toString().length));
-    user = User(id: null);
-    return user;
   }
 }

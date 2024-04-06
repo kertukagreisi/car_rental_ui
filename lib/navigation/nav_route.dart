@@ -1,6 +1,7 @@
 enum NavRoute {
   home('/'),
-  book('/book'),
+  carDetails('/car-details'),
+  rent('/rent'),
   bookingsOverview('/bookings-overview'),
   user('/user'),
   login('/login'),

@@ -65,14 +65,10 @@ class CarCardWidget extends StatelessWidget {
             ),
           ),
           TextButton(
+            style: Dimens.clearButtonStyle,
             onPressed: () {
               onCarCardItemClick(car.id!);
             },
-            style: TextButton.styleFrom(
-              minimumSize: Size.zero,
-              padding: EdgeInsets.zero,
-              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            ),
             child: ColoredBox(
               color: AppColors.darkCyan,
               child: Padding(

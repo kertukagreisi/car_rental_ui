@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../resources/images.dart';
-import '../../shared/flutter_secure_storage_service.dart';
 import '../../widgets/car_card_widget.dart';
 import 'home_view_model.dart';
 
@@ -29,16 +28,21 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (viewModel.cars.where((car) => car.averageRating! >= 4.0).isNotEmpty)
+            if (viewModel.cars
+                .where((car) => car.averageRating! >= 4.0)
+                .isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(bottom: 10.0),
                 child: CarouselSlider(
                   options: CarouselOptions(
+                    enableInfiniteScroll: false,
                     height: 250,
                     viewportFraction: 300 / MediaQuery.of(context).size.width,
                     autoPlay: true,
                   ),
-                  items: viewModel.cars.where((car) => car.averageRating! >= 4.0).map((car) {
+                  items: viewModel.cars
+                      .where((car) => car.averageRating! >= 4.0)
+                      .map((car) {
                     return Builder(
                       builder: (BuildContext context) {
                         return SizedBox(
@@ -46,10 +50,11 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
                           child: CarCarouselWidget(
                               car: car,
                               onCarCardItemClick: (id) async {
-                                bool isLoggedIn = await getUserFromSecureStorage() != null;
                                 if (context.mounted) {
-                                  context.goNamedRoute(isLoggedIn ? NavRoute.book : NavRoute.login,
-                                      queryParams: {'id': '$id', 'navRoute': 'book'}, extra: car);
+                                  print('Id of car: $id');
+                                  print('Car object: $car');
+                                  context.goNamedRoute(NavRoute.carDetails,
+                                      queryParams: {'id': '$id'}, extra: car);
                                 }
                               }),
                         );
@@ -84,23 +89,22 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
                             padding: const EdgeInsets.only(right: 50.0),
                             child: Wrap(
                               children: [
-                                const Text('Showing results for ', style: Dimens.smallTextStyle),
-                                Text(viewModel.searchValue, style: Dimens.smallHeadTextStyle),
+                                const Text('Showing results for ',
+                                    style: Dimens.smallTextStyle),
+                                Text(viewModel.searchValue,
+                                    style: Dimens.smallHeadTextStyle),
                               ],
                             ),
                           ),
                           Positioned(
                             right: 0.0,
                             child: TextButton(
-                              style: TextButton.styleFrom(
-                                minimumSize: Size.zero,
-                                padding: EdgeInsets.zero,
-                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              ),
+                              style: Dimens.clearButtonStyle,
                               onPressed: () {
                                 viewModel.onSearch('');
                               },
-                              child: const Icon(Icons.clear, color: AppColors.darkCyan, size: 16),
+                              child: const Icon(Icons.clear,
+                                  color: AppColors.darkCyan, size: 16),
                             ),
                           )
                         ],
@@ -114,20 +118,24 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
               child: Wrap(
                 spacing: 8.0,
                 runSpacing: 12.0,
-                children: [Brand.AUDI, Brand.MERCEDES_BENZ, Brand.BMW, Brand.FORD, Brand.TOYOTA, Brand.VOLKSWAGEN]
+                children: [
+                  Brand.AUDI,
+                  Brand.MERCEDES_BENZ,
+                  Brand.BMW,
+                  Brand.FORD,
+                  Brand.TOYOTA,
+                  Brand.VOLKSWAGEN
+                ]
                     .map(
                       (brand) => Padding(
                         padding: const EdgeInsets.only(right: 6.0),
                         child: TextButton(
-                          style: TextButton.styleFrom(
-                            minimumSize: Size.zero,
-                            padding: EdgeInsets.zero,
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          ),
+                          style: Dimens.clearButtonStyle,
                           onPressed: () {
                             viewModel.addBrandFilter = brand;
                           },
-                          child: _getIconButtonForBrand(brand, viewModel.brandFiltersValues.contains(brand)),
+                          child: _getIconButtonForBrand(brand,
+                              viewModel.brandFiltersValues.contains(brand)),
                         ),
                       ),
                     )
@@ -145,11 +153,10 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
                     (car) => CarCardWidget(
                       car: car,
                       onCarCardItemClick: (id) async {
-                        bool isLoggedIn = await getUserFromSecureStorage() != null;
                         if (context.mounted) {
                           if (context.mounted) {
-                            context.goNamedRoute(isLoggedIn ? NavRoute.book : NavRoute.login,
-                                queryParams: {'id': '$id', 'navRoute': 'book'}, extra: car);
+                            context.goNamedRoute(NavRoute.carDetails,
+                                queryParams: {'id': '$id'}, extra: car);
                           }
                         }
                       },
@@ -182,7 +189,8 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
           ),
           padding: const EdgeInsets.all(4.0),
           child: ColorFiltered(
-            colorFilter: ColorFilter.mode(isActive ? Colors.white : AppColors.darkCyan, BlendMode.srcIn),
+            colorFilter: ColorFilter.mode(
+                isActive ? Colors.white : AppColors.darkCyan, BlendMode.srcIn),
             child: SvgPicture.asset(
               Images.audiIcon,
             ),
@@ -198,7 +206,8 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
             color: isActive ? AppColors.darkCyan : AppColors.lightGray,
           ),
           child: ColorFiltered(
-            colorFilter: ColorFilter.mode(isActive ? Colors.white : AppColors.darkCyan, BlendMode.srcIn),
+            colorFilter: ColorFilter.mode(
+                isActive ? Colors.white : AppColors.darkCyan, BlendMode.srcIn),
             child: SvgPicture.asset(
               Images.benzIcon,
             ),
@@ -214,7 +223,8 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
             color: isActive ? AppColors.darkCyan : AppColors.lightGray,
           ),
           child: ColorFiltered(
-            colorFilter: ColorFilter.mode(isActive ? Colors.white : AppColors.darkCyan, BlendMode.srcIn),
+            colorFilter: ColorFilter.mode(
+                isActive ? Colors.white : AppColors.darkCyan, BlendMode.srcIn),
             child: SvgPicture.asset(
               Images.bmwIcon,
             ),
@@ -230,7 +240,8 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
             color: isActive ? AppColors.darkCyan : AppColors.lightGray,
           ),
           child: ColorFiltered(
-            colorFilter: ColorFilter.mode(isActive ? Colors.white : AppColors.darkCyan, BlendMode.srcIn),
+            colorFilter: ColorFilter.mode(
+                isActive ? Colors.white : AppColors.darkCyan, BlendMode.srcIn),
             child: SvgPicture.asset(
               Images.fordIcon,
             ),
@@ -246,7 +257,8 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
             color: isActive ? AppColors.darkCyan : AppColors.lightGray,
           ),
           child: ColorFiltered(
-            colorFilter: ColorFilter.mode(isActive ? Colors.white : AppColors.darkCyan, BlendMode.srcIn),
+            colorFilter: ColorFilter.mode(
+                isActive ? Colors.white : AppColors.darkCyan, BlendMode.srcIn),
             child: SvgPicture.asset(
               Images.toyotaIcon,
             ),
@@ -262,7 +274,8 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
             color: isActive ? AppColors.darkCyan : AppColors.lightGray,
           ),
           child: ColorFiltered(
-            colorFilter: ColorFilter.mode(isActive ? Colors.white : AppColors.darkCyan, BlendMode.srcIn),
+            colorFilter: ColorFilter.mode(
+                isActive ? Colors.white : AppColors.darkCyan, BlendMode.srcIn),
             child: SvgPicture.asset(
               Images.volkswagenIcon,
             ),

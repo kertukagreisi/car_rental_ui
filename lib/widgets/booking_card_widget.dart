@@ -90,6 +90,7 @@ class BookingCardWidget extends StatelessWidget {
             ],
           ),
           TextButton(
+            style: Dimens.clearButtonStyle,
             onPressed: () {
               onBookingCardItemClick(booking.id!);
               showDialog(
@@ -107,11 +108,6 @@ class BookingCardWidget extends StatelessWidget {
                     );
                   });
             },
-            style: TextButton.styleFrom(
-              minimumSize: Size.zero,
-              padding: EdgeInsets.zero,
-              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            ),
             child: ColoredBox(
               color: AppColors.gray,
               child: Padding(
@@ -283,14 +279,10 @@ class BookingCardWidget extends StatelessWidget {
                   List<Widget> starWidgets = [];
                   for (var index = 4; index >= 0; index--) {
                     starWidgets.add(TextButton(
+                      style: Dimens.clearButtonStyle,
                       onPressed: () {
                         ratingNotifier.value = 4 - index;
                       },
-                      style: TextButton.styleFrom(
-                        minimumSize: Size.zero,
-                        padding: EdgeInsets.zero,
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(2.0),
                         child: Icon(

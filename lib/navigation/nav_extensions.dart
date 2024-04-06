@@ -1,10 +1,4 @@
 import 'package:flutter/cupertino.dart';
-/*extension NavigationExtension on BuildContext {
-  void goNamedRoute(String routeName) {
-    Navigator.pushNamed(this, routeName);
-  }
-}*/
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -15,9 +9,11 @@ extension NavControllerHelper on BuildContext {
 
   Object? get extra => GoRouterState.of(this).extra;
 
-  Map<String, String> get currentRouteParams => GoRouterState.of(this).pathParameters;
+  Map<String, String> get currentRouteParams =>
+      GoRouterState.of(this).pathParameters;
 
-  Map<String, String> get currentRouteQueryParams => GoRouterState.of(this).uri.queryParameters;
+  Map<String, String> get currentRouteQueryParams =>
+      GoRouterState.of(this).uri.queryParameters;
 
   void goNamedRoute(
     NavRoute route, {
@@ -63,30 +59,32 @@ extension NavControllerHelper on BuildContext {
     return _getAppBarTitleByRoute(currentRoute, currentRouteParams);
   }
 
-  String _getAppBarTitleByRoute(String currentRoute, Map<String, String> routeParams) {
-    var list = NavRoute.values.where((element) => element.path == currentRoute).toList();
+  String _getAppBarTitleByRoute(
+      String currentRoute, Map<String, String> routeParams) {
+    var list = NavRoute.values
+        .where((element) => element.path == currentRoute)
+        .toList();
     var navRoute = list.isNotEmpty ? list[0] : 'default';
 
     switch (navRoute) {
       case NavRoute.home:
-        return 'Home';
-      case NavRoute.book:
-        return 'Booking';
-      case NavRoute.user:
-        return 'User';
-      case NavRoute.login:
-        return 'Login';
-      default:
         return '';
+      case NavRoute.rent:
+        return 'Car Details';
+      default:
+        return 'Home';
     }
   }
 
   Future<void> navigateToPreviousLevel() async {
-    var list = NavRoute.values.where((element) => element.path == currentRoute).toList();
+    var list = NavRoute.values
+        .where((element) => element.path == currentRoute)
+        .toList();
     var navRoute = list.isNotEmpty ? list[0] : 'default';
 
-    if (navRoute == NavRoute.book) {
-      goNamedRoute(NavRoute.home, queryParams: currentRouteQueryParams);
+    if (navRoute == NavRoute.rent) {
+      goNamedRoute(NavRoute.carDetails,
+          queryParams: currentRouteQueryParams, extra: extra);
     } else {
       goNamedRoute(NavRoute.home);
     }

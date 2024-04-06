@@ -56,7 +56,7 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
                         }
                       } else {
                         if (signUpFormKey.currentState!.validate()) {
-                          await viewModel.signUp(signUpFormKey.currentState!.value);
+                          await viewModel.signUp(signUpFormKey.currentState!.value, context);
                         }
                       }
                     },
@@ -81,11 +81,7 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
                           ? const Text('Don\'t have an account?  ', style: Dimens.smallTextStyle)
                           : const Text('Have an account?  ', style: Dimens.smallTextStyle),
                       TextButton(
-                        style: TextButton.styleFrom(
-                          minimumSize: Size.zero,
-                          padding: EdgeInsets.zero,
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        ),
+                        style: Dimens.clearButtonStyle,
                         onPressed: () {
                           viewModel.setForm = !viewModel.isOnLoginForm;
                         },

@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import '../../../resources/dimens.dart';
 import '../navigation/nav_route.dart';
 import '../resources/app_colors.dart';
-import '../shared/flutter_secure_storage_service.dart';
+import '../shared/auth_service.dart';
+import '../shared/locator.dart';
 
 class CarRentalScaffold extends StatefulWidget {
   const CarRentalScaffold({
@@ -89,6 +90,7 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
   ValueListenableBuilder _buildTopNavPopup() => ValueListenableBuilder<bool>(
       valueListenable: _isRailExtended,
       builder: (_, extended, __) {
+        final authService = getIt<AuthService>();
         return _isRailExtended.value
             ? TextButton(
                 style: TextButton.styleFrom(
@@ -96,7 +98,7 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
                 ),
                 onPressed: () async {
                   _isRailExtended.value = false;
-                  await removeUserFromSecureStorage();
+                  await authService.logout();
                   if (context.mounted) {
                     context.goNamedRoute(NavRoute.login);
                   }
