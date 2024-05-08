@@ -24,16 +24,14 @@ class LoginViewModel extends ViewModel {
     notifyListeners();
   }
 
-  Future<void> login(
-      String username, String password, BuildContext context) async {
+  Future<void> login(String username, String password, BuildContext context) async {
     final authService = getIt<AuthService>();
     if (await authService.login(username, password) && context.mounted) {
       context.goNamedRoute(NavRoute.home);
     }
   }
 
-  Future<void> signUp(
-      Map<String, dynamic> formValues, BuildContext context) async {
+  Future<void> signUp(Map<String, dynamic> formValues, BuildContext context) async {
     if (formValues['Password'] != formValues['Retype Password']) {
       showSnackBar(SnackBarLevel.error, 'The passwords didn\'t match!');
     } else {

@@ -22,7 +22,6 @@ class BookingsOverviewViewModel extends ViewModel {
   Future<void> loadData() async {
     final authService = getIt<AuthService>();
     user = authService.user!;
-    bookings = (await CarRentalApi.bookingEndpointApi
-        .bookingsUserUserIdGet(user.id!))!;
+    bookings = (await CarRentalApi.bookingEndpointApi.bookingsUserUserIdGet(user.id!))!;
   }
 }

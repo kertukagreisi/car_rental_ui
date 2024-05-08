@@ -7,19 +7,16 @@ import 'package:rxdart/rxdart.dart';
 import 'helpers.dart';
 
 class AuthService {
-  final BehaviorSubject<bool> _isAuthenticated =
-      BehaviorSubject<bool>.seeded(false);
+  final BehaviorSubject<bool> _isAuthenticated = BehaviorSubject<bool>.seeded(false);
   User? user;
+  String? token;
 
   Stream<bool> get isAuthenticated => _isAuthenticated.stream;
 
   Future<bool> login(String username, String password) async {
-    LoginRequest loginRequest =
-        LoginRequest(username: username, password: password);
-    await CarRentalApi.userEndpointApi
-        .userLoginPost(loginRequest: loginRequest)
-        .then((response) {
-      Map<String, dynamic> userMap = JwtDecoder.decode(response!.token!);
+    LoginRequest loginRequest = LoginRequest(username: username, password: password);
+    await CarRentalApi.userEndpointApi.userLoginPost(loginRequest: loginRequest).then((loginResponse) {
+      Map<String, dynamic> userMap = JwtDecoder.decode(loginResponse!.token!);
       user = User(
           id: userMap['id'],
           name: userMap['name'],
@@ -27,9 +24,8 @@ class AuthService {
           email: userMap['email'],
           phone: userMap['phone'],
           username: userMap['username'],
-          role: Role.values
-              .firstWhere((role) => role.value == userMap['role'].toString()));
-      print(user);
+          role: Role.values.firstWhere((role) => role.value == userMap['role'].toString()));
+      token = loginResponse.token!;
       _isAuthenticated.add(true);
       showSnackBar(SnackBarLevel.success, 'Logged in successfully!');
     }).onError((error, stackTrace) {
@@ -41,6 +37,7 @@ class AuthService {
 
   Future<void> logout() async {
     user = null;
+    token = null;
     _isAuthenticated.add(false);
   }
 }

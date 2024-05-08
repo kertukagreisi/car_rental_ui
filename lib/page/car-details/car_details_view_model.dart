@@ -7,8 +7,7 @@ class CarDetailsViewModel extends ViewModel {
   final Map<String, String> args;
   final Car? carFromExtraParameters;
 
-  CarDetailsViewModel(
-      {required this.args, required this.carFromExtraParameters});
+  CarDetailsViewModel({required this.args, required this.carFromExtraParameters});
 
   late Car car;
 

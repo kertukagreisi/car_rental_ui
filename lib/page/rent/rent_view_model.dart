@@ -22,11 +22,8 @@ class RentViewModel extends ViewModel {
 
   double totalPrice = 0;
   int datesDifference = 1;
-  DateTime startDate = DateTime(
-      DateTime.now().year, DateTime.now().month, DateTime.now().day, 0);
-  DateTime endDate =
-      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 0)
-          .add(const Duration(days: 1));
+  DateTime startDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 0);
+  DateTime endDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 0).add(const Duration(days: 1));
 
   @override
   Future<void> init() async {
@@ -48,24 +45,17 @@ class RentViewModel extends ViewModel {
     totalPrice = car.price;
   }
 
-  Future<void> renatCar(
-      Map<String, dynamic> value, BuildContext context) async {
+  Future<void> renatCar(Map<String, dynamic> value, BuildContext context) async {
     Booking booking = Booking(
       user: user,
       car: car,
-      startDate: DateTime(value['Start Date'].year, value['Start Date'].month,
-              value['Start Date'].day)
-          .add(const Duration(days: 1)),
-      endDate: DateTime(value['End Date'].year, value['End Date'].month,
-              value['End Date'].day)
-          .add(const Duration(days: 1)),
+      startDate: DateTime(value['Start Date'].year, value['Start Date'].month, value['Start Date'].day).add(const Duration(days: 1)),
+      endDate: DateTime(value['End Date'].year, value['End Date'].month, value['End Date'].day).add(const Duration(days: 1)),
       timeStamp: DateTime.now(),
       total: datesDifference * car.price,
       bookingStatus: BookingStatus.PENDING,
     );
-    await CarRentalApi.bookingEndpointApi
-        .bookingsCreatePost(carId: car.id, userId: 1, booking: booking)
-        .then((value) {
+    await CarRentalApi.bookingEndpointApi.bookingsCreatePost(carId: car.id, userId: 1, booking: booking).then((value) {
       showSnackBar(SnackBarLevel.success, 'The booking was saved!');
       context.goNamedRoute(NavRoute.bookingsOverview);
     }).onError((error, stackTrace) {
