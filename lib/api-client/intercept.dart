@@ -18,7 +18,7 @@ class AuthInterceptor extends BugInterceptor {
 
   @override
   Future<BaseRequest> interceptRequest({required BaseRequest request}) async {
-    if (await _auth.isAuthenticated.first) {
+    if (await _auth.isAuthenticated) {
       request.headers['Authorization'] = 'Bearer ${_auth.token}';
     }
     return super.interceptRequest(request: request);

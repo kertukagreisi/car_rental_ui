@@ -3,9 +3,7 @@ import 'package:car_rental_ui/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 
 String getErrorMessage(Object? error) {
-  return error
-      .toString()
-      .substring(error.toString().indexOf(':') + 2, error.toString().length);
+  return error.toString().substring(error.toString().indexOf(':') + 2, error.toString().length);
 }
 
 Color getTextColor(bool isMainColor, String value) {
@@ -55,3 +53,4 @@ Color getTextColor(bool isMainColor, String value) {
 }
 
 List<String> noAuthRoutes = [NavRoute.home.path, NavRoute.carDetails.path];
+List<String> adminRoutes = [NavRoute.adminCars.path, NavRoute.adminUsers.path, NavRoute.adminBookings.path];

@@ -4,13 +4,13 @@ import 'package:car_rental_ui/shared/locator.dart';
 import 'package:car_rental_ui/shared/mvvm/view_model_widgets.dart';
 import 'package:flutter/material.dart';
 
-import 'user_view_model.dart';
+import 'profile_view_model.dart';
 
-class UserPage extends ViewModelWidget<UserViewModel> {
-  const UserPage({super.key});
+class ProfilePage extends ViewModelWidget<ProfileViewModel> {
+  const ProfilePage({super.key});
 
   @override
-  Widget builder(BuildContext context, UserViewModel viewModel, Widget? child) {
+  Widget builder(BuildContext context, ProfileViewModel viewModel, Widget? child) {
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.all(16.0),
@@ -101,7 +101,7 @@ class UserPage extends ViewModelWidget<UserViewModel> {
   }
 
   @override
-  UserViewModel viewModelBuilder() {
-    return getIt.get<UserViewModel>();
+  ProfileViewModel viewModelBuilder() {
+    return getIt.get<ProfileViewModel>();
   }
 }

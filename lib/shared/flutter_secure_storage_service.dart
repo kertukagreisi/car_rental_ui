@@ -30,3 +30,24 @@ Future<dynamic> getObjectFromSecureStorage() async {
   //replace the return value with object of type you want
   return User.fromJson(userMap);
 }
+
+// Save a token to secure storage
+Future<void> saveTokenToSecureStorage(String token) async {
+  const FlutterSecureStorage storage = FlutterSecureStorage();
+
+  await storage.write(key: 'token', value: token);
+}
+
+// Retrieve a token from secure storage
+Future<String?> getTokenFromSecureStorage() async {
+  const FlutterSecureStorage storage = FlutterSecureStorage();
+  final token = await storage.read(key: 'token');
+
+  return token;
+}
+
+// Delete a token from secure storage
+Future<void> removeTokenFromSecureStorage() async {
+  const FlutterSecureStorage storage = FlutterSecureStorage();
+  await storage.delete(key: 'token');
+}

@@ -270,6 +270,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_data_table:
+    dependency: "direct main"
+    description:
+      name: flutter_data_table
+      sha256: dcd1d385c5df99f66655aa88833569fbc35216cfc5dac0721593ecc14bf44a63
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.2"
   flutter_dotenv:
     dependency: "direct main"
     description:
@@ -912,22 +920,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
-  syncfusion_flutter_core:
-    dependency: transitive
-    description:
-      name: syncfusion_flutter_core
-      sha256: ed8527189f874b9d07f78f2f4306739ce003e8baccfdd7453c0098beef16428f
-      url: "https://pub.dev"
-    source: hosted
-    version: "24.1.47"
-  syncfusion_flutter_datagrid:
-    dependency: "direct main"
-    description:
-      name: syncfusion_flutter_datagrid
-      sha256: "5ce2418059263dd9ce3e8eaee644117909cb257bcb56119c8683adf01ef7b91a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "24.1.47"
   synchronized:
     dependency: transitive
     description:

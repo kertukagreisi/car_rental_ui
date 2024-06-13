@@ -1,4 +1,3 @@
-import 'package:car_rental_ui/generated_code/lib/api.dart';
 import 'package:car_rental_ui/navigation/nav_extensions.dart';
 import 'package:car_rental_ui/navigation/nav_route.dart';
 import 'package:car_rental_ui/shared/locator.dart';
@@ -8,18 +7,17 @@ import 'package:car_rental_ui/widgets/ui_type/text_field_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
-import '../../resources/app_colors.dart';
-import '../../resources/dimens.dart';
-import 'rent_view_model.dart';
+import '../../../resources/app_colors.dart';
+import '../../../resources/dimens.dart';
+import 'admin_users_view_model.dart';
 
-class RentPage extends ViewModelWidget<RentViewModel> {
+class AdminUsersPage extends ViewModelWidget<AdminUsersViewModel> {
   final Map<String, String> args;
-  final Car? carFromExtraParameters;
 
-  const RentPage({super.key, required this.args, required this.carFromExtraParameters});
+  const AdminUsersPage({super.key, required this.args});
 
   @override
-  Widget builder(BuildContext context, RentViewModel viewModel, Widget? child) {
+  Widget builder(BuildContext context, AdminUsersViewModel viewModel, Widget? child) {
     final formKey = GlobalKey<FormBuilderState>();
     return Container(
       color: Colors.white,
@@ -141,7 +139,7 @@ class RentPage extends ViewModelWidget<RentViewModel> {
   }
 
   @override
-  RentViewModel viewModelBuilder() {
-    return getIt.get<RentViewModel>(param1: args, param2: carFromExtraParameters);
+  AdminUsersViewModel viewModelBuilder() {
+    return getIt.get<AdminUsersViewModel>(param1: args);
   }
 }

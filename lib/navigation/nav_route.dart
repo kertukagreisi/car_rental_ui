@@ -1,9 +1,19 @@
 enum NavRoute {
+  // no auth routes
   home('/'),
   carDetails('/car-details'),
+
+  // user routes
   rent('/rent'),
   bookingsOverview('/bookings-overview'),
-  user('/user'),
+  profile('/profile'),
+
+  // admin routes
+  adminCars('/admin-cars'),
+  adminUsers('/admin-users'),
+  adminBookings('/admin-bookings'),
+
+  // other
   login('/login'),
   pageNotFound('/not-found');
 

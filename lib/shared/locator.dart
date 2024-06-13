@@ -3,7 +3,7 @@ import 'package:car_rental_ui/page/bookings_overview/bookings_overview_view_mode
 import 'package:car_rental_ui/page/car-details/car_details_view_model.dart';
 import 'package:car_rental_ui/page/login/login_view_model.dart';
 import 'package:car_rental_ui/page/rent/rent_view_model.dart';
-import 'package:car_rental_ui/page/user/user_view_model.dart';
+import 'package:car_rental_ui/page/user/profile_view_model.dart';
 import 'package:get_it/get_it.dart';
 
 import '../navigation/nav_controller.dart';
@@ -28,7 +28,7 @@ void _setupViewModels() {
   getIt.registerFactoryParam<LoginViewModel, Map<String, String>, dynamic>(
     (args, extra) => LoginViewModel(args: args),
   );
-  getIt.registerFactory(() => UserViewModel());
+  getIt.registerFactory(() => ProfileViewModel());
   getIt.registerFactory(() => BookingsOverviewViewModel());
 }
 

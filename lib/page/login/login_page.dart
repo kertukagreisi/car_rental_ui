@@ -108,14 +108,14 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
   List<Widget> _buildInputFields(bool isLoggingIn) {
     if (isLoggingIn) {
       return [
-        TextFieldWidget(
+        TextInputWidget(
           label: 'Username',
           placeholder: 'Username',
           mandatory: true,
           onChange: (value) {},
           hideLabel: true,
         ),
-        TextFieldWidget(
+        TextInputWidget(
           label: 'Password',
           placeholder: 'Password',
           mandatory: true,
@@ -130,7 +130,7 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
           spacing: 16.0,
           runSpacing: 16.0,
           children: [
-            TextFieldWidget(
+            TextInputWidget(
               width: 128,
               label: 'Name',
               placeholder: 'Name',
@@ -138,7 +138,7 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
               onChange: (value) {},
               hideLabel: true,
             ),
-            TextFieldWidget(
+            TextInputWidget(
               width: 128,
               label: 'Last Name',
               placeholder: 'Last Name',
@@ -152,7 +152,7 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
           spacing: 16.0,
           runSpacing: 16.0,
           children: [
-            TextFieldWidget(
+            TextInputWidget(
               width: 128,
               label: 'Email',
               placeholder: 'Email',
@@ -161,7 +161,7 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
               hideLabel: true,
               inputType: 'Email',
             ),
-            TextFieldWidget(
+            TextInputWidget(
               width: 128,
               label: 'Phone',
               placeholder: 'Phone',
@@ -172,7 +172,7 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
             ),
           ],
         ),
-        TextFieldWidget(
+        TextInputWidget(
           width: 272,
           label: 'Username',
           placeholder: 'Username',
@@ -184,7 +184,7 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
           spacing: 16.0,
           runSpacing: 16.0,
           children: [
-            TextFieldWidget(
+            TextInputWidget(
               width: 128,
               label: 'Password',
               placeholder: 'Password',
@@ -193,7 +193,7 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
               onChange: (value) {},
               hideLabel: true,
             ),
-            TextFieldWidget(
+            TextInputWidget(
               width: 128,
               label: 'Retype Password',
               placeholder: 'Retype Password',

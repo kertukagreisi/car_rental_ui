@@ -40,7 +40,7 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
         ),
         _NavigationElement(
           label: 'User',
-          route: NavRoute.user,
+          route: NavRoute.profile,
         ),
       ];
 

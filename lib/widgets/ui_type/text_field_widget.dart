@@ -7,7 +7,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import '../../resources/app_colors.dart';
 import '../../resources/dimens.dart';
 
-class TextFieldWidget extends StatelessWidget {
+class TextInputWidget extends StatelessWidget {
   final String label;
   final bool mandatory;
   final Function(String?) onChange;
@@ -23,7 +23,7 @@ class TextFieldWidget extends StatelessWidget {
   final bool? showLabel;
   final String? inputType;
 
-  const TextFieldWidget(
+  const TextInputWidget(
       {super.key,
       required this.label,
       required this.mandatory,

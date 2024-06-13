@@ -23,7 +23,6 @@ paths:
           description: Not Allowed
       security:
         - SecurityScheme:
-            - USER
             - ADMIN
   /bookings/car/{carId}:
     get:
@@ -76,6 +75,28 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Booking'
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - SecurityScheme:
+            - USER
+            - ADMIN
+  /bookings/delete/{id}:
+    delete:
+      tags:
+        - Booking Endpoint
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
       responses:
         "200":
           description: OK
@@ -161,28 +182,6 @@ paths:
           description: User not found
           content:
             text/plain: {}
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      security:
-        - SecurityScheme:
-            - USER
-            - ADMIN
-  /bookings/{id}:
-    delete:
-      tags:
-        - Booking Endpoint
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        "200":
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -284,6 +283,131 @@ paths:
           description: Not Allowed
       security:
         - SecurityScheme:
+            - ADMIN
+  /files/cars/{carId}/photos:
+    post:
+      tags:
+        - File Endpoint
+      parameters:
+        - name: carId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - SecurityScheme:
+            - ADMIN
+  /files/cars/{carId}/thumbnail:
+    get:
+      tags:
+        - File Endpoint
+      parameters:
+        - name: carId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    post:
+      tags:
+        - File Endpoint
+      parameters:
+        - name: carId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                fileName:
+                  type: string
+                file:
+                  format: binary
+                  type: string
+            encoding:
+              fileName:
+                contentType: text/plain
+              file:
+                contentType: application/octet-stream
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - SecurityScheme:
+            - ADMIN
+  /files/users/{userId}/profile-picture:
+    get:
+      tags:
+        - File Endpoint
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - SecurityScheme:
+            - USER
+            - ADMIN
+    post:
+      tags:
+        - File Endpoint
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                fileName:
+                  type: string
+                file:
+                  format: binary
+                  type: string
+            encoding:
+              fileName:
+                contentType: text/plain
+              file:
+                contentType: application/octet-stream
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - SecurityScheme:
+            - USER
             - ADMIN
   /ratings/all:
     get:
@@ -476,6 +600,88 @@ paths:
         - SecurityScheme:
             - USER
             - ADMIN
+  /user/all:
+    get:
+      tags:
+        - User Endpoint
+      responses:
+        "200":
+          description: List of users found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - SecurityScheme:
+            - ADMIN
+  /user/create:
+    post:
+      tags:
+        - User Endpoint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - SecurityScheme:
+            - ADMIN
+  /user/delete/{id}:
+    delete:
+      tags:
+        - User Endpoint
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - SecurityScheme:
+            - ADMIN
+  /user/get/{id}:
+    get:
+      tags:
+        - User Endpoint
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        "200":
+          description: User found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "404":
+          description: User not found
+          content:
+            text/plain: {}
   /user/login:
     post:
       tags:
@@ -511,17 +717,72 @@ paths:
               $ref: '#/components/schemas/User'
       responses:
         "201":
-          description: Login successful
+          description: Sign up successful
           content:
-            text/plain: {}
+            application/json: {}
         "409":
           description: This username already exists!
           content:
             text/plain: {}
+  /user/update:
+    put:
+      tags:
+        - User Endpoint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        "204":
+          description: Edited profile successfully!
+          content:
+            application/json: {}
+        "409":
+          description: User with selected username exists!
+          content:
+            text/plain: {}
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - SecurityScheme:
+            - ADMIN
+  /user/updateOwnProfile:
+    put:
+      tags:
+        - User Endpoint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        "204":
+          description: Edited profile successfully!
+          content:
+            application/json: {}
+        "409":
+          description: User with selected username exists!
+          content:
+            text/plain: {}
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - SecurityScheme:
+            - USER
+            - ADMIN
 components:
   schemas:
     Booking:
       required:
+        - name
+        - lastName
+        - email
+        - phone
         - startDate
         - endDate
         - timeStamp
@@ -534,6 +795,14 @@ components:
         id:
           format: int64
           type: integer
+        name:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
         startDate:
           $ref: '#/components/schemas/Date'
         endDate:
@@ -621,6 +890,8 @@ components:
         reviewsCount:
           format: int32
           type: integer
+        picturePath:
+          type: string
     Color:
       enum:
         - BEIGE
@@ -705,6 +976,8 @@ components:
         username:
           type: string
         password:
+          type: string
+        profilePicturePath:
           type: string
         role:
           $ref: '#/components/schemas/Role'

@@ -296,7 +296,7 @@ class BookingCardWidget extends StatelessWidget {
                   return Wrap(children: starWidgets);
                 },
               ),
-              TextFieldWidget(
+              TextInputWidget(
                   label: 'Comment',
                   mandatory: false,
                   placeholder: 'Comment',

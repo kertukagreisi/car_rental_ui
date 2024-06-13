@@ -5,16 +5,15 @@ import 'package:car_rental_ui/navigation/nav_route.dart';
 import 'package:car_rental_ui/shared/snackbar_service.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../shared/auth_service.dart';
-import '../../shared/locator.dart';
-import '../../shared/mvvm/view_model.dart';
+import '../../../shared/auth_service.dart';
+import '../../../shared/locator.dart';
+import '../../../shared/mvvm/view_model.dart';
 
-class RentViewModel extends ViewModel {
+class AdminUsersViewModel extends ViewModel {
   final Map<String, String> args;
-  final Car? carFromExtraParameters;
   late User user;
 
-  RentViewModel({required this.args, required this.carFromExtraParameters});
+  AdminUsersViewModel({required this.args});
 
   late Car car;
 
@@ -37,11 +36,8 @@ class RentViewModel extends ViewModel {
   Future<void> loadData() async {
     final authService = getIt<AuthService>();
     user = authService.user!;
-    if (carFromExtraParameters == null) {
-      car = (await CarRentalApi.carEndpointApi.carsGetIdGet(int.parse(id)))!;
-    } else {
-      car = carFromExtraParameters!;
-    }
+    car = (await CarRentalApi.carEndpointApi.carsGetIdGet(int.parse(id)))!;
+
     totalPrice = car.price;
   }
 

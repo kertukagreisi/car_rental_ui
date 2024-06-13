@@ -4,7 +4,7 @@ import '../../shared/auth_service.dart';
 import '../../shared/locator.dart';
 import '../../shared/mvvm/view_model.dart';
 
-class UserViewModel extends ViewModel {
+class ProfileViewModel extends ViewModel {
   late User user;
 
   @override
