@@ -29,7 +29,7 @@ class AdminCarsPage extends ViewModelWidget<AdminCarsViewModel> {
     );
   }
 
-  _getColumns(Map<String, String> columnsMap) {
+  List<DataColumn> _getColumns(Map<String, String> columnsMap) {
     return columnsMap.entries
         .map((column) =>
             DataColumn(label: Text(column.value, style: Dimens.smallTextStyle.copyWith(fontWeight: FontWeight.w600)), tooltip: column.value))

@@ -1,13 +1,8 @@
-import 'package:car_rental_ui/navigation/nav_extensions.dart';
-import 'package:car_rental_ui/navigation/nav_route.dart';
+import 'package:car_rental_ui/page/admin-pages/admin-bookings/bookings_table_datasource.dart';
 import 'package:car_rental_ui/shared/locator.dart';
 import 'package:car_rental_ui/shared/mvvm/view_model_widgets.dart';
-import 'package:car_rental_ui/widgets/ui_type/date_picker_widget.dart';
-import 'package:car_rental_ui/widgets/ui_type/text_field_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 
-import '../../../resources/app_colors.dart';
 import '../../../resources/dimens.dart';
 import 'admin_bookings_view_model.dart';
 
@@ -18,7 +13,6 @@ class AdminBookingsPage extends ViewModelWidget<AdminBookingsViewModel> {
 
   @override
   Widget builder(BuildContext context, AdminBookingsViewModel viewModel, Widget? child) {
-    final formKey = GlobalKey<FormBuilderState>();
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.all(24.0),
@@ -27,115 +21,19 @@ class AdminBookingsPage extends ViewModelWidget<AdminBookingsViewModel> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.only(bottom: 12.0),
-              child: Text('Select your options', style: Dimens.mediumTextStyle),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: FormBuilder(
-                key: formKey,
-                child: Wrap(
-                  spacing: 8.0,
-                  runSpacing: 12.0,
-                  children: [
-                    TextInputWidget(
-                      label: 'Name',
-                      mandatory: true,
-                      onChange: (value) {},
-                      showLabel: true,
-                    ),
-                    TextInputWidget(
-                      label: 'Last Name',
-                      mandatory: true,
-                      onChange: (value) {},
-                      showLabel: true,
-                    ),
-                    TextInputWidget(
-                      label: 'Email',
-                      mandatory: true,
-                      onChange: (value) {},
-                      showLabel: true,
-                    ),
-                    TextInputWidget(
-                      label: 'Phone',
-                      mandatory: true,
-                      onChange: (value) {},
-                      showLabel: true,
-                    ),
-                    DatePickerWidget(
-                        label: 'Start Date',
-                        mandatory: true,
-                        initialValue: viewModel.startDate,
-                        startsFromToday: true,
-                        onChange: (value) {
-                          viewModel.setTotalToBePayed(true, value);
-                        }),
-                    DatePickerWidget(
-                        label: 'End Date',
-                        mandatory: true,
-                        initialValue: viewModel.endDate,
-                        startsFromToday: true,
-                        onChange: (value) {
-                          viewModel.setTotalToBePayed(false, value);
-                        })
-                  ],
-                ),
-              ),
-            ),
-            if (viewModel.datesDifference <= 0)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 12.0),
-                child: Text(
-                  'The end date should be after the start date!',
-                  style: Dimens.smallTextStyle.copyWith(color: AppColors.red),
-                ),
-              ),
-            Padding(
-              padding: const EdgeInsets.only(top: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('${viewModel.totalPrice} €', style: Dimens.headTextStyle),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(backgroundColor: AppColors.darkCyan, padding: const EdgeInsets.all(8.0)),
-                            onPressed: viewModel.datesDifference > 0
-                                ? () async {
-                                    formKey.currentState?.save();
-                                    if (formKey.currentState!.validate()) {
-                                      await viewModel
-                                          .rentCar(formKey.currentState!.value, context)
-                                          .then((value) => context.goNamedRoute(NavRoute.home));
-                                    }
-                                  }
-                                : null,
-                            child: Text('Rent', style: Dimens.mediumTextStyle.copyWith(color: Colors.white)),
-                          ),
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(backgroundColor: Colors.white, padding: const EdgeInsets.all(8.0)),
-                          onPressed: () {
-                            context.goNamedRoute(NavRoute.home);
-                          },
-                          child: Text('Cancel', style: Dimens.mediumTextStyle.copyWith(color: AppColors.darkCyan)),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            const Text('Users Overview', style: Dimens.smallHeadTextStyle),
+            PaginatedDataTable(columns: _getColumns(viewModel.columnsMap), source: BookingTableDatasource(bookings: viewModel.bookings))
           ],
         ),
       ),
     );
+  }
+
+  List<DataColumn> _getColumns(Map<String, String> columnsMap) {
+    return columnsMap.entries
+        .map((column) =>
+            DataColumn(label: Text(column.value, style: Dimens.smallTextStyle.copyWith(fontWeight: FontWeight.w600)), tooltip: column.value))
+        .toList();
   }
 
   @override

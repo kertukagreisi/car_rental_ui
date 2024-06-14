@@ -1,21 +1,22 @@
 import 'package:car_rental_ui/generated_code/lib/api.dart';
-import 'package:car_rental_ui/resources/dimens.dart';
 import 'package:flutter/material.dart';
 
-class CarTableDatasource extends DataTableSource {
-  final List<Car> cars;
+import '../../../resources/dimens.dart';
 
-  CarTableDatasource({required this.cars});
+class BookingTableDatasource extends DataTableSource {
+  final List<Booking> bookings;
+
+  BookingTableDatasource({required this.bookings});
 
   @override
-  int get rowCount => cars.length;
+  int get rowCount => bookings.length;
 
   static const List<int> _displayIndexToRawIndex = <int>[0, 1, 2, 3, 4];
-  late List<Car> sortedData;
+  late List<Booking> sortedData;
 
-  void setData(List<Car> rawData, int sortColumn, bool sortAscending) {
+  void setData(List<Booking> rawData, int sortColumn, bool sortAscending) {
     sortedData = rawData.toList()
-      ..sort((Car a, Car b) {
+      ..sort((Booking a, Booking b) {
         Comparable<Object> cellA;
         Comparable<Object> cellB;
 
@@ -25,20 +26,28 @@ class CarTableDatasource extends DataTableSource {
             cellB = b.id.toString();
             break;
           case 1:
-            cellA = a.brand.value;
-            cellB = b.brand.value;
+            cellA = '${a.name} ${a.lastName}';
+            cellB = '${b.name} ${b.lastName}';
             break;
           case 2:
-            cellA = a.model;
-            cellB = b.model;
+            cellA = a.startDate;
+            cellB = b.startDate;
             break;
           case 3:
-            cellA = a.year;
-            cellB = b.year;
+            cellA = a.endDate;
+            cellB = b.endDate;
             break;
           case 4:
-            cellA = a.price;
-            cellB = b.price;
+            cellA = a.bookingStatus.value;
+            cellB = b.bookingStatus.value;
+            break;
+          case 5:
+            cellA = a.total;
+            cellB = b.total;
+            break;
+          case 6:
+            cellA = a.timeStamp;
+            cellB = b.timeStamp;
             break;
           default:
             throw Exception('Invalid sort column');
@@ -64,11 +73,13 @@ class CarTableDatasource extends DataTableSource {
     return DataRow.byIndex(
       index: index,
       cells: <DataCell>[
-        cellFor(cars[index].id.toString()),
-        cellFor('S${cars[index].brand}'),
-        cellFor(cars[index].model),
-        cellFor(cars[index].year),
-        cellFor(cars[index].price),
+        cellFor(bookings[index].id.toString()),
+        cellFor('${bookings[index].name} ${bookings[index].lastName}'),
+        cellFor(bookings[index].startDate),
+        cellFor(bookings[index].endDate),
+        cellFor(bookings[index].bookingStatus.value),
+        cellFor(bookings[index].total),
+        cellFor(bookings[index].timeStamp),
       ],
     );
   }
