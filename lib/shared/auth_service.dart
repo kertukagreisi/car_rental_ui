@@ -40,7 +40,7 @@ class AuthService with ChangeNotifier {
       showSnackBar(SnackBarLevel.error, getErrorMessage(error));
       _removeUser();
     });
-    return isAuthenticated.first;
+    return isAuthenticated;
   }
 
   _decodeToken(String? token) {
