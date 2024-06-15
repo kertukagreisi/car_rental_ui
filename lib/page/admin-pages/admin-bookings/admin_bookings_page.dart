@@ -4,6 +4,8 @@ import 'package:car_rental_ui/shared/mvvm/view_model_widgets.dart';
 import 'package:flutter/material.dart';
 
 import '../../../resources/dimens.dart';
+import '../../../shared/helpers.dart';
+import '../../../widgets/confirm_dialog_widget.dart';
 import 'admin_bookings_view_model.dart';
 
 class AdminBookingsPage extends ViewModelWidget<AdminBookingsViewModel> {
@@ -21,23 +23,54 @@ class AdminBookingsPage extends ViewModelWidget<AdminBookingsViewModel> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Users Overview', style: Dimens.smallHeadTextStyle),
-            PaginatedDataTable(columns: _getColumns(viewModel.columnsMap), source: BookingTableDatasource(bookings: viewModel.bookings))
+            const Text('Users Overview', style: Dimens.mediumHeadTextStyle),
+            Dimens.mediumSizedBox,
+            Row(
+              children: [
+                Expanded(
+                  child: PaginatedDataTable(
+                      columns: getColumns(viewModel.columnsMap),
+                      source: BookingTableDatasource(
+                          bookings: viewModel.bookings,
+                          columnsMap: viewModel.columnsMap,
+                          onButtonClick: (String button, int id) => _getActionDialog(viewModel, context, button, id))),
+                ),
+              ],
+            )
           ],
         ),
       ),
     );
   }
 
-  List<DataColumn> _getColumns(Map<String, String> columnsMap) {
-    return columnsMap.entries
-        .map((column) =>
-            DataColumn(label: Text(column.value, style: Dimens.smallTextStyle.copyWith(fontWeight: FontWeight.w600)), tooltip: column.value))
-        .toList();
-  }
-
   @override
   AdminBookingsViewModel viewModelBuilder() {
     return getIt.get<AdminBookingsViewModel>(param1: args);
+  }
+
+  _getActionDialog(AdminBookingsViewModel viewModel, BuildContext context, String button, int id) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) => ConfirmDialog(
+              title: '${convertToCamelCase(button)} Booking',
+              message: 'Are you sure you want to $button this booking?',
+              confirmCallback: () async {
+                if (button == 'approve') {
+                  await viewModel.approveBooking(id);
+                } else if (button == 'reject') {
+                  await viewModel.rejectBooking(id);
+                } else {
+                  await viewModel.deleteBooking(id);
+                }
+                if (context.mounted) {
+                  Navigator.of(context).pop();
+                }
+              },
+              cancelCallback: () {
+                Navigator.of(context).pop();
+              },
+              confirmButtonText: 'Yes',
+              cancelButtonText: 'No',
+            ));
   }
 }

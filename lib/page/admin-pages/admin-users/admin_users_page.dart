@@ -21,8 +21,10 @@ class AdminUsersPage extends ViewModelWidget<AdminUsersViewModel> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Users Overview', style: Dimens.smallHeadTextStyle),
-            PaginatedDataTable(columns: _getColumns(viewModel.columnsMap), source: UsersTableDatasource(users: viewModel.users))
+            const Text('Users Overview', style: Dimens.mediumHeadTextStyle),
+            Dimens.mediumSizedBox,
+            PaginatedDataTable(
+                columns: _getColumns(viewModel.columnsMap), source: UsersTableDatasource(users: viewModel.users, columnsMap: viewModel.columnsMap))
           ],
         ),
       ),

@@ -21,8 +21,9 @@ class AdminCarsPage extends ViewModelWidget<AdminCarsViewModel> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Cars Overview', style: Dimens.smallHeadTextStyle),
-            PaginatedDataTable(columns: _getColumns(viewModel.columnsMap), source: CarTableDatasource(cars: viewModel.cars))
+            const Text('Cars Overview', style: Dimens.mediumHeadTextStyle),
+            Dimens.mediumSizedBox,
+            PaginatedDataTable(columns: _getColumns(viewModel.columnsMap), source: CarTableDatasource(cars: viewModel.cars, columnsMap: viewModel.columnsMap))
           ],
         ),
       ),

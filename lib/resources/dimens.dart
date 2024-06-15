@@ -6,20 +6,15 @@ import 'fonts.dart';
 class Dimens {
   const Dimens._();
 
+  static const buttonPadding = EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0);
   static const smallPadding = EdgeInsets.all(8.0);
   static const mediumPadding = EdgeInsets.all(16);
   static const largePadding = EdgeInsets.all(24);
 
-  static const mediumSpacing = 16.0;
-  static const largeSpacing = 24.0;
-  static const bigSvgPictureSize = 100.0;
-  static const smallSvgPictureSize = 20.0;
   static const extraSmallSvgPictureSize = 16.0;
   static const smallSizedBox = SizedBox(width: 8, height: 8);
   static const mediumSizedBox = SizedBox(width: 24, height: 24);
-  static const largeSizedBox = SizedBox(width: 48, height: 8);
-  static const mediumSizedBoxHeight = SizedBox(width: 8, height: 16);
-  static const largeSizedBoxHeight = SizedBox(width: 48, height: 36);
+  static const largeSizedBox = SizedBox(width: 48, height: 48);
   static const smallBorderRadius = 4.0;
   static const defaultElevation = 8.0;
   static const defaultScrollbarThickness = 8.0;
@@ -28,23 +23,23 @@ class Dimens {
   static const filePickerHeightNoFiles = 66.0;
   static const filePickerHeightFiles = 110.0;
 
-  static const fontSizeSmall = 10.0;
-  static const fontSizeMedium = 16.0;
-  static const tooltipSize = 20.0;
-
   static ButtonStyle clearButtonStyle = TextButton.styleFrom(
     minimumSize: Size.zero,
     padding: EdgeInsets.zero,
     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
   );
 
-  // text styles
-  static const lightTitleTextStyle = TextStyle(
-    color: Colors.white,
-    fontSize: 18,
-    fontFamily: Fonts.openSansHead,
-    fontWeight: FontWeight.normal,
-  );
+  static ButtonStyle saveButtonStyle = TextButton.styleFrom(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+      backgroundColor: AppColors.darkCyan,
+      side: const BorderSide(color: AppColors.darkCyan),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)));
+
+  static ButtonStyle cancelButtonStyle = TextButton.styleFrom(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+      backgroundColor: Colors.white,
+      side: const BorderSide(color: AppColors.darkCyan),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)));
 
   static const headTextStyle = TextStyle(
     color: AppColors.darkCyan,
@@ -98,13 +93,6 @@ class Dimens {
   static const extraSmallTextStyle = TextStyle(
     color: AppColors.darkCyan,
     fontSize: 12,
-    fontFamily: Fonts.openSans,
-    fontWeight: FontWeight.normal,
-  );
-
-  static const radioLabelTextStyle = TextStyle(
-    color: AppColors.gray,
-    fontSize: 10,
     fontFamily: Fonts.openSans,
     fontWeight: FontWeight.normal,
   );

@@ -1,20 +1,25 @@
 import 'package:car_rental_ui/generated_code/lib/api.dart';
+import 'package:car_rental_ui/shared/helpers.dart';
 import 'package:flutter/material.dart';
 
+import '../../../resources/app_colors.dart';
 import '../../../resources/dimens.dart';
 
 class BookingTableDatasource extends DataTableSource {
   final List<Booking> bookings;
+  final Map<String, String> columnsMap;
+  final Function(String button, int bookingId) onButtonClick;
 
-  BookingTableDatasource({required this.bookings});
+  BookingTableDatasource({required this.bookings, required this.columnsMap, required this.onButtonClick});
 
   @override
   int get rowCount => bookings.length;
 
-  static const List<int> _displayIndexToRawIndex = <int>[0, 1, 2, 3, 4];
+  List<int> _displayIndexToRawIndex = [];
   late List<Booking> sortedData;
 
   void setData(List<Booking> rawData, int sortColumn, bool sortAscending) {
+    _displayIndexToRawIndex = generateIndexes(columnsMap);
     sortedData = rawData.toList()
       ..sort((Booking a, Booking b) {
         Comparable<Object> cellA;
@@ -61,7 +66,7 @@ class BookingTableDatasource extends DataTableSource {
   static DataCell cellFor(Object data) {
     String value;
     if (data is DateTime) {
-      value = '${data.year}-${data.month.toString().padLeft(2, '0')}-${data.day.toString().padLeft(2, '0')}';
+      value = '${data.day}.${data.month.toString().padLeft(2, '0')}.${data.year.toString().padLeft(2, '0')}';
     } else {
       value = data.toString();
     }
@@ -80,6 +85,28 @@ class BookingTableDatasource extends DataTableSource {
         cellFor(bookings[index].bookingStatus.value),
         cellFor(bookings[index].total),
         cellFor(bookings[index].timeStamp),
+        DataCell(Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              if (bookings[index].bookingStatus == BookingStatus.PENDING || bookings[index].bookingStatus == BookingStatus.ACTIVE) ...[
+                TextButton(
+                    onPressed: () => onButtonClick('approve', bookings[index].id!),
+                    style: Dimens.clearButtonStyle,
+                    child: const Icon(Icons.done_all, color: AppColors.green)),
+                TextButton(
+                    onPressed: () => onButtonClick('reject', bookings[index].id!),
+                    style: Dimens.clearButtonStyle,
+                    child: const Icon(Icons.cancel_outlined, color: AppColors.darkGray)),
+              ],
+              TextButton(
+                  onPressed: () => onButtonClick('delete', bookings[index].id!),
+                  style: Dimens.clearButtonStyle,
+                  child: const Icon(Icons.delete, color: AppColors.red)),
+            ],
+          ),
+        ))
       ],
     );
   }

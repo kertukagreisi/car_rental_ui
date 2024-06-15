@@ -2,8 +2,26 @@ import 'package:car_rental_ui/navigation/nav_route.dart';
 import 'package:car_rental_ui/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 
+import '../resources/dimens.dart';
+
 String getErrorMessage(Object? error) {
   return error.toString().substring(error.toString().indexOf(':') + 2, error.toString().length);
+}
+
+String convertToCamelCase(String input) {
+  if (input.isEmpty) return input;
+  List<String> words = input.split(RegExp(r'[_\s]+'));
+  if (words.isEmpty) return input;
+
+  String camelCaseString = '';
+
+  for (int index = 0; index < words.length; index++) {
+    String word = words[index];
+    if (word.isNotEmpty) {
+      camelCaseString += '${word.substring(0, 1).toUpperCase()}${word.substring(1, word.length).toLowerCase()}';
+    }
+  }
+  return camelCaseString;
 }
 
 Color getTextColor(bool isMainColor, String value) {
@@ -50,6 +68,17 @@ Color getTextColor(bool isMainColor, String value) {
         return Colors.white;
     }
   }
+}
+
+List<DataColumn> getColumns(Map<String, String> columnsMap) {
+  return columnsMap.entries
+      .map((column) =>
+          DataColumn(label: Text(column.value, style: Dimens.smallTextStyle.copyWith(fontWeight: FontWeight.w600)), tooltip: column.value))
+      .toList();
+}
+
+List<int> generateIndexes(Map<String, String> map) {
+  return List<int>.generate(map.length + 1, (index) => index);
 }
 
 List<String> noAuthRoutes = [NavRoute.home.path, NavRoute.carDetails.path];

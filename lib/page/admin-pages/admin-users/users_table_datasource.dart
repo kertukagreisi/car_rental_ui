@@ -2,19 +2,22 @@ import 'package:car_rental_ui/generated_code/lib/api.dart';
 import 'package:flutter/material.dart';
 
 import '../../../resources/dimens.dart';
+import '../../../shared/helpers.dart';
 
 class UsersTableDatasource extends DataTableSource {
   final List<User> users;
+  final Map<String, String> columnsMap;
 
-  UsersTableDatasource({required this.users});
+  UsersTableDatasource({required this.users, required this.columnsMap});
 
   @override
   int get rowCount => users.length;
 
-  static const List<int> _displayIndexToRawIndex = <int>[0, 1, 2, 3, 4, 5];
+  List<int> _displayIndexToRawIndex = [];
   late List<User> sortedData;
 
   void setData(List<User> rawData, int sortColumn, bool sortAscending) {
+    _displayIndexToRawIndex = generateIndexes(columnsMap);
     sortedData = rawData.toList()
       ..sort((User a, User b) {
         Comparable<Object> cellA;
@@ -57,7 +60,7 @@ class UsersTableDatasource extends DataTableSource {
   static DataCell cellFor(Object data) {
     String value;
     if (data is DateTime) {
-      value = '${data.year}-${data.month.toString().padLeft(2, '0')}-${data.day.toString().padLeft(2, '0')}';
+      value = '${data.day}.${data.month.toString().padLeft(2, '0')}.${data.year.toString().padLeft(2, '0')}';
     } else {
       value = data.toString();
     }
