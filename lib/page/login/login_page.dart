@@ -2,7 +2,7 @@ import 'package:car_rental_ui/resources/app_colors.dart';
 import 'package:car_rental_ui/resources/dimens.dart';
 import 'package:car_rental_ui/shared/locator.dart';
 import 'package:car_rental_ui/shared/mvvm/view_model_widgets.dart';
-import 'package:car_rental_ui/widgets/ui_type/text_field_widget.dart';
+import 'package:car_rental_ui/widgets/ui_type/text_input_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 

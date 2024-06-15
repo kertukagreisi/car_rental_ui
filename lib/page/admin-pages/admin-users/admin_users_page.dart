@@ -23,8 +23,15 @@ class AdminUsersPage extends ViewModelWidget<AdminUsersViewModel> {
           children: [
             const Text('Users Overview', style: Dimens.mediumHeadTextStyle),
             Dimens.mediumSizedBox,
-            PaginatedDataTable(
-                columns: _getColumns(viewModel.columnsMap), source: UsersTableDatasource(users: viewModel.users, columnsMap: viewModel.columnsMap))
+            Row(
+              children: [
+                Expanded(
+                  child: PaginatedDataTable(
+                      columns: _getColumns(viewModel.columnsMap),
+                      source: UsersTableDatasource(users: viewModel.users, columnsMap: viewModel.columnsMap)),
+                ),
+              ],
+            )
           ],
         ),
       ),

@@ -2,6 +2,7 @@ import 'package:car_rental_ui/navigation/nav_route.dart';
 import 'package:car_rental_ui/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 
+import 'package:car_rental_ui/generated_code/lib/api.dart' as api_values;
 import '../resources/dimens.dart';
 
 String getErrorMessage(Object? error) {
@@ -80,6 +81,11 @@ List<DataColumn> getColumns(Map<String, String> columnsMap) {
 List<int> generateIndexes(Map<String, String> map) {
   return List<int>.generate(map.length + 1, (index) => index);
 }
+
+List<String> brandValues = api_values.Brand.values.map((brand) => brand.value).toList();
+List<String> fuelTypeValues = api_values.FuelType.values.map((fuelType) => fuelType.value).toList();
+List<String> colorValues = api_values.Color.values.map((color) => color.value).toList();
+List<String> transmissionValues = api_values.Transmission.values.map((transmission) => transmission.value).toList();
 
 List<String> noAuthRoutes = [NavRoute.home.path, NavRoute.carDetails.path];
 List<String> adminRoutes = [NavRoute.adminCars.path, NavRoute.adminUsers.path, NavRoute.adminBookings.path];

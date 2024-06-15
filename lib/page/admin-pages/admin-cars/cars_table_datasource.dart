@@ -1,14 +1,16 @@
 import 'package:car_rental_ui/generated_code/lib/api.dart';
+import 'package:car_rental_ui/resources/app_colors.dart';
 import 'package:car_rental_ui/resources/dimens.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/helpers.dart';
 
-class CarTableDatasource extends DataTableSource {
+class CarsTableDatasource extends DataTableSource {
   final List<Car> cars;
   final Map<String, String> columnsMap;
+  final Function(String button, int id) onButtonClick;
 
-  CarTableDatasource({required this.cars, required this.columnsMap});
+  CarsTableDatasource({required this.cars, required this.columnsMap, required this.onButtonClick});
 
   @override
   int get rowCount => cars.length;
@@ -73,6 +75,8 @@ class CarTableDatasource extends DataTableSource {
         cellFor(cars[index].model),
         cellFor(cars[index].year),
         cellFor(cars[index].price),
+        DataCell(TextButton(style: Dimens.clearButtonStyle, onPressed: () {}, child: const Icon(Icons.edit, color: AppColors.gray)),
+            onTap: () => onButtonClick('edit', cars[index].id!))
       ],
     );
   }

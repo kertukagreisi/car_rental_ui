@@ -3,7 +3,7 @@ import 'package:car_rental_ui/generated_code/lib/api.dart';
 import 'package:car_rental_ui/resources/app_colors.dart';
 import 'package:car_rental_ui/resources/images.dart';
 import 'package:car_rental_ui/shared/snackbar_service.dart';
-import 'package:car_rental_ui/widgets/ui_type/text_field_widget.dart';
+import 'package:car_rental_ui/widgets/ui_type/text_input_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';

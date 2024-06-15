@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import '../../../resources/app_colors.dart';
 import '../../../resources/dimens.dart';
 
-class BookingTableDatasource extends DataTableSource {
+class BookingsTableDatasource extends DataTableSource {
   final List<Booking> bookings;
   final Map<String, String> columnsMap;
   final Function(String button, int bookingId) onButtonClick;
 
-  BookingTableDatasource({required this.bookings, required this.columnsMap, required this.onButtonClick});
+  BookingsTableDatasource({required this.bookings, required this.columnsMap, required this.onButtonClick});
 
   @override
   int get rowCount => bookings.length;

@@ -30,7 +30,7 @@ class AdminBookingsPage extends ViewModelWidget<AdminBookingsViewModel> {
                 Expanded(
                   child: PaginatedDataTable(
                       columns: getColumns(viewModel.columnsMap),
-                      source: BookingTableDatasource(
+                      source: BookingsTableDatasource(
                           bookings: viewModel.bookings,
                           columnsMap: viewModel.columnsMap,
                           onButtonClick: (String button, int id) => _getActionDialog(viewModel, context, button, id))),

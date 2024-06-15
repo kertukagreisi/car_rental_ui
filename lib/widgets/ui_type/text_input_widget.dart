@@ -17,10 +17,9 @@ class TextInputWidget extends StatelessWidget {
   final List<TextInputFormatter>? validations;
   final String placeholder;
   final bool obscureText;
-  final bool hideLabel;
   final double height;
   final double? width;
-  final bool? showLabel;
+  final bool showLabel;
   final String? inputType;
 
   const TextInputWidget(
@@ -34,10 +33,9 @@ class TextInputWidget extends StatelessWidget {
       this.validations,
       this.placeholder = 'Placeholder',
       this.obscureText = false,
-      this.hideLabel = false,
       this.width,
       this.height = 75.0,
-      this.showLabel,
+      this.showLabel = true,
       this.inputType});
 
   @override
@@ -54,7 +52,7 @@ class TextInputWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (showLabel ?? false)
+        if (showLabel)
           SizedBox(
             height: 20.0,
             child: Text(
@@ -64,7 +62,7 @@ class TextInputWidget extends StatelessWidget {
           ),
         Dimens.smallSizedBox,
         SizedBox(
-          height: showLabel ?? false ? height + 20 : height,
+          height: showLabel ? height + 20 : height,
           width: width ?? 150,
           child: Column(
             children: [
@@ -98,7 +96,7 @@ class TextInputWidget extends StatelessWidget {
     );
 
     return InputDecoration(
-      labelText: (showLabel ?? false) ? label + (mandatory ? ' *' : '') : null,
+      labelText: showLabel ? label + (mandatory ? ' *' : '') : null,
       floatingLabelBehavior: FloatingLabelBehavior.never,
       hintText: placeholder,
       hoverColor: Colors.white,

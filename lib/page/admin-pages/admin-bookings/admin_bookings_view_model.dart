@@ -38,27 +38,34 @@ class AdminBookingsViewModel extends ViewModel {
   Future<void> approveBooking(int bookingId) async {
     Booking booking = bookings.firstWhere((booking) => booking.id == bookingId);
     booking.bookingStatus = booking.bookingStatus == BookingStatus.PENDING ? BookingStatus.ACTIVE : BookingStatus.COMPLETED;
-    await CarRentalApi.bookingEndpointApi
-        .bookingsUpdatePut(booking: booking)
-        .then((value) =>
-            showSnackBar(SnackBarLevel.success, '${booking.bookingStatus == BookingStatus.PENDING ? 'Approved' : 'Completed'} booking sucessfully!'))
-        .onError((error, stackTrace) =>
-            showSnackBar(SnackBarLevel.error, 'Error when ${booking.bookingStatus == BookingStatus.PENDING ? 'approving' : 'completing'} booking!'));
+    await CarRentalApi.bookingEndpointApi.bookingsUpdatePut(booking: booking).then((value) async {
+      showSnackBar(SnackBarLevel.success, '${booking.bookingStatus == BookingStatus.PENDING ? 'Approved' : 'Completed'} booking sucessfully!');
+      await loadData();
+      notifyListeners();
+    }).onError((error, stackTrace) {
+      showSnackBar(SnackBarLevel.error, 'Error when ${booking.bookingStatus == BookingStatus.PENDING ? 'approving' : 'completing'} booking!');
+    });
   }
 
   Future<void> rejectBooking(int bookingId) async {
     Booking booking = bookings.firstWhere((booking) => booking.id == bookingId);
     booking.bookingStatus = BookingStatus.CANCELED;
-    await CarRentalApi.bookingEndpointApi
-        .bookingsUpdatePut(booking: booking)
-        .then((value) => showSnackBar(SnackBarLevel.success, 'Canceled booking sucessfully!'))
-        .onError((error, stackTrace) => showSnackBar(SnackBarLevel.error, 'Error when canceling booking!'));
+    await CarRentalApi.bookingEndpointApi.bookingsUpdatePut(booking: booking).then((value) async {
+      showSnackBar(SnackBarLevel.success, 'Canceled booking sucessfully!');
+      await loadData();
+      notifyListeners();
+    }).onError((error, stackTrace) {
+      showSnackBar(SnackBarLevel.error, 'Error when canceling booking!');
+    });
   }
 
   Future<void> deleteBooking(int bookingId) async {
-    await CarRentalApi.bookingEndpointApi
-        .bookingsDeleteIdDelete(bookingId)
-        .then((value) => showSnackBar(SnackBarLevel.success, 'Deleted booking sucessfully!'))
-        .onError((error, stackTrace) => showSnackBar(SnackBarLevel.error, 'Error when deleting booking!'));
+    await CarRentalApi.bookingEndpointApi.bookingsDeleteIdDelete(bookingId).then((value) async {
+      showSnackBar(SnackBarLevel.success, 'Deleted booking sucessfully!');
+      await loadData();
+      notifyListeners();
+    }).onError((error, stackTrace) {
+      showSnackBar(SnackBarLevel.error, 'Error when deleting booking!');
+    });
   }
 }
