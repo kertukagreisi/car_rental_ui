@@ -113,7 +113,6 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
           placeholder: 'Username',
           mandatory: true,
           onChange: (value) {},
-          hideLabel: true,
         ),
         TextInputWidget(
           label: 'Password',
@@ -121,7 +120,6 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
           mandatory: true,
           obscureText: true,
           onChange: (value) {},
-          hideLabel: true,
         ),
       ];
     } else {
@@ -136,7 +134,6 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
               placeholder: 'Name',
               mandatory: true,
               onChange: (value) {},
-              hideLabel: true,
             ),
             TextInputWidget(
               width: 128,
@@ -144,7 +141,6 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
               placeholder: 'Last Name',
               mandatory: true,
               onChange: (value) {},
-              hideLabel: true,
             ),
           ],
         ),
@@ -158,7 +154,6 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
               placeholder: 'Email',
               mandatory: true,
               onChange: (value) {},
-              hideLabel: true,
               inputType: 'Email',
             ),
             TextInputWidget(
@@ -167,7 +162,6 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
               placeholder: 'Phone',
               mandatory: true,
               onChange: (value) {},
-              hideLabel: true,
               inputType: 'Phone Number',
             ),
           ],
@@ -178,7 +172,6 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
           placeholder: 'Username',
           mandatory: true,
           onChange: (value) {},
-          hideLabel: true,
         ),
         Wrap(
           spacing: 16.0,
@@ -191,7 +184,6 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
               obscureText: true,
               mandatory: true,
               onChange: (value) {},
-              hideLabel: true,
             ),
             TextInputWidget(
               width: 128,
@@ -200,7 +192,6 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
               obscureText: true,
               mandatory: true,
               onChange: (value) {},
-              hideLabel: true,
             ),
           ],
         ),
