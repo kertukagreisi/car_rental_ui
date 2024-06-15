@@ -10,10 +10,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  path: any
+  async: any
   cupertino_icons: ^1.0.5
   rxdart: ^0.27.7
   flutter_offline: ^3.0.1
-  web: 0.3.0
+  web: 0.5.0
   flutter_plugin_android_lifecycle: 2.0.16
   connectivity_plus: 5.0.2
   network_info_plus: 4.1.0

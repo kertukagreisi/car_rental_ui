@@ -82,6 +82,7 @@ List<int> generateIndexes(Map<String, String> map) {
   return List<int>.generate(map.length + 1, (index) => index);
 }
 
+List<String> roleValues = api_values.Role.values.map((role) => role.value).toList();
 List<String> brandValues = api_values.Brand.values.map((brand) => brand.value).toList();
 List<String> fuelTypeValues = api_values.FuelType.values.map((fuelType) => fuelType.value).toList();
 List<String> colorValues = api_values.Color.values.map((color) => color.value).toList();

@@ -24,7 +24,7 @@ class AdminBookingsPage extends ViewModelWidget<AdminBookingsViewModel> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Users Overview', style: Dimens.mediumHeadTextStyle),
+            const Text('Bookings Overview', style: Dimens.mediumHeadTextStyle),
             Dimens.mediumSizedBox,
             Row(
               children: [

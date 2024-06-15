@@ -32,13 +32,13 @@ class Dimens {
   static ButtonStyle saveButtonStyle = TextButton.styleFrom(
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
       backgroundColor: AppColors.darkCyan,
-      side: const BorderSide(color: AppColors.darkCyan),
+      side: const BorderSide(color: AppColors.darkCyan, width: 2.0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)));
 
   static ButtonStyle cancelButtonStyle = TextButton.styleFrom(
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
       backgroundColor: Colors.white,
-      side: const BorderSide(color: AppColors.darkCyan),
+      side: const BorderSide(color: AppColors.darkCyan, width: 2.0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)));
 
   static const headTextStyle = TextStyle(

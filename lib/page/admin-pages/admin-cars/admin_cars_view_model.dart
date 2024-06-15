@@ -25,25 +25,52 @@ class AdminCarsViewModel extends ViewModel {
     cars = _fetchedCars;
   }
 
+  Future<void> addCar(Map<String, dynamic> formValue) async {
+    var brand = Brand.values.firstWhere((brand) => brand.value == formValue['brand']);
+    var fuelType = FuelType.values.firstWhere((fuelType) => fuelType.value == formValue['fuelType']);
+    var color = Color.values.firstWhere((color) => color.value == formValue['color']);
+    var transmission = Transmission.values.firstWhere((transmission) => transmission.value == formValue['transmission']);
+    var createdCar = Car(
+        model: formValue['model'],
+        brand: brand,
+        engine: formValue['engine'],
+        fuelType: fuelType,
+        doors: int.parse(formValue['doors']),
+        color: color,
+        transmission: transmission,
+        seats: int.parse(formValue['seats']),
+        year: int.parse(formValue['year']),
+        licencePlate: formValue['licencePlate'],
+        price: double.parse(formValue['price']),
+        averageRating: 0.0,
+        reviewsCount: 0);
+    await CarRentalApi.carEndpointApi.carsCreatePost(car: createdCar).then((response) async {
+      showSnackBar(SnackBarLevel.success, 'Created car successfully!');
+      await _fetchCars();
+      notifyListeners();
+    }).onError((error, stackTrace) {
+      showSnackBar(SnackBarLevel.error, 'Error when creating car!');
+    });
+  }
+
   Future<void> editCar(Map<String, dynamic> formValue, Car car) async {
     var brand = Brand.values.firstWhere((brand) => brand.value == formValue['brand']);
     var fuelType = FuelType.values.firstWhere((fuelType) => fuelType.value == formValue['fuelType']);
     var color = Color.values.firstWhere((color) => color.value == formValue['color']);
     var transmission = Transmission.values.firstWhere((transmission) => transmission.value == formValue['transmission']);
-    print('$brand$fuelType$color$transmission');
-    Car editedCar = Car(
+    var editedCar = Car(
         id: car.id,
         model: formValue['model'],
         brand: brand,
         engine: formValue['engine'],
         fuelType: fuelType,
-        doors: formValue['doors'],
+        doors: int.parse(formValue['doors']),
         color: color,
         transmission: transmission,
-        seats: formValue['seats'],
-        year: formValue['year'],
+        seats: int.parse(formValue['seats']),
+        year: int.parse(formValue['year']),
         licencePlate: formValue['licencePlate'],
-        price: formValue['price'],
+        price: double.parse(formValue['price']),
         averageRating: car.averageRating,
         reviewsCount: car.reviewsCount,
         picturePath: car.picturePath);

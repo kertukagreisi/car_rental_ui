@@ -11,6 +11,15 @@ class SaveButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-        onPressed: onPressed, style: Dimens.saveButtonStyle, child: Text(text, style: Dimens.mediumTextStyle.copyWith(color: Colors.white)));
+        onPressed: onPressed,
+        style: Dimens.saveButtonStyle,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.save, color: Colors.white, size: 16),
+            const SizedBox(width: 2.0),
+            Text(text, style: Dimens.mediumHeadTextStyle.copyWith(color: Colors.white)),
+          ],
+        ));
   }
 }

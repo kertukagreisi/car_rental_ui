@@ -2,12 +2,21 @@ import 'package:car_rental_ui/api-client/api_client.dart';
 import 'package:car_rental_ui/generated_code/lib/api.dart';
 
 import '../../../shared/mvvm/view_model.dart';
+import '../../../shared/snackbar_service.dart';
 
 class AdminUsersViewModel extends ViewModel {
   final Map<String, String> args;
   late List<User> _fetchedUsers = [];
   List<User> users = [];
-  final Map<String, String> columnsMap = {'id': 'ID', 'fullName': 'Name', 'email': 'Email', 'phone': 'Phone', 'username': 'Username', 'role': 'Role'};
+  final Map<String, String> columnsMap = {
+    'id': 'ID',
+    'fullName': 'Name',
+    'email': 'Email',
+    'phone': 'Phone',
+    'username': 'Username',
+    'role': 'Role',
+    'actions': 'Actions'
+  };
 
   AdminUsersViewModel({required this.args});
 
@@ -15,12 +24,62 @@ class AdminUsersViewModel extends ViewModel {
   Future<void> init() async {
     super.init();
     loadDataAsync(() async {
-      await loadData();
+      await _fetchUsers();
     });
   }
 
-  Future<void> loadData() async {
+  Future<void> _fetchUsers() async {
     _fetchedUsers = await CarRentalApi.userEndpointApi.userAllGet() ?? [];
     users = _fetchedUsers;
+  }
+
+  Future<void> addUser(Map<String, dynamic> formValue) async {
+    var role = Role.values.firstWhere((role) => role.value == formValue['role']);
+    var createdUser = User(
+        name: formValue['name'],
+        lastName: formValue['lastName'],
+        email: formValue['email'],
+        phone: formValue['phone'],
+        username: formValue['username'],
+        password: formValue['password'],
+        role: role);
+    await CarRentalApi.userEndpointApi.userCreatePost(user: createdUser).then((response) async {
+      showSnackBar(SnackBarLevel.success, 'Created user successfully!');
+      await _fetchUsers();
+      notifyListeners();
+    }).onError((error, stackTrace) {
+      showSnackBar(SnackBarLevel.error, 'Error when creating user!');
+    });
+  }
+
+  Future<void> editUser(Map<String, dynamic> formValue, User user) async {
+    var role = Role.values.firstWhere((role) => role.value == formValue['role']);
+    var editedUser = User(
+        id: user.id,
+        name: formValue['name'],
+        lastName: formValue['lastName'],
+        email: formValue['email'],
+        phone: formValue['phone'],
+        username: formValue['username'],
+        password: formValue['password'],
+        role: role,
+        profilePicturePath: user.profilePicturePath);
+    await CarRentalApi.userEndpointApi.userUpdatePut(user: editedUser).then((response) async {
+      showSnackBar(SnackBarLevel.success, 'Edited user successfully!');
+      await _fetchUsers();
+      notifyListeners();
+    }).onError((error, stackTrace) {
+      showSnackBar(SnackBarLevel.error, 'Error when editing user!');
+    });
+  }
+
+  Future<void> deleteUser(int userId) async {
+    await CarRentalApi.userEndpointApi.userDeleteIdDelete(userId).then((response) async {
+      showSnackBar(SnackBarLevel.success, 'Deleted user successfully!');
+      await _fetchUsers();
+      notifyListeners();
+    }).onError((error, stackTrace) {
+      showSnackBar(SnackBarLevel.error, 'Error when deleting user!');
+    });
   }
 }

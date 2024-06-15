@@ -47,9 +47,7 @@ class _SingleCheckBoxWidgetState extends State<SingleCheckBoxWidget> {
               // decoration: _buildDCheckBoxInputDecoration(widget.label),
               onChanged: widget.onChange,
               initialValue: widget.initialValue,
-              side: MaterialStateBorderSide.resolveWith(
-                (states) => const BorderSide(color: AppColors.darkCyan),
-              ),
+              side: const BorderSide(color: AppColors.darkCyan),
             ),
           ),
         ],

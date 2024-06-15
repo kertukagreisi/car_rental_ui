@@ -9,11 +9,9 @@ extension NavControllerHelper on BuildContext {
 
   Object? get extra => GoRouterState.of(this).extra;
 
-  Map<String, String> get currentRouteParams =>
-      GoRouterState.of(this).pathParameters;
+  Map<String, String> get currentRouteParams => GoRouterState.of(this).pathParameters;
 
-  Map<String, String> get currentRouteQueryParams =>
-      GoRouterState.of(this).uri.queryParameters;
+  Map<String, String> get currentRouteQueryParams => GoRouterState.of(this).uri.queryParameters;
 
   void goNamedRoute(
     NavRoute route, {
@@ -59,11 +57,8 @@ extension NavControllerHelper on BuildContext {
     return _getAppBarTitleByRoute(currentRoute, currentRouteParams);
   }
 
-  String _getAppBarTitleByRoute(
-      String currentRoute, Map<String, String> routeParams) {
-    var list = NavRoute.values
-        .where((element) => element.path == currentRoute)
-        .toList();
+  String _getAppBarTitleByRoute(String currentRoute, Map<String, String> routeParams) {
+    var list = NavRoute.values.where((element) => element.path == currentRoute).toList();
     var navRoute = list.isNotEmpty ? list[0] : 'default';
 
     switch (navRoute) {
@@ -77,14 +72,11 @@ extension NavControllerHelper on BuildContext {
   }
 
   Future<void> navigateToPreviousLevel() async {
-    var list = NavRoute.values
-        .where((element) => element.path == currentRoute)
-        .toList();
+    var list = NavRoute.values.where((element) => element.path == currentRoute).toList();
     var navRoute = list.isNotEmpty ? list[0] : 'default';
 
     if (navRoute == NavRoute.rent) {
-      goNamedRoute(NavRoute.carDetails,
-          queryParams: currentRouteQueryParams, extra: extra);
+      goNamedRoute(NavRoute.carDetails, queryParams: currentRouteQueryParams, extra: extra);
     } else {
       goNamedRoute(NavRoute.home);
     }

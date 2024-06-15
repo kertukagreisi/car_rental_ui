@@ -47,8 +47,6 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
                               car: car,
                               onCarCardItemClick: (id) async {
                                 if (context.mounted) {
-                                  print('Id of car: $id');
-                                  print('Car object: $car');
                                   context.goNamedRoute(NavRoute.carDetails, queryParams: {'id': '$id'}, extra: car);
                                 }
                               }),

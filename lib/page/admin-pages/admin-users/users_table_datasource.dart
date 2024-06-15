@@ -1,14 +1,16 @@
 import 'package:car_rental_ui/generated_code/lib/api.dart';
 import 'package:flutter/material.dart';
 
+import '../../../resources/app_colors.dart';
 import '../../../resources/dimens.dart';
 import '../../../shared/helpers.dart';
 
 class UsersTableDatasource extends DataTableSource {
   final List<User> users;
   final Map<String, String> columnsMap;
+  final Function(String button, int carId) onButtonClick;
 
-  UsersTableDatasource({required this.users, required this.columnsMap});
+  UsersTableDatasource({required this.users, required this.columnsMap, required this.onButtonClick});
 
   @override
   int get rowCount => users.length;
@@ -78,6 +80,25 @@ class UsersTableDatasource extends DataTableSource {
         cellFor(users[index].phone ?? ''),
         cellFor(users[index].username ?? ''),
         cellFor(users[index].role?.value ?? ''),
+        DataCell(
+          Padding(
+            padding: Dimens.tableCellPadding,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                    style: Dimens.clearButtonStyle,
+                    onPressed: () => onButtonClick('edit', users[index].id!),
+                    child: const Icon(Icons.edit, color: AppColors.gray)),
+                TextButton(
+                    style: Dimens.clearButtonStyle,
+                    onPressed: () => onButtonClick('delete', users[index].id!),
+                    child: const Icon(Icons.delete, color: AppColors.red)),
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }

@@ -99,7 +99,8 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
                 onPressed: () async {
                   _isRailExtended.value = false;
                   await authService.logout();
-                  if (context.mounted) {
+                  if (mounted) {
+                    if (!context.mounted) return;
                     context.goNamedRoute(NavRoute.login);
                   }
                 },
@@ -107,19 +108,13 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(4.0),
                       color: Colors.white,
-                      boxShadow: const [
-                        BoxShadow(
-                            color: AppColors.gray,
-                            spreadRadius: 2.0,
-                            blurRadius: 2.0)
-                      ]),
+                      boxShadow: const [BoxShadow(color: AppColors.gray, spreadRadius: 2.0, blurRadius: 2.0)]),
                   padding: const EdgeInsets.all(8.0),
                   child: const Row(
                     children: [
                       Padding(
                         padding: EdgeInsets.only(right: 4.0),
-                        child: Icon(Icons.logout,
-                            color: AppColors.darkCyan, size: 20),
+                        child: Icon(Icons.logout, color: AppColors.darkCyan, size: 20),
                       ),
                       Text('Log Out', style: Dimens.smallHeadTextStyle),
                     ],

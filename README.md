@@ -14,7 +14,7 @@ steps:
 npm install @openapitools/openapi-generator-cli -g 
 ```
 
-2. Run the command to generate the code:
+1. Run the command to generate the code:
 
 ```shell script
 npx @openapitools/openapi-generator-cli generate -i api_clients/openapi.yaml -g dart -o lib/generated_code

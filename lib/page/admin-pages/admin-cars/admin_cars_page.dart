@@ -2,6 +2,7 @@ import 'package:car_rental_ui/generated_code/lib/api.dart';
 import 'package:car_rental_ui/shared/helpers.dart';
 import 'package:car_rental_ui/shared/locator.dart';
 import 'package:car_rental_ui/shared/mvvm/view_model_widgets.dart';
+import 'package:car_rental_ui/widgets/button_with_icon_widget.dart';
 import 'package:car_rental_ui/widgets/cancel_button_widget.dart';
 import 'package:car_rental_ui/widgets/confirm_dialog_widget.dart';
 import 'package:car_rental_ui/widgets/save_button_widget.dart';
@@ -29,7 +30,19 @@ class AdminCarsPage extends ViewModelWidget<AdminCarsViewModel> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Cars Overview', style: Dimens.mediumHeadTextStyle),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('Cars Overview', style: Dimens.mediumHeadTextStyle),
+                ButtonWithIcon(
+                    text: 'Add Car',
+                    onPressed: () {
+                      showDialog(context: context, builder: (context) => _showAddCarDialog(viewModel, context));
+                    },
+                    icon: Icons.add,
+                    dark: false)
+              ],
+            ),
             Dimens.mediumSizedBox,
             Row(
               children: [
@@ -48,6 +61,8 @@ class AdminCarsPage extends ViewModelWidget<AdminCarsViewModel> {
                                 builder: (context) => ConfirmDialog(
                                     title: 'Delete Car',
                                     message: 'Are you sure you want to delete this car?',
+                                    confirmButtonText: 'Yes',
+                                    cancelButtonText: 'No',
                                     confirmCallback: () async {
                                       await viewModel.deleteCar(id);
                                       if (context.mounted) {
@@ -66,6 +81,53 @@ class AdminCarsPage extends ViewModelWidget<AdminCarsViewModel> {
           ],
         ),
       ),
+    );
+  }
+
+  AlertDialog _showAddCarDialog(AdminCarsViewModel viewModel, BuildContext context) {
+    final formKey = GlobalKey<FormBuilderState>();
+    return AlertDialog(
+      title: const Text('Add Car', style: Dimens.headTextStyle),
+      content: FormBuilder(
+        key: formKey,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TextInputWidget(label: 'model', mandatory: true, onChange: (value) {}),
+              DropDownSelectWidget(label: 'brand', items: brandValues, onDropDownChange: (value) {}, mandatory: true),
+              TextInputWidget(label: 'engine', mandatory: true, onChange: (value) {}),
+              DropDownSelectWidget(label: 'fuelType', items: fuelTypeValues, onDropDownChange: (value) {}, mandatory: true),
+              TextInputWidget(label: 'doors', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true),
+              DropDownSelectWidget(label: 'color', items: colorValues, onDropDownChange: (value) {}, mandatory: true),
+              DropDownSelectWidget(label: 'transmission', items: transmissionValues, onDropDownChange: (value) {}, mandatory: true),
+              TextInputWidget(label: 'seats', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true),
+              TextInputWidget(label: 'year', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true),
+              TextInputWidget(label: 'licencePlate', mandatory: true, onChange: (value) {}),
+              TextInputWidget(label: 'price', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true),
+            ],
+          ),
+        ),
+      ),
+      actions: [
+        SaveButton(
+            text: 'Add',
+            onPressed: () async {
+              formKey.currentState?.save();
+              if (formKey.currentState!.validate()) {
+                await viewModel.addCar(formKey.currentState!.value);
+                if (context.mounted) {
+                  Navigator.of(context).pop();
+                }
+              }
+            }),
+        CancelButton(onPressed: () {
+          Navigator.of(context).pop();
+        }),
+      ],
+      titlePadding: Dimens.mediumPadding,
+      contentPadding: Dimens.mediumPadding,
+      actionsPadding: Dimens.mediumPadding,
     );
   }
 
