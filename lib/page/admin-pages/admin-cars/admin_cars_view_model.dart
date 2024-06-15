@@ -26,24 +26,29 @@ class AdminCarsViewModel extends ViewModel {
   }
 
   Future<void> editCar(Map<String, dynamic> formValue, Car car) async {
+    var brand = Brand.values.firstWhere((brand) => brand.value == formValue['brand']);
+    var fuelType = FuelType.values.firstWhere((fuelType) => fuelType.value == formValue['fuelType']);
+    var color = Color.values.firstWhere((color) => color.value == formValue['color']);
+    var transmission = Transmission.values.firstWhere((transmission) => transmission.value == formValue['transmission']);
+    print('$brand$fuelType$color$transmission');
     Car editedCar = Car(
         id: car.id,
-        model: formValue['model']?.value,
-        brand: Brand.values.firstWhere((brand) => brand.value == formValue['brand']?.value),
-        engine: formValue['engine']?.value,
-        fuelType: FuelType.values.firstWhere((fuelType) => fuelType.value == formValue['fuelType']?.value),
-        doors: formValue['doors']?.value,
-        color: Color.values.firstWhere((color) => color.value == formValue['color']?.value),
-        transmission: Transmission.values.firstWhere((transmission) => transmission.value == formValue['transmission']?.value),
-        seats: formValue['seats']?.value,
-        year: formValue['year']?.value,
-        licencePlate: formValue['licencePlate']?.value,
-        price: formValue['price']?.value,
+        model: formValue['model'],
+        brand: brand,
+        engine: formValue['engine'],
+        fuelType: fuelType,
+        doors: formValue['doors'],
+        color: color,
+        transmission: transmission,
+        seats: formValue['seats'],
+        year: formValue['year'],
+        licencePlate: formValue['licencePlate'],
+        price: formValue['price'],
         averageRating: car.averageRating,
         reviewsCount: car.reviewsCount,
         picturePath: car.picturePath);
     await CarRentalApi.carEndpointApi.carsUpdatePut(car: editedCar).then((response) async {
-      showSnackBar(SnackBarLevel.success, 'Edited car sucessfully!');
+      showSnackBar(SnackBarLevel.success, 'Edited car successfully!');
       await _fetchCars();
       notifyListeners();
     }).onError((error, stackTrace) {
@@ -53,7 +58,7 @@ class AdminCarsViewModel extends ViewModel {
 
   Future<void> deleteCar(int carId) async {
     await CarRentalApi.carEndpointApi.carsDeleteIdDelete(carId).then((response) async {
-      showSnackBar(SnackBarLevel.success, 'Deleted car sucessfully!');
+      showSnackBar(SnackBarLevel.success, 'Deleted car successfully!');
       await _fetchCars();
       notifyListeners();
     }).onError((error, stackTrace) {

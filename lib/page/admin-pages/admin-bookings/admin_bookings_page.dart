@@ -1,3 +1,4 @@
+import 'package:car_rental_ui/generated_code/lib/api.dart';
 import 'package:car_rental_ui/page/admin-pages/admin-bookings/bookings_table_datasource.dart';
 import 'package:car_rental_ui/shared/locator.dart';
 import 'package:car_rental_ui/shared/mvvm/view_model_widgets.dart';
@@ -49,11 +50,12 @@ class AdminBookingsPage extends ViewModelWidget<AdminBookingsViewModel> {
   }
 
   _getActionDialog(AdminBookingsViewModel viewModel, BuildContext context, String button, int id) {
+    bool isPending = viewModel.bookings.firstWhere((booking) => booking.id == id).bookingStatus == BookingStatus.PENDING;
     showDialog(
         context: context,
         builder: (BuildContext context) => ConfirmDialog(
               title: '${convertToCamelCase(button)} Booking',
-              message: 'Are you sure you want to $button this booking?',
+              message: 'Are you sure you want to ${isPending ? 'activate' : 'complete'} this booking?',
               confirmCallback: () async {
                 if (button == 'approve') {
                   await viewModel.approveBooking(id);

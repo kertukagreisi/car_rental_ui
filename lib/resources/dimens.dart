@@ -5,7 +5,7 @@ import 'fonts.dart';
 
 class Dimens {
   const Dimens._();
-
+  static const tableCellPadding = EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0);
   static const buttonPadding = EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0);
   static const smallPadding = EdgeInsets.all(8.0);
   static const mediumPadding = EdgeInsets.all(16);
@@ -19,7 +19,7 @@ class Dimens {
   static const defaultElevation = 8.0;
   static const defaultScrollbarThickness = 8.0;
   static const filterButtonHeight = 56.0;
-  static const filterButtonWidth = 392.0;
+  static const filterButtonWidth = 150.0;
   static const filePickerHeightNoFiles = 66.0;
   static const filePickerHeightFiles = 110.0;
 

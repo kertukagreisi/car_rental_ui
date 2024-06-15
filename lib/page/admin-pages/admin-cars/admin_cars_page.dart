@@ -34,31 +34,33 @@ class AdminCarsPage extends ViewModelWidget<AdminCarsViewModel> {
             Row(
               children: [
                 Expanded(
-                    child: PaginatedDataTable(
-                        columns: _getColumns(viewModel.columnsMap),
-                        source: CarsTableDatasource(
-                            cars: viewModel.cars,
-                            columnsMap: viewModel.columnsMap,
-                            onButtonClick: (button, id) {
-                              if (button == 'edit') {
-                                showDialog(context: context, builder: (context) => _showEditCarDialog(viewModel, context, button, id));
-                              } else {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) => ConfirmDialog(
-                                        title: 'Delete Car',
-                                        message: 'Are you sure you want to delete this car?',
-                                        confirmCallback: () async {
-                                          await viewModel.deleteCar(id);
-                                          if (context.mounted) {
-                                            Navigator.of(context).pop();
-                                          }
-                                        },
-                                        cancelCallback: () {
-                                          Navigator.of(context).pop();
-                                        }));
-                              }
-                            }))),
+                  child: PaginatedDataTable(
+                    columns: _getColumns(viewModel.columnsMap),
+                    source: CarsTableDatasource(
+                        cars: viewModel.cars,
+                        columnsMap: viewModel.columnsMap,
+                        onButtonClick: (button, id) {
+                          if (button == 'edit') {
+                            showDialog(context: context, builder: (context) => _showEditCarDialog(viewModel, context, button, id));
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (context) => ConfirmDialog(
+                                    title: 'Delete Car',
+                                    message: 'Are you sure you want to delete this car?',
+                                    confirmCallback: () async {
+                                      await viewModel.deleteCar(id);
+                                      if (context.mounted) {
+                                        Navigator.of(context).pop();
+                                      }
+                                    },
+                                    cancelCallback: () {
+                                      Navigator.of(context).pop();
+                                    }));
+                          }
+                        }),
+                  ),
+                ),
               ],
             )
           ],
@@ -67,29 +69,36 @@ class AdminCarsPage extends ViewModelWidget<AdminCarsViewModel> {
     );
   }
 
-  Widget _showEditCarDialog(AdminCarsViewModel viewModel, BuildContext context, String button, int carId) {
+  AlertDialog _showEditCarDialog(AdminCarsViewModel viewModel, BuildContext context, String button, int carId) {
     final formKey = GlobalKey<FormBuilderState>();
     Car car = viewModel.cars.firstWhere((car) => car.id == carId);
     return AlertDialog(
       title: const Text('Edit Car', style: Dimens.headTextStyle),
       content: FormBuilder(
         key: formKey,
-        child: Wrap(
-          spacing: 16.0,
-          runSpacing: 12.0,
-          children: [
-            TextInputWidget(label: 'model', mandatory: true, onChange: (value) {}, initialValue: car.model),
-            DropDownSelectWidget(label: 'brand', items: brandValues, onDropDownChange: (value) {}, mandatory: true),
-            TextInputWidget(label: 'engine', mandatory: true, onChange: (value) {}, initialValue: car.engine),
-            DropDownSelectWidget(label: 'fuelType', items: fuelTypeValues, onDropDownChange: (value) {}, mandatory: true),
-            TextInputWidget(label: 'doors', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true, initialValue: car.doors),
-            DropDownSelectWidget(label: 'color', items: colorValues, onDropDownChange: (value) {}, mandatory: true),
-            DropDownSelectWidget(label: 'transmission', items: transmissionValues, onDropDownChange: (value) {}, mandatory: true),
-            TextInputWidget(label: 'seats', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true, initialValue: car.seats),
-            TextInputWidget(label: 'year', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true, initialValue: car.year),
-            TextInputWidget(label: 'licencePlate', mandatory: true, onChange: (value) {}, initialValue: car.licencePlate),
-            TextInputWidget(label: 'price', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true, initialValue: car.price),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TextInputWidget(label: 'model', mandatory: true, onChange: (value) {}, initialValue: car.model),
+              DropDownSelectWidget(label: 'brand', items: brandValues, onDropDownChange: (value) {}, mandatory: true, initialValue: car.brand.value),
+              TextInputWidget(label: 'engine', mandatory: true, onChange: (value) {}, initialValue: car.engine),
+              DropDownSelectWidget(
+                  label: 'fuelType', items: fuelTypeValues, onDropDownChange: (value) {}, mandatory: true, initialValue: car.fuelType.value),
+              TextInputWidget(label: 'doors', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true, initialValue: car.doors),
+              DropDownSelectWidget(label: 'color', items: colorValues, onDropDownChange: (value) {}, mandatory: true, initialValue: car.color.value),
+              DropDownSelectWidget(
+                  label: 'transmission',
+                  items: transmissionValues,
+                  onDropDownChange: (value) {},
+                  mandatory: true,
+                  initialValue: car.transmission.value),
+              TextInputWidget(label: 'seats', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true, initialValue: car.seats),
+              TextInputWidget(label: 'year', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true, initialValue: car.year),
+              TextInputWidget(label: 'licencePlate', mandatory: true, onChange: (value) {}, initialValue: car.licencePlate),
+              TextInputWidget(label: 'price', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true, initialValue: car.price),
+            ],
+          ),
         ),
       ),
       actions: [

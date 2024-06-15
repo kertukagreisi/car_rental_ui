@@ -8,7 +8,7 @@ import '../../../shared/helpers.dart';
 class CarsTableDatasource extends DataTableSource {
   final List<Car> cars;
   final Map<String, String> columnsMap;
-  final Function(String button, int id) onButtonClick;
+  final Function(String button, int carId) onButtonClick;
 
   CarsTableDatasource({required this.cars, required this.columnsMap, required this.onButtonClick});
 
@@ -71,12 +71,29 @@ class CarsTableDatasource extends DataTableSource {
       index: index,
       cells: <DataCell>[
         cellFor(cars[index].id.toString()),
-        cellFor('S${cars[index].brand}'),
+        cellFor(cars[index].brand.value),
         cellFor(cars[index].model),
         cellFor(cars[index].year),
         cellFor(cars[index].price),
-        DataCell(TextButton(style: Dimens.clearButtonStyle, onPressed: () {}, child: const Icon(Icons.edit, color: AppColors.gray)),
-            onTap: () => onButtonClick('edit', cars[index].id!))
+        DataCell(
+          Padding(
+            padding: Dimens.tableCellPadding,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                    style: Dimens.clearButtonStyle,
+                    onPressed: () => onButtonClick('edit', cars[index].id!),
+                    child: const Icon(Icons.edit, color: AppColors.gray)),
+                TextButton(
+                    style: Dimens.clearButtonStyle,
+                    onPressed: () => onButtonClick('delete', cars[index].id!),
+                    child: const Icon(Icons.delete, color: AppColors.red)),
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }

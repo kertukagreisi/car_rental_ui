@@ -86,8 +86,9 @@ class BookingsTableDatasource extends DataTableSource {
         cellFor(bookings[index].total),
         cellFor(bookings[index].timeStamp),
         DataCell(Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
+          padding: Dimens.tableCellPadding,
           child: Row(
+            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               if (bookings[index].bookingStatus == BookingStatus.PENDING || bookings[index].bookingStatus == BookingStatus.ACTIVE) ...[
