@@ -1,5 +1,5 @@
 import 'package:car_rental_ui/resources/app_colors.dart';
-import 'package:car_rental_ui/resources/dimens.dart';
+import 'package:car_rental_ui/resources/constants.dart';
 import 'package:car_rental_ui/shared/locator.dart';
 import 'package:car_rental_ui/shared/mvvm/view_model_widgets.dart';
 import 'package:car_rental_ui/widgets/ui_type/text_input_widget.dart';
@@ -69,7 +69,7 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
                     ),
                     child: Text(
                       viewModel.isOnLoginForm ? 'Login' : 'Sign Up',
-                      style: Dimens.headTextStyle.copyWith(color: Colors.white),
+                      style: Constants.headTextStyle.copyWith(color: Colors.white),
                     ),
                   ),
                 ),
@@ -78,16 +78,16 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
                   child: Wrap(
                     children: [
                       viewModel.isOnLoginForm
-                          ? const Text('Don\'t have an account?  ', style: Dimens.smallTextStyle)
-                          : const Text('Have an account?  ', style: Dimens.smallTextStyle),
+                          ? const Text('Don\'t have an account?  ', style: Constants.smallTextStyle)
+                          : const Text('Have an account?  ', style: Constants.smallTextStyle),
                       TextButton(
-                        style: Dimens.clearButtonStyle,
+                        style: Constants.clearButtonStyle,
                         onPressed: () {
                           viewModel.setForm = !viewModel.isOnLoginForm;
                         },
                         child: viewModel.isOnLoginForm
-                            ? const Text('Sign Up', style: Dimens.smallHeadTextStyle)
-                            : const Text('Login', style: Dimens.smallHeadTextStyle),
+                            ? const Text('Sign Up', style: Constants.smallHeadTextStyle)
+                            : const Text('Login', style: Constants.smallHeadTextStyle),
                       ),
                     ],
                   ),

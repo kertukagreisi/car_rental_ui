@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../resources/app_colors.dart';
-import '../../resources/dimens.dart';
+import '../../resources/constants.dart';
 import '../../resources/fonts.dart';
 
 class DropDownSelectWidget extends StatefulWidget {
@@ -35,7 +35,7 @@ class _DropDownSelectWidgetState extends State<DropDownSelectWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        width: Dimens.filterButtonWidth,
+        width: Constants.filterButtonWidth,
         height: (widget.showLabel ?? false) ? null : 60.0,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -49,7 +49,7 @@ class _DropDownSelectWidgetState extends State<DropDownSelectWidget> {
                   style: const TextStyle(fontSize: 16.0, color: AppColors.darkCyan, fontFamily: Fonts.openSans),
                 ),
               ),
-            if (widget.showLabel ?? false) Dimens.mediumSizedBox,
+            if (widget.showLabel ?? false) Constants.mediumSizedBox,
             Row(
               children: [
                 Expanded(

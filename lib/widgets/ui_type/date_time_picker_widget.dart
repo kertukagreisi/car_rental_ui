@@ -3,7 +3,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
 
 import '../../resources/app_colors.dart';
-import '../../resources/dimens.dart';
+import '../../resources/constants.dart';
 
 class DateTimePickerWidget extends StatefulWidget {
   final String label;
@@ -27,8 +27,8 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: Dimens.filterButtonHeight,
-      width: Dimens.filterButtonWidth,
+      height: Constants.filterButtonHeight,
+      width: Constants.filterButtonWidth,
       color: Colors.white,
       child: Row(
         children: [
@@ -57,8 +57,8 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
       labelText: label + (widget.mandatory ? ' *' : ''),
       floatingLabelBehavior: FloatingLabelBehavior.always,
       hintText: 'mm/dd/yyyy - mm/dd/yyyy',
-      floatingLabelStyle: Dimens.extraSmallTextStyle,
-      labelStyle: Dimens.mediumTextStyle.copyWith(
+      floatingLabelStyle: Constants.extraSmallTextStyle,
+      labelStyle: Constants.mediumTextStyle.copyWith(
         color: Colors.black,
       ),
       errorStyle: const TextStyle(fontSize: 9, backgroundColor: AppColors.lightBlue),

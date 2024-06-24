@@ -1,6 +1,6 @@
 import 'package:car_rental_ui/generated_code/lib/api.dart';
 import 'package:car_rental_ui/resources/app_colors.dart';
-import 'package:car_rental_ui/resources/dimens.dart';
+import 'package:car_rental_ui/resources/constants.dart';
 import 'package:car_rental_ui/shared/locator.dart';
 import 'package:car_rental_ui/shared/mvvm/view_model_widgets.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +32,7 @@ class BookingsOverviewPage extends ViewModelWidget<BookingsOverviewViewModel> {
                     child: Row(
                       children: BookingStatus.values.map((status) {
                         return TextButton(
-                          style: Dimens.clearButtonStyle,
+                          style: Constants.clearButtonStyle,
                           onPressed: () {
                             tabNotifier.value = BookingStatus.values.firstWhere((value) => value == status);
                           },
@@ -46,7 +46,7 @@ class BookingsOverviewPage extends ViewModelWidget<BookingsOverviewViewModel> {
                                 borderRadius: BorderRadius.circular(4.0)),
                             child: Text(
                               '${status.value} (${viewModel.bookings.where((booking) => booking.bookingStatus == status).length})',
-                              style: Dimens.extraSmallTextStyle
+                              style: Constants.extraSmallTextStyle
                                   .copyWith(fontWeight: FontWeight.w600, color: value.value == status.value ? Colors.white : AppColors.darkCyan),
                             ),
                           ),

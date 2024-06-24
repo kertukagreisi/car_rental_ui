@@ -3,7 +3,7 @@ import 'package:car_rental_ui/navigation/nav_extensions.dart';
 import 'package:car_rental_ui/shared/extensions.dart';
 import 'package:flutter/material.dart';
 
-import '../../../resources/dimens.dart';
+import '../../../resources/constants.dart';
 import '../navigation/nav_route.dart';
 import '../resources/app_colors.dart';
 import '../shared/auth_service.dart';
@@ -154,7 +154,7 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
                               padding: EdgeInsets.only(right: 4.0),
                               child: Icon(Icons.account_box, color: AppColors.darkCyan, size: 20),
                             ),
-                            Text('Profile', style: Dimens.smallHeadTextStyle),
+                            Text('Profile', style: Constants.smallHeadTextStyle),
                           ],
                         ),
                         const Row(
@@ -163,7 +163,7 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
                               padding: EdgeInsets.only(right: 4.0),
                               child: Icon(Icons.logout, color: AppColors.darkCyan, size: 20),
                             ),
-                            Text('Log Out', style: Dimens.smallHeadTextStyle),
+                            Text('Log Out', style: Constants.smallHeadTextStyle),
                           ],
                         ),
                       ],
@@ -174,7 +174,7 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
                               padding: EdgeInsets.only(right: 4.0),
                               child: Icon(Icons.login, color: AppColors.darkCyan, size: 20),
                             ),
-                            Text('Log In', style: Dimens.smallHeadTextStyle),
+                            Text('Log In', style: Constants.smallHeadTextStyle),
                           ],
                         ),
                     ],
@@ -196,7 +196,7 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
             },
             child: Text(
               context.getAppBarTitle(),
-              style: Dimens.extraSmallHeadTextStyle.copyWith(
+              style: Constants.extraSmallHeadTextStyle.copyWith(
                 fontSize: 14,
                 color: Colors.white,
                 fontWeight: FontWeight.w700,

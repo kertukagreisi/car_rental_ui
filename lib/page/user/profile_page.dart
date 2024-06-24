@@ -1,5 +1,5 @@
 import 'package:car_rental_ui/resources/app_colors.dart';
-import 'package:car_rental_ui/resources/dimens.dart';
+import 'package:car_rental_ui/resources/constants.dart';
 import 'package:car_rental_ui/shared/locator.dart';
 import 'package:car_rental_ui/shared/mvvm/view_model_widgets.dart';
 import 'package:flutter/material.dart';
@@ -29,9 +29,9 @@ class ProfilePage extends ViewModelWidget<ProfileViewModel> {
                     children: [
                       const Padding(
                         padding: EdgeInsets.only(bottom: 8.0),
-                        child: Text('Name', style: Dimens.mediumHeadTextStyle),
+                        child: Text('Name', style: Constants.mediumHeadTextStyle),
                       ),
-                      Text(viewModel.user.name ?? '', style: Dimens.mediumTextStyle.copyWith(color: AppColors.darkCyan)),
+                      Text(viewModel.user.name ?? '', style: Constants.mediumTextStyle.copyWith(color: AppColors.darkCyan)),
                     ],
                   ),
                   Column(
@@ -39,9 +39,9 @@ class ProfilePage extends ViewModelWidget<ProfileViewModel> {
                     children: [
                       const Padding(
                         padding: EdgeInsets.only(bottom: 8.0),
-                        child: Text('Last Name', style: Dimens.mediumHeadTextStyle),
+                        child: Text('Last Name', style: Constants.mediumHeadTextStyle),
                       ),
-                      Text(viewModel.user.lastName ?? '', style: Dimens.mediumTextStyle.copyWith(color: AppColors.darkCyan)),
+                      Text(viewModel.user.lastName ?? '', style: Constants.mediumTextStyle.copyWith(color: AppColors.darkCyan)),
                     ],
                   ),
                   Column(
@@ -49,9 +49,9 @@ class ProfilePage extends ViewModelWidget<ProfileViewModel> {
                     children: [
                       const Padding(
                         padding: EdgeInsets.only(bottom: 8.0),
-                        child: Text('Email', style: Dimens.mediumHeadTextStyle),
+                        child: Text('Email', style: Constants.mediumHeadTextStyle),
                       ),
-                      Text(viewModel.user.email ?? '', style: Dimens.mediumTextStyle.copyWith(color: AppColors.darkCyan)),
+                      Text(viewModel.user.email ?? '', style: Constants.mediumTextStyle.copyWith(color: AppColors.darkCyan)),
                     ],
                   ),
                   Column(
@@ -59,9 +59,9 @@ class ProfilePage extends ViewModelWidget<ProfileViewModel> {
                     children: [
                       const Padding(
                         padding: EdgeInsets.only(bottom: 8.0),
-                        child: Text('Phone Number', style: Dimens.mediumHeadTextStyle),
+                        child: Text('Phone Number', style: Constants.mediumHeadTextStyle),
                       ),
-                      Text(viewModel.user.phone ?? '', style: Dimens.mediumTextStyle.copyWith(color: AppColors.darkCyan)),
+                      Text(viewModel.user.phone ?? '', style: Constants.mediumTextStyle.copyWith(color: AppColors.darkCyan)),
                     ],
                   ),
                   Column(
@@ -69,9 +69,9 @@ class ProfilePage extends ViewModelWidget<ProfileViewModel> {
                     children: [
                       const Padding(
                         padding: EdgeInsets.only(bottom: 8.0),
-                        child: Text('Username', style: Dimens.mediumHeadTextStyle),
+                        child: Text('Username', style: Constants.mediumHeadTextStyle),
                       ),
-                      Text(viewModel.user.username ?? '', style: Dimens.mediumTextStyle.copyWith(color: AppColors.darkCyan)),
+                      Text(viewModel.user.username ?? '', style: Constants.mediumTextStyle.copyWith(color: AppColors.darkCyan)),
                     ],
                   ),
                   Column(
@@ -79,9 +79,9 @@ class ProfilePage extends ViewModelWidget<ProfileViewModel> {
                     children: [
                       const Padding(
                         padding: EdgeInsets.only(bottom: 8.0),
-                        child: Text('Role', style: Dimens.mediumHeadTextStyle),
+                        child: Text('Role', style: Constants.mediumHeadTextStyle),
                       ),
-                      Text(viewModel.user.role?.value ?? '', style: Dimens.mediumTextStyle.copyWith(color: AppColors.darkCyan)),
+                      Text(viewModel.user.role?.value ?? '', style: Constants.mediumTextStyle.copyWith(color: AppColors.darkCyan)),
                     ],
                   ),
                 ],

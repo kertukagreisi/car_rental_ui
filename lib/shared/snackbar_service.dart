@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../resources/dimens.dart';
+import '../resources/constants.dart';
 import 'globals.dart';
 
 void showSnackBar(SnackBarLevel level, String content) {
@@ -36,7 +36,7 @@ void showSnackBar(SnackBarLevel level, String content) {
 SnackBar _getSnackBar(String content, Color color, Color? textColor) => SnackBar(
       content: Text(
         content,
-        style: Dimens.mediumTextStyle.copyWith(color: textColor),
+        style: Constants.mediumTextStyle.copyWith(color: textColor),
       ),
       backgroundColor: color,
       behavior: SnackBarBehavior.floating,

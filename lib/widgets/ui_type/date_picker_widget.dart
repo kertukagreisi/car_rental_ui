@@ -5,7 +5,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
 
 import '../../resources/app_colors.dart';
-import '../../resources/dimens.dart';
+import '../../resources/constants.dart';
 
 class DatePickerWidget extends StatefulWidget {
   final String label;
@@ -33,8 +33,8 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: Dimens.filterButtonHeight,
-      width: Dimens.filterButtonWidth,
+      height: Constants.filterButtonHeight,
+      width: Constants.filterButtonWidth,
       color: Colors.white,
       child: Row(
         children: [
@@ -66,8 +66,8 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
       labelText: label + (widget.mandatory ? ' *' : ''),
       floatingLabelBehavior: FloatingLabelBehavior.always,
       hintText: 'mm/dd/yyyy',
-      floatingLabelStyle: Dimens.extraSmallTextStyle,
-      labelStyle: Dimens.extraSmallTextStyle,
+      floatingLabelStyle: Constants.extraSmallTextStyle,
+      labelStyle: Constants.extraSmallTextStyle,
       errorStyle: const TextStyle(fontSize: 9, backgroundColor: AppColors.lightBlue),
       errorMaxLines: 1,
       enabledBorder: outlineInputBorder,

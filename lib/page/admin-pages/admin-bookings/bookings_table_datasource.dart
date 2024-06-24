@@ -3,7 +3,7 @@ import 'package:car_rental_ui/shared/helpers.dart';
 import 'package:flutter/material.dart';
 
 import '../../../resources/app_colors.dart';
-import '../../../resources/dimens.dart';
+import '../../../resources/constants.dart';
 
 class BookingsTableDatasource extends DataTableSource {
   final List<Booking> bookings;
@@ -70,7 +70,7 @@ class BookingsTableDatasource extends DataTableSource {
     } else {
       value = data.toString();
     }
-    return DataCell(Text(value, style: Dimens.smallTextStyle));
+    return DataCell(Text(value, style: Constants.smallTextStyle));
   }
 
   @override
@@ -86,7 +86,7 @@ class BookingsTableDatasource extends DataTableSource {
         cellFor(bookings[index].total),
         cellFor(bookings[index].timeStamp),
         DataCell(Padding(
-          padding: Dimens.tableCellPadding,
+          padding: Constants.tableCellPadding,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.end,
@@ -94,16 +94,16 @@ class BookingsTableDatasource extends DataTableSource {
               if (bookings[index].bookingStatus == BookingStatus.PENDING || bookings[index].bookingStatus == BookingStatus.ACTIVE) ...[
                 TextButton(
                     onPressed: () => onButtonClick('approve', bookings[index].id!),
-                    style: Dimens.clearButtonStyle,
+                    style: Constants.clearButtonStyle,
                     child: const Icon(Icons.done_all, color: AppColors.green)),
                 TextButton(
                     onPressed: () => onButtonClick('reject', bookings[index].id!),
-                    style: Dimens.clearButtonStyle,
+                    style: Constants.clearButtonStyle,
                     child: const Icon(Icons.cancel_outlined, color: AppColors.darkGray)),
               ],
               TextButton(
                   onPressed: () => onButtonClick('delete', bookings[index].id!),
-                  style: Dimens.clearButtonStyle,
+                  style: Constants.clearButtonStyle,
                   child: const Icon(Icons.delete, color: AppColors.red)),
             ],
           ),

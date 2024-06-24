@@ -6,7 +6,7 @@ import 'package:car_rental_ui/shared/mvvm/view_model_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
-import '../../../resources/dimens.dart';
+import '../../../resources/constants.dart';
 import '../../../widgets/button_with_icon_widget.dart';
 import '../../../widgets/cancel_button_widget.dart';
 import '../../../widgets/confirm_dialog_widget.dart';
@@ -33,7 +33,7 @@ class AdminUsersPage extends ViewModelWidget<AdminUsersViewModel> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Users Overview', style: Dimens.mediumHeadTextStyle),
+                const Text('Users Overview', style: Constants.mediumHeadTextStyle),
                 ButtonWithIcon(
                     text: 'Add User',
                     onPressed: () {
@@ -43,7 +43,7 @@ class AdminUsersPage extends ViewModelWidget<AdminUsersViewModel> {
                     dark: false)
               ],
             ),
-            Dimens.largeSizedBox,
+            Constants.largeSizedBox,
             Row(
               children: [
                 Expanded(
@@ -87,7 +87,7 @@ class AdminUsersPage extends ViewModelWidget<AdminUsersViewModel> {
   AlertDialog _showAddUserDialog(AdminUsersViewModel viewModel, BuildContext context) {
     final formKey = GlobalKey<FormBuilderState>();
     return AlertDialog(
-      title: const Text('Add User', style: Dimens.headTextStyle),
+      title: const Text('Add User', style: Constants.headTextStyle),
       content: FormBuilder(
         key: formKey,
         child: SingleChildScrollView(
@@ -121,9 +121,9 @@ class AdminUsersPage extends ViewModelWidget<AdminUsersViewModel> {
           Navigator.of(context).pop();
         }),
       ],
-      titlePadding: Dimens.mediumPadding,
-      contentPadding: Dimens.mediumPadding,
-      actionsPadding: Dimens.mediumPadding,
+      titlePadding: Constants.mediumPadding,
+      contentPadding: Constants.mediumPadding,
+      actionsPadding: Constants.mediumPadding,
     );
   }
 
@@ -131,7 +131,7 @@ class AdminUsersPage extends ViewModelWidget<AdminUsersViewModel> {
     final formKey = GlobalKey<FormBuilderState>();
     User user = viewModel.users.firstWhere((user) => user.id == userId);
     return AlertDialog(
-      title: const Text('Edit User', style: Dimens.headTextStyle),
+      title: const Text('Edit User', style: Constants.headTextStyle),
       content: FormBuilder(
         key: formKey,
         child: SingleChildScrollView(
@@ -165,16 +165,16 @@ class AdminUsersPage extends ViewModelWidget<AdminUsersViewModel> {
           Navigator.of(context).pop();
         }),
       ],
-      titlePadding: Dimens.mediumPadding,
-      contentPadding: Dimens.mediumPadding,
-      actionsPadding: Dimens.mediumPadding,
+      titlePadding: Constants.mediumPadding,
+      contentPadding: Constants.mediumPadding,
+      actionsPadding: Constants.mediumPadding,
     );
   }
 
   List<DataColumn> _getColumns(Map<String, String> columnsMap) {
     return columnsMap.entries
         .map((column) =>
-            DataColumn(label: Text(column.value, style: Dimens.smallTextStyle.copyWith(fontWeight: FontWeight.w600)), tooltip: column.value))
+            DataColumn(label: Text(column.value, style: Constants.smallTextStyle.copyWith(fontWeight: FontWeight.w600)), tooltip: column.value))
         .toList();
   }
 

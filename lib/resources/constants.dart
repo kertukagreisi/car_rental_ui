@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'app_colors.dart';
 import 'fonts.dart';
 
-class Dimens {
-  const Dimens._();
+class Constants {
+  const Constants._();
 
   static const tableCellPadding = EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0);
   static const buttonPadding = EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0);

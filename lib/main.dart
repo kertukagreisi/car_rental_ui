@@ -1,6 +1,6 @@
 import 'package:car_rental_ui/navigation/nav_controller.dart';
 import 'package:car_rental_ui/resources/app_colors.dart';
-import 'package:car_rental_ui/resources/dimens.dart';
+import 'package:car_rental_ui/resources/constants.dart';
 import 'package:car_rental_ui/shared/extensions.dart';
 import 'package:car_rental_ui/shared/globals.dart';
 import 'package:car_rental_ui/shared/locator.dart';
@@ -41,7 +41,7 @@ class CarRentalApp extends StatelessWidget {
         snackBarTheme: SnackBarThemeData(
             backgroundColor: AppColors.lightGray,
             contentTextStyle:
-                Dimens.smallTextStyle.copyWith(color: AppColors.green)),
+                Constants.smallTextStyle.copyWith(color: AppColors.green)),
       ),
     );
   }

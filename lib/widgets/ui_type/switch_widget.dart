@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
-import '../../resources/dimens.dart';
+import '../../resources/constants.dart';
 
 class SwitchWidget extends StatefulWidget {
   final String label;
@@ -29,7 +29,7 @@ class _SwitchWidgetState extends State<SwitchWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: widget.noSizeConstraints != null && widget.noSizeConstraints! ? 200.0 : Dimens.filterButtonWidth,
+      width: widget.noSizeConstraints != null && widget.noSizeConstraints! ? 200.0 : Constants.filterButtonWidth,
       height: widget.noSizeConstraints != null && widget.noSizeConstraints! ? 50.0 : null,
       child: Row(
         children: [
@@ -38,7 +38,7 @@ class _SwitchWidgetState extends State<SwitchWidget> {
               name: widget.label,
               title: Text(
                 widget.label,
-                style: Dimens.mediumTextStyle,
+                style: Constants.mediumTextStyle,
               ),
               decoration: _buildSwitchInputDecoration(widget.label),
               onChanged: widget.onChange,

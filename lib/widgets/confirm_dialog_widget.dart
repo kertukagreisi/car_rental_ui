@@ -1,4 +1,4 @@
-import 'package:car_rental_ui/resources/dimens.dart';
+import 'package:car_rental_ui/resources/constants.dart';
 import 'package:car_rental_ui/widgets/save_button_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -24,12 +24,12 @@ class ConfirmDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(title, style: Dimens.headTextStyle),
-      content: Text(message, style: Dimens.smallTextStyle),
+      title: Text(title, style: Constants.headTextStyle),
+      content: Text(message, style: Constants.smallTextStyle),
       actions: [SaveButton(text: confirmButtonText, onPressed: confirmCallback), CancelButton(text: cancelButtonText, onPressed: cancelCallback)],
-      titlePadding: Dimens.mediumPadding,
-      contentPadding: Dimens.mediumPadding,
-      actionsPadding: Dimens.mediumPadding,
+      titlePadding: Constants.mediumPadding,
+      contentPadding: Constants.mediumPadding,
+      actionsPadding: Constants.mediumPadding,
     );
   }
 }

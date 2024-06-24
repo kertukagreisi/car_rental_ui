@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../navigation/nav_route.dart';
 import '../../resources/app_colors.dart';
-import '../../resources/dimens.dart';
+import '../../resources/constants.dart';
 
 class PageNotFound extends StatelessWidget {
   const PageNotFound({super.key});
@@ -26,14 +26,14 @@ class PageNotFound extends StatelessWidget {
               const Spacer(),
               Text(
                 'Page not found',
-                style: Dimens.titleTextStyle.copyWith(
+                style: Constants.titleTextStyle.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const Spacer(),
               Text(
                 'The page you are looking for is not available!',
-                style: Dimens.mediumTextStyle.copyWith(
+                style: Constants.mediumTextStyle.copyWith(
                   color: AppColors.gray,
                 ),
               ),
@@ -45,7 +45,7 @@ class PageNotFound extends StatelessWidget {
                   icon: const Icon(Icons.arrow_back),
                   label: Text(
                     'GO TO HOME',
-                    style: Dimens.titleTextStyle.copyWith(color: AppColors.darkCyan, fontWeight: FontWeight.bold),
+                    style: Constants.titleTextStyle.copyWith(color: AppColors.darkCyan, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),

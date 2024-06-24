@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../resources/app_colors.dart';
-import '../../resources/dimens.dart';
+import '../../resources/constants.dart';
 
 class TextInputWidget extends StatelessWidget {
   final String label;
@@ -60,7 +60,7 @@ class TextInputWidget extends StatelessWidget {
               style: const TextStyle(fontSize: 16.0, color: AppColors.darkCyan, fontFamily: Fonts.openSans),
             ),
           ),
-        Dimens.mediumSizedBox,
+        Constants.mediumSizedBox,
         SizedBox(
           height: showLabel ? height + 20 : height,
           width: width ?? 150,

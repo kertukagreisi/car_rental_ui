@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../resources/app_colors.dart';
-import '../../resources/dimens.dart';
+import '../../resources/constants.dart';
 
 class RangeSliderWidget extends StatefulWidget {
   final String label;
@@ -43,7 +43,7 @@ class _RangeSliderWidgetState extends State<RangeSliderWidget> {
 
     return Container(
       // height: Dimens.filterButtonHeight,
-      width: Dimens.filterButtonWidth,
+      width: Constants.filterButtonWidth,
       color: Colors.white,
       child: Row(
         children: [
@@ -76,8 +76,8 @@ class _RangeSliderWidgetState extends State<RangeSliderWidget> {
     );
     return InputDecoration(
       labelText: label + (widget.mandatory ? ' *' : ''),
-      labelStyle: Dimens.extraSmallTextStyle,
-      floatingLabelStyle: Dimens.extraSmallTextStyle,
+      labelStyle: Constants.extraSmallTextStyle,
+      floatingLabelStyle: Constants.extraSmallTextStyle,
       floatingLabelBehavior: FloatingLabelBehavior.always,
       errorStyle:
           const TextStyle(fontSize: 9, backgroundColor: AppColors.lightBlue),

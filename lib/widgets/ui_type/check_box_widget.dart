@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../resources/app_colors.dart';
-import '../../resources/dimens.dart';
+import '../../resources/constants.dart';
 
 class SingleCheckBoxWidget extends StatefulWidget {
   final String label;
@@ -31,7 +31,7 @@ class _SingleCheckBoxWidgetState extends State<SingleCheckBoxWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: Dimens.filterButtonWidth,
+      width: Constants.filterButtonWidth,
       height: 40.0,
       color: Colors.white,
       child: Row(

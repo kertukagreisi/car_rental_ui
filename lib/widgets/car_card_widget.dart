@@ -3,7 +3,7 @@ import 'package:car_rental_ui/resources/app_colors.dart';
 import 'package:car_rental_ui/resources/images.dart';
 import 'package:flutter/material.dart';
 
-import '../resources/dimens.dart';
+import '../resources/constants.dart';
 
 class CarCardWidget extends StatelessWidget {
   final Car car;
@@ -54,18 +54,18 @@ class CarCardWidget extends StatelessWidget {
               children: [
                 Text(
                   '${car.brand.value.replaceAll('_', ' ')} ${car.model} ${car.year}',
-                  style: Dimens.smallTextStyle,
+                  style: Constants.smallTextStyle,
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
                   '${car.price} €',
-                  style: Dimens.mediumHeadTextStyle,
+                  style: Constants.mediumHeadTextStyle,
                 ),
               ],
             ),
           ),
           TextButton(
-            style: Dimens.clearButtonStyle,
+            style: Constants.clearButtonStyle,
             onPressed: () {
               onCarCardItemClick(car.id!);
             },
@@ -81,7 +81,7 @@ class CarCardWidget extends StatelessWidget {
                         children: [
                           Text(
                             'More details',
-                            style: Dimens.mediumTextStyle
+                            style: Constants.mediumTextStyle
                                 .copyWith(color: Colors.white),
                           ),
                           const Icon(Icons.navigate_next_outlined,

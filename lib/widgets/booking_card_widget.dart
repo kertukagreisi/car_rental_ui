@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
 
-import '../resources/dimens.dart';
+import '../resources/constants.dart';
 
 class BookingCardWidget extends StatelessWidget {
   final Booking booking;
@@ -62,7 +62,7 @@ class BookingCardWidget extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 12.0),
                       child: Text(
                           '${booking.car.brand.value.replaceAll('_', ' ')} ${booking.car.model.toUpperCase()}',
-                          style: Dimens.smallHeadTextStyle),
+                          style: Constants.smallHeadTextStyle),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),
@@ -71,13 +71,13 @@ class BookingCardWidget extends StatelessWidget {
                           Text(
                               DateFormat('d MMMM y', 'en_US')
                                   .format(booking.startDate),
-                              style: Dimens.smallTextStyle),
+                              style: Constants.smallTextStyle),
                           Text(DateFormat(' - ').format(booking.startDate),
-                              style: Dimens.smallTextStyle),
+                              style: Constants.smallTextStyle),
                           Text(
                               DateFormat('d MMMM y', 'en_US')
                                   .format(booking.endDate),
-                              style: Dimens.smallTextStyle),
+                              style: Constants.smallTextStyle),
                         ],
                       ),
                     ),
@@ -90,7 +90,7 @@ class BookingCardWidget extends StatelessWidget {
             ],
           ),
           TextButton(
-            style: Dimens.clearButtonStyle,
+            style: Constants.clearButtonStyle,
             onPressed: () {
               onBookingCardItemClick(booking.id!);
               showDialog(
@@ -128,7 +128,7 @@ class BookingCardWidget extends StatelessWidget {
                                           booking.rating == null
                                       ? 'Leave rating'
                                       : 'View Details',
-                                  style: Dimens.smallTextStyle.copyWith(
+                                  style: Constants.smallTextStyle.copyWith(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w600),
                                 ),
@@ -142,7 +142,7 @@ class BookingCardWidget extends StatelessWidget {
                     ),
                     Text(
                       '${booking.total} €',
-                      style: Dimens.mediumHeadTextStyle
+                      style: Constants.mediumHeadTextStyle
                           .copyWith(color: Colors.white),
                     )
                   ],
@@ -171,10 +171,10 @@ class BookingCardWidget extends StatelessWidget {
               child: booking.bookingStatus == BookingStatus.COMPLETED &&
                       booking.rating == null
                   ? Text('Leave a rating for yor booking!',
-                      style: Dimens.smallHeadTextStyle
+                      style: Constants.smallHeadTextStyle
                           .copyWith(color: Colors.white))
                   : Text('Booking Details',
-                      style: Dimens.smallHeadTextStyle
+                      style: Constants.smallHeadTextStyle
                           .copyWith(color: Colors.white)),
             ),
           ),
@@ -195,11 +195,11 @@ class BookingCardWidget extends StatelessWidget {
                 child: Text(
                   'Car Model',
                   style:
-                      Dimens.smallHeadTextStyle.copyWith(color: AppColors.gray),
+                      Constants.smallHeadTextStyle.copyWith(color: AppColors.gray),
                 ),
               ),
               Text('${booking.car.brand} ${booking.car.model}',
-                  style: Dimens.smallTextStyle),
+                  style: Constants.smallTextStyle),
             ],
           ),
           Column(
@@ -210,11 +210,11 @@ class BookingCardWidget extends StatelessWidget {
                 child: Text(
                   'Time of ${booking.bookingStatus == BookingStatus.CANCELED ? 'Canceling' : 'Booking'}',
                   style:
-                      Dimens.smallHeadTextStyle.copyWith(color: AppColors.gray),
+                      Constants.smallHeadTextStyle.copyWith(color: AppColors.gray),
                 ),
               ),
               Text(DateFormat('d MMMM y', 'en_US').format(booking.timeStamp),
-                  style: Dimens.smallTextStyle),
+                  style: Constants.smallTextStyle),
             ],
           ),
           Column(
@@ -225,11 +225,11 @@ class BookingCardWidget extends StatelessWidget {
                 child: Text(
                   'Start Date',
                   style:
-                      Dimens.smallHeadTextStyle.copyWith(color: AppColors.gray),
+                      Constants.smallHeadTextStyle.copyWith(color: AppColors.gray),
                 ),
               ),
               Text(DateFormat('d MMMM y', 'en_US').format(booking.startDate),
-                  style: Dimens.smallTextStyle),
+                  style: Constants.smallTextStyle),
             ],
           ),
           Column(
@@ -240,11 +240,11 @@ class BookingCardWidget extends StatelessWidget {
                 child: Text(
                   'End Date',
                   style:
-                      Dimens.smallHeadTextStyle.copyWith(color: AppColors.gray),
+                      Constants.smallHeadTextStyle.copyWith(color: AppColors.gray),
                 ),
               ),
               Text(DateFormat('d MMMM y', 'en_US').format(booking.endDate),
-                  style: Dimens.smallTextStyle),
+                  style: Constants.smallTextStyle),
             ],
           ),
           Column(
@@ -255,10 +255,10 @@ class BookingCardWidget extends StatelessWidget {
                 child: Text(
                   'Total Payed',
                   style:
-                      Dimens.smallHeadTextStyle.copyWith(color: AppColors.gray),
+                      Constants.smallHeadTextStyle.copyWith(color: AppColors.gray),
                 ),
               ),
-              Text('${booking.total} €', style: Dimens.smallTextStyle),
+              Text('${booking.total} €', style: Constants.smallTextStyle),
             ],
           ),
         ],
@@ -279,7 +279,7 @@ class BookingCardWidget extends StatelessWidget {
                   List<Widget> starWidgets = [];
                   for (var index = 4; index >= 0; index--) {
                     starWidgets.add(TextButton(
-                      style: Dimens.clearButtonStyle,
+                      style: Constants.clearButtonStyle,
                       onPressed: () {
                         ratingNotifier.value = 4 - index;
                       },
@@ -339,7 +339,7 @@ class BookingCardWidget extends StatelessWidget {
                       },
                       child: Text(
                         'Save',
-                        style: Dimens.mediumTextStyle
+                        style: Constants.mediumTextStyle
                             .copyWith(color: Colors.white),
                       ),
                     ),
@@ -355,7 +355,7 @@ class BookingCardWidget extends StatelessWidget {
                     },
                     child: const Text(
                       'Cancel',
-                      style: Dimens.mediumTextStyle,
+                      style: Constants.mediumTextStyle,
                     ),
                   ),
                 ],
@@ -379,7 +379,7 @@ class BookingCardWidget extends StatelessWidget {
             },
             child: const Text(
               'Close',
-              style: Dimens.mediumTextStyle,
+              style: Constants.mediumTextStyle,
             ),
           ),
         ),

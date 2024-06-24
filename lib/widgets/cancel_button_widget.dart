@@ -1,7 +1,7 @@
 import 'package:car_rental_ui/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 
-import '../resources/dimens.dart';
+import '../resources/constants.dart';
 
 class CancelButton extends StatelessWidget {
   final String text;
@@ -13,13 +13,13 @@ class CancelButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
         onPressed: onPressed,
-        style: Dimens.cancelButtonStyle,
+        style: Constants.cancelButtonStyle,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             const Icon(Icons.close, color: AppColors.darkCyan, size: 16),
             const SizedBox(width: 2.0),
-            Text(text, style: Dimens.mediumTextStyle.copyWith(fontWeight: FontWeight.w500)),
+            Text(text, style: Constants.mediumTextStyle.copyWith(fontWeight: FontWeight.w500)),
           ],
         ));
   }

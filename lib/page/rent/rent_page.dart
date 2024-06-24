@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../resources/app_colors.dart';
-import '../../resources/dimens.dart';
+import '../../resources/constants.dart';
 import 'rent_view_model.dart';
 
 class RentPage extends ViewModelWidget<RentViewModel> {
@@ -31,7 +31,7 @@ class RentPage extends ViewModelWidget<RentViewModel> {
           children: [
             const Padding(
               padding: EdgeInsets.only(bottom: 12.0),
-              child: Text('Select your options', style: Dimens.mediumTextStyle),
+              child: Text('Select your options', style: Constants.mediumTextStyle),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
@@ -90,7 +90,7 @@ class RentPage extends ViewModelWidget<RentViewModel> {
                 padding: const EdgeInsets.only(bottom: 12.0),
                 child: Text(
                   'The end date should be after the start date!',
-                  style: Dimens.smallTextStyle.copyWith(color: AppColors.red),
+                  style: Constants.smallTextStyle.copyWith(color: AppColors.red),
                 ),
               ),
             Padding(
@@ -98,7 +98,7 @@ class RentPage extends ViewModelWidget<RentViewModel> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('${viewModel.totalPrice} €', style: Dimens.headTextStyle),
+                  Text('${viewModel.totalPrice} €', style: Constants.headTextStyle),
                   Padding(
                     padding: const EdgeInsets.only(top: 16.0),
                     child: Row(
@@ -118,7 +118,7 @@ class RentPage extends ViewModelWidget<RentViewModel> {
                                     }
                                   }
                                 : null,
-                            child: Text('Rent', style: Dimens.mediumTextStyle.copyWith(color: Colors.white)),
+                            child: Text('Rent', style: Constants.mediumTextStyle.copyWith(color: Colors.white)),
                           ),
                         ),
                         ElevatedButton(
@@ -126,7 +126,7 @@ class RentPage extends ViewModelWidget<RentViewModel> {
                           onPressed: () {
                             context.goNamedRoute(NavRoute.home);
                           },
-                          child: Text('Cancel', style: Dimens.mediumTextStyle.copyWith(color: AppColors.darkCyan)),
+                          child: Text('Cancel', style: Constants.mediumTextStyle.copyWith(color: AppColors.darkCyan)),
                         ),
                       ],
                     ),

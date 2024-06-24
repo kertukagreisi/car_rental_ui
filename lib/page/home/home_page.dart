@@ -2,7 +2,7 @@ import 'package:car_rental_ui/generated_code/lib/api.dart';
 import 'package:car_rental_ui/navigation/nav_extensions.dart';
 import 'package:car_rental_ui/navigation/nav_route.dart';
 import 'package:car_rental_ui/resources/app_colors.dart';
-import 'package:car_rental_ui/resources/dimens.dart';
+import 'package:car_rental_ui/resources/constants.dart';
 import 'package:car_rental_ui/shared/locator.dart';
 import 'package:car_rental_ui/shared/mvvm/view_model_widgets.dart';
 import 'package:car_rental_ui/widgets/button_with_icon_widget.dart';
@@ -68,7 +68,7 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
                     height: 34,
                     child: TextFormField(
                       controller: searchController,
-                      style: Dimens.smallTextStyle,
+                      style: Constants.smallTextStyle,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.only(left: 4.0),
                         hintText: 'Search',
@@ -79,7 +79,7 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
                       },
                     ),
                   ),
-                  Dimens.smallSizedBox,
+                  Constants.smallSizedBox,
                   ButtonWithIcon(
                       text: 'Search',
                       onPressed: () {
@@ -87,7 +87,7 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
                       },
                       icon: Icons.search,
                       dark: true),
-                  Dimens.smallSizedBox,
+                  Constants.smallSizedBox,
                   CancelButton(
                       text: 'Clear',
                       onPressed: () {
@@ -101,8 +101,8 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
                 padding: const EdgeInsets.only(bottom: 20.0),
                 child: Wrap(
                   children: [
-                    const Text('Showing results for ', style: Dimens.mediumTextStyle),
-                    Text(viewModel.searchValue, style: Dimens.mediumHeadTextStyle),
+                    const Text('Showing results for ', style: Constants.mediumTextStyle),
+                    Text(viewModel.searchValue, style: Constants.mediumHeadTextStyle),
                   ],
                 ),
               ),
@@ -116,7 +116,7 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
                       (brand) => Padding(
                         padding: const EdgeInsets.only(right: 6.0),
                         child: TextButton(
-                          style: Dimens.clearButtonStyle,
+                          style: Constants.clearButtonStyle,
                           onPressed: () {
                             viewModel.addBrandFilter = brand;
                           },

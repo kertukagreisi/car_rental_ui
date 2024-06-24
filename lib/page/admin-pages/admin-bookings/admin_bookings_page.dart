@@ -4,7 +4,7 @@ import 'package:car_rental_ui/shared/locator.dart';
 import 'package:car_rental_ui/shared/mvvm/view_model_widgets.dart';
 import 'package:flutter/material.dart';
 
-import '../../../resources/dimens.dart';
+import '../../../resources/constants.dart';
 import '../../../shared/helpers.dart';
 import '../../../widgets/confirm_dialog_widget.dart';
 import 'admin_bookings_view_model.dart';
@@ -24,8 +24,8 @@ class AdminBookingsPage extends ViewModelWidget<AdminBookingsViewModel> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Bookings Overview', style: Dimens.mediumHeadTextStyle),
-            Dimens.largeSizedBox,
+            const Text('Bookings Overview', style: Constants.mediumHeadTextStyle),
+            Constants.largeSizedBox,
             Row(
               children: [
                 Expanded(

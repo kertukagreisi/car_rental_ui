@@ -2,7 +2,7 @@ import 'package:car_rental_ui/generated_code/lib/api.dart';
 import 'package:flutter/material.dart';
 
 import '../../../resources/app_colors.dart';
-import '../../../resources/dimens.dart';
+import '../../../resources/constants.dart';
 import '../../../shared/helpers.dart';
 
 class UsersTableDatasource extends DataTableSource {
@@ -66,7 +66,7 @@ class UsersTableDatasource extends DataTableSource {
     } else {
       value = data.toString();
     }
-    return DataCell(Text(value, style: Dimens.smallTextStyle));
+    return DataCell(Text(value, style: Constants.smallTextStyle));
   }
 
   @override
@@ -82,17 +82,17 @@ class UsersTableDatasource extends DataTableSource {
         cellFor(users[index].role?.value ?? ''),
         DataCell(
           Padding(
-            padding: Dimens.tableCellPadding,
+            padding: Constants.tableCellPadding,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(
-                    style: Dimens.clearButtonStyle,
+                    style: Constants.clearButtonStyle,
                     onPressed: () => onButtonClick('edit', users[index].id!),
                     child: const Icon(Icons.edit, color: AppColors.gray)),
                 TextButton(
-                    style: Dimens.clearButtonStyle,
+                    style: Constants.clearButtonStyle,
                     onPressed: () => onButtonClick('delete', users[index].id!),
                     child: const Icon(Icons.delete, color: AppColors.red)),
               ],

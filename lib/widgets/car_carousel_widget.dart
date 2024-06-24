@@ -4,7 +4,7 @@ import 'package:car_rental_ui/resources/images.dart';
 import 'package:car_rental_ui/widgets/text_container.dart';
 import 'package:flutter/material.dart';
 
-import '../resources/dimens.dart';
+import '../resources/constants.dart';
 import '../shared/helpers.dart';
 
 class CarCarouselWidget extends StatelessWidget {
@@ -54,13 +54,13 @@ class CarCarouselWidget extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 6.0),
                         child: Text(
                           car.model,
-                          style: Dimens.mediumHeadTextStyle,
+                          style: Constants.mediumHeadTextStyle,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       Text(
                         car.brand.value.replaceAll('_', ' '),
-                        style: Dimens.smallTextStyle.copyWith(fontSize: 10.0),
+                        style: Constants.smallTextStyle.copyWith(fontSize: 10.0),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ],
@@ -86,7 +86,7 @@ class CarCarouselWidget extends StatelessWidget {
                     onPressed: () {
                       onCarCardItemClick(car.id!);
                     },
-                    child: const Text('Rent', style: Dimens.smallHeadTextStyle),
+                    child: const Text('Rent', style: Constants.smallHeadTextStyle),
                   ),
                 ),
               ],
@@ -135,7 +135,7 @@ class CarCarouselWidget extends StatelessWidget {
                 ),
                 Text(
                   '${car.price} €',
-                  style: Dimens.headTextStyle,
+                  style: Constants.headTextStyle,
                 ),
               ],
             ),
@@ -152,7 +152,7 @@ class CarCarouselWidget extends StatelessWidget {
         padding: const EdgeInsets.only(right: 8.0),
         child: Text(
             '${double.parse(averageRating.toStringAsFixed(1))} ($reviewsCount)',
-            style: Dimens.smallTextStyle.copyWith(color: AppColors.orange)),
+            style: Constants.smallTextStyle.copyWith(color: AppColors.orange)),
       ),
     );
     for (var index = 4; index >= 0; index--) {

@@ -7,7 +7,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 import '../../resources/app_colors.dart';
-import '../../resources/dimens.dart';
+import '../../resources/constants.dart';
 import '../../resources/images.dart';
 import 'car_details_view_model.dart';
 
@@ -35,11 +35,11 @@ class CarDetailsPage extends ViewModelWidget<CarDetailsViewModel> {
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 12.0),
-              child: Text('${viewModel.car.brand} ${viewModel.car.model}', style: Dimens.headTextStyle),
+              child: Text('${viewModel.car.brand} ${viewModel.car.model}', style: Constants.headTextStyle),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 12.0),
-              child: Text('${viewModel.car.engine} ${viewModel.car.fuelType}', style: Dimens.mediumHeadTextStyle.copyWith(color: AppColors.gray)),
+              child: Text('${viewModel.car.engine} ${viewModel.car.fuelType}', style: Constants.mediumHeadTextStyle.copyWith(color: AppColors.gray)),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 12.0),
@@ -72,7 +72,7 @@ class CarDetailsPage extends ViewModelWidget<CarDetailsViewModel> {
             Padding(
                 padding: const EdgeInsets.only(bottom: 12.0),
                 child: TextButton(
-                  style: Dimens.clearButtonStyle,
+                  style: Constants.clearButtonStyle,
                   onPressed: () {
                     context.goNamedRoute(NavRoute.rent, queryParams: args, extra: carFromExtraParameters);
                   },
@@ -84,7 +84,7 @@ class CarDetailsPage extends ViewModelWidget<CarDetailsViewModel> {
                     ),
                     child: Text(
                       'Rent',
-                      style: Dimens.mediumHeadTextStyle.copyWith(color: Colors.white),
+                      style: Constants.mediumHeadTextStyle.copyWith(color: Colors.white),
                     ),
                   ),
                 )),
@@ -110,7 +110,7 @@ class CarDetailsPage extends ViewModelWidget<CarDetailsViewModel> {
     ratingWidgets.add(
       Padding(
         padding: const EdgeInsets.only(left: 10.0, top: 2.0),
-        child: Text('($reviewsCount)', style: Dimens.headTextStyle.copyWith(color: AppColors.yellow)),
+        child: Text('($reviewsCount)', style: Constants.headTextStyle.copyWith(color: AppColors.yellow)),
       ),
     );
 

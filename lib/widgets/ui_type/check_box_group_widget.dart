@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../resources/app_colors.dart';
-import '../../resources/dimens.dart';
+import '../../resources/constants.dart';
 
 class CheckBoxGroupWidget extends StatefulWidget {
   final String label;
@@ -27,7 +27,7 @@ class _CheckBoxGroupWidgetState extends State<CheckBoxGroupWidget> {
   Widget build(BuildContext context) {
     return Container(
       // height: Dimens.filterButtonHeight,
-      width: Dimens.filterButtonWidth,
+      width: Constants.filterButtonWidth,
       color: Colors.white,
       child: FormBuilderCheckboxGroup(
         name: widget.label,
@@ -45,8 +45,8 @@ class _CheckBoxGroupWidgetState extends State<CheckBoxGroupWidget> {
     );
     return InputDecoration(
       labelText: label + (widget.mandatory ? ' *' : ''),
-      floatingLabelStyle: Dimens.extraSmallTextStyle,
-      labelStyle: Dimens.mediumTextStyle.copyWith(
+      floatingLabelStyle: Constants.extraSmallTextStyle,
+      labelStyle: Constants.mediumTextStyle.copyWith(
         color: Colors.black,
       ),
       errorStyle: const TextStyle(fontSize: 9, backgroundColor: AppColors.lightBlue),

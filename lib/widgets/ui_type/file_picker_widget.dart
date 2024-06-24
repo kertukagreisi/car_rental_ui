@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:form_builder_file_picker/form_builder_file_picker.dart';
 
 import '../../resources/app_colors.dart';
-import '../../resources/dimens.dart';
+import '../../resources/constants.dart';
 
 class FilePickerWidget extends StatefulWidget {
   final String label;
@@ -30,10 +30,10 @@ class _FilePickerWidgetState extends State<FilePickerWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: Dimens.filterButtonWidth,
+      width: Constants.filterButtonWidth,
       height: (platformFiles != null && (platformFiles?.isNotEmpty)!)
-          ? ((widget.allowMultiple ?? true) ? null : Dimens.filePickerHeightFiles)
-          : Dimens.filePickerHeightNoFiles,
+          ? ((widget.allowMultiple ?? true) ? null : Constants.filePickerHeightFiles)
+          : Constants.filePickerHeightNoFiles,
       color: Colors.white,
       child: Row(
         children: [
@@ -86,9 +86,9 @@ class _FilePickerWidgetState extends State<FilePickerWidget> {
     );
     return InputDecoration(
       labelText: label + (widget.mandatory ? ' *' : ''),
-      floatingLabelStyle: Dimens.extraSmallTextStyle,
+      floatingLabelStyle: Constants.extraSmallTextStyle,
       floatingLabelBehavior: FloatingLabelBehavior.always,
-      labelStyle: Dimens.mediumTextStyle.copyWith(
+      labelStyle: Constants.mediumTextStyle.copyWith(
         color: Colors.black,
       ),
       errorStyle: const TextStyle(fontSize: 9, backgroundColor: AppColors.lightBlue),

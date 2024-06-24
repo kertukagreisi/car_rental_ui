@@ -3,7 +3,7 @@ import 'package:car_rental_ui/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 
 import 'package:car_rental_ui/generated_code/lib/api.dart' as api_values;
-import '../resources/dimens.dart';
+import '../resources/constants.dart';
 
 String getErrorMessage(Object? error) {
   return error.toString().substring(error.toString().indexOf(':') + 2, error.toString().length);
@@ -74,7 +74,7 @@ Color getTextColor(bool isMainColor, String value) {
 List<DataColumn> getColumns(Map<String, String> columnsMap) {
   return columnsMap.entries
       .map((column) =>
-          DataColumn(label: Text(column.value, style: Dimens.smallTextStyle.copyWith(fontWeight: FontWeight.w600)), tooltip: column.value))
+          DataColumn(label: Text(column.value, style: Constants.smallTextStyle.copyWith(fontWeight: FontWeight.w600)), tooltip: column.value))
       .toList();
 }
 

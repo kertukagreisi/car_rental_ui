@@ -11,7 +11,7 @@ import 'package:car_rental_ui/widgets/ui_type/text_input_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
-import '../../../resources/dimens.dart';
+import '../../../resources/constants.dart';
 import 'admin_cars_view_model.dart';
 import 'cars_table_datasource.dart';
 
@@ -33,7 +33,7 @@ class AdminCarsPage extends ViewModelWidget<AdminCarsViewModel> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Cars Overview', style: Dimens.mediumHeadTextStyle),
+                const Text('Cars Overview', style: Constants.mediumHeadTextStyle),
                 ButtonWithIcon(
                     text: 'Add Car',
                     onPressed: () {
@@ -43,7 +43,7 @@ class AdminCarsPage extends ViewModelWidget<AdminCarsViewModel> {
                     dark: false)
               ],
             ),
-            Dimens.largeSizedBox,
+            Constants.largeSizedBox,
             Row(
               children: [
                 Expanded(
@@ -87,7 +87,7 @@ class AdminCarsPage extends ViewModelWidget<AdminCarsViewModel> {
   AlertDialog _showAddCarDialog(AdminCarsViewModel viewModel, BuildContext context) {
     final formKey = GlobalKey<FormBuilderState>();
     return AlertDialog(
-      title: const Text('Add Car', style: Dimens.headTextStyle),
+      title: const Text('Add Car', style: Constants.headTextStyle),
       content: FormBuilder(
         key: formKey,
         child: SingleChildScrollView(
@@ -125,9 +125,9 @@ class AdminCarsPage extends ViewModelWidget<AdminCarsViewModel> {
           Navigator.of(context).pop();
         }),
       ],
-      titlePadding: Dimens.mediumPadding,
-      contentPadding: Dimens.mediumPadding,
-      actionsPadding: Dimens.mediumPadding,
+      titlePadding: Constants.mediumPadding,
+      contentPadding: Constants.mediumPadding,
+      actionsPadding: Constants.mediumPadding,
     );
   }
 
@@ -135,7 +135,7 @@ class AdminCarsPage extends ViewModelWidget<AdminCarsViewModel> {
     final formKey = GlobalKey<FormBuilderState>();
     Car car = viewModel.cars.firstWhere((car) => car.id == carId);
     return AlertDialog(
-      title: const Text('Edit Car', style: Dimens.headTextStyle),
+      title: const Text('Edit Car', style: Constants.headTextStyle),
       content: FormBuilder(
         key: formKey,
         child: SingleChildScrollView(
@@ -179,16 +179,16 @@ class AdminCarsPage extends ViewModelWidget<AdminCarsViewModel> {
           Navigator.of(context).pop();
         }),
       ],
-      titlePadding: Dimens.mediumPadding,
-      contentPadding: Dimens.mediumPadding,
-      actionsPadding: Dimens.mediumPadding,
+      titlePadding: Constants.mediumPadding,
+      contentPadding: Constants.mediumPadding,
+      actionsPadding: Constants.mediumPadding,
     );
   }
 
   List<DataColumn> _getColumns(Map<String, String> columnsMap) {
     return columnsMap.entries
         .map((column) =>
-            DataColumn(label: Text(column.value, style: Dimens.smallTextStyle.copyWith(fontWeight: FontWeight.w600)), tooltip: column.value))
+            DataColumn(label: Text(column.value, style: Constants.smallTextStyle.copyWith(fontWeight: FontWeight.w600)), tooltip: column.value))
         .toList();
   }
 

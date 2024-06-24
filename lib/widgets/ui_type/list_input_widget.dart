@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../resources/app_colors.dart';
-import '../../resources/dimens.dart';
+import '../../resources/constants.dart';
 
 class ListInputWidget extends StatefulWidget {
   final String label;
@@ -39,7 +39,7 @@ class _ListInputWidgetState extends State<ListInputWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: Dimens.filterButtonWidth,
+      width: Constants.filterButtonWidth,
       color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,7 +119,7 @@ class _ListInputWidgetState extends State<ListInputWidget> {
 
     return InputDecoration(
       labelText: label + (widget.mandatory ? ' *' : ''),
-      floatingLabelStyle: Dimens.extraSmallTextStyle,
+      floatingLabelStyle: Constants.extraSmallTextStyle,
       errorStyle: const TextStyle(fontSize: 9.0, height: 1.0),
       errorMaxLines: 1,
       hoverColor: Colors.white,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../resources/app_colors.dart';
-import '../../resources/dimens.dart';
+import '../../resources/constants.dart';
 
 class RadioButtonWidget extends StatefulWidget {
   final String label;
@@ -31,7 +31,7 @@ class _RadioButtonWidgetState extends State<RadioButtonWidget> {
   Widget build(BuildContext context) {
     return Container(
       // height: Dimens.filterButtonHeight,
-      width: Dimens.filterButtonWidth,
+      width: Constants.filterButtonWidth,
       color: Colors.white,
       child: Row(
         children: [
@@ -63,8 +63,8 @@ class _RadioButtonWidgetState extends State<RadioButtonWidget> {
     );
     return InputDecoration(
       labelText: label + (widget.mandatory ? ' *' : ''),
-      floatingLabelStyle: Dimens.extraSmallTextStyle,
-      labelStyle: Dimens.mediumTextStyle.copyWith(
+      floatingLabelStyle: Constants.extraSmallTextStyle,
+      labelStyle: Constants.mediumTextStyle.copyWith(
         color: Colors.black,
       ),
       errorStyle: const TextStyle(fontSize: 9, backgroundColor: AppColors.lightBlue),

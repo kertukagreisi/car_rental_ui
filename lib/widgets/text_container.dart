@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../resources/dimens.dart';
+import '../resources/constants.dart';
 
 class TextContainer extends StatelessWidget {
   final String text;
@@ -33,7 +33,7 @@ class TextContainer extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: Dimens.extraSmallTextStyle.copyWith(fontSize: fontSize, fontWeight: fontWeight, color: textColor),
+        style: Constants.extraSmallTextStyle.copyWith(fontSize: fontSize, fontWeight: fontWeight, color: textColor),
       ),
     );
   }

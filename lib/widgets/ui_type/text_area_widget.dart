@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../resources/app_colors.dart';
-import '../../resources/dimens.dart';
+import '../../resources/constants.dart';
 
 class TextAreaWidget extends StatelessWidget {
   final String label;
@@ -24,7 +24,7 @@ class TextAreaWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: Dimens.filterButtonWidth,
+      width: Constants.filterButtonWidth,
       color: Colors.white,
       child: Row(
         children: [
@@ -59,7 +59,7 @@ class TextAreaWidget extends StatelessWidget {
 
     return InputDecoration(
       labelText: label + (mandatory ? ' *' : ''),
-      floatingLabelStyle: Dimens.extraSmallTextStyle,
+      floatingLabelStyle: Constants.extraSmallTextStyle,
       errorStyle: const TextStyle(fontSize: 9.0, height: 1.0),
       errorMaxLines: 1,
       hoverColor: Colors.white,
