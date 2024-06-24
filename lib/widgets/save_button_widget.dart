@@ -18,7 +18,7 @@ class SaveButton extends StatelessWidget {
           children: [
             const Icon(Icons.save, color: Colors.white, size: 16),
             const SizedBox(width: 2.0),
-            Text(text, style: Dimens.mediumHeadTextStyle.copyWith(color: Colors.white)),
+            Text(text, style: Dimens.mediumHeadTextStyle.copyWith(fontWeight: FontWeight.w500, color: Colors.white)),
           ],
         ));
   }

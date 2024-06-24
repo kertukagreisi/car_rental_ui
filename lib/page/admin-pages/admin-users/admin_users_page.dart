@@ -43,7 +43,7 @@ class AdminUsersPage extends ViewModelWidget<AdminUsersViewModel> {
                     dark: false)
               ],
             ),
-            Dimens.mediumSizedBox,
+            Dimens.largeSizedBox,
             Row(
               children: [
                 Expanded(

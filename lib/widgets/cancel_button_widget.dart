@@ -19,7 +19,7 @@ class CancelButton extends StatelessWidget {
           children: [
             const Icon(Icons.close, color: AppColors.darkCyan, size: 16),
             const SizedBox(width: 2.0),
-            Text(text, style: Dimens.mediumHeadTextStyle),
+            Text(text, style: Dimens.mediumTextStyle.copyWith(fontWeight: FontWeight.w500)),
           ],
         ));
   }

@@ -21,7 +21,7 @@ class ButtonWithIcon extends StatelessWidget {
           children: [
             Icon(icon, color: dark ? Colors.white : AppColors.darkCyan, size: 16),
             const SizedBox(width: 2.0),
-            Text(text, style: Dimens.mediumHeadTextStyle.copyWith(color: dark ? Colors.white : AppColors.darkCyan)),
+            Text(text, style: Dimens.mediumTextStyle.copyWith(fontWeight: FontWeight.w500, color: dark ? Colors.white : AppColors.darkCyan)),
           ],
         ));
   }

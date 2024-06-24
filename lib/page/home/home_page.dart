@@ -5,6 +5,8 @@ import 'package:car_rental_ui/resources/app_colors.dart';
 import 'package:car_rental_ui/resources/dimens.dart';
 import 'package:car_rental_ui/shared/locator.dart';
 import 'package:car_rental_ui/shared/mvvm/view_model_widgets.dart';
+import 'package:car_rental_ui/widgets/button_with_icon_widget.dart';
+import 'package:car_rental_ui/widgets/cancel_button_widget.dart';
 import 'package:car_rental_ui/widgets/car_carousel_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -56,52 +58,53 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
                   }).toList(),
                 ),
               ),
-            Padding(
+            Container(
               padding: const EdgeInsets.only(bottom: 12.0),
-              child: TextFormField(
-                controller: searchController,
-                decoration: const InputDecoration(
-                  hintText: 'Search',
-                  border: InputBorder.none,
-                  prefixIcon: Icon(Icons.search, color: AppColors.darkCyan),
-                ),
-                onFieldSubmitted: (value) async {
-                  await viewModel.onSearch(value);
-                },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    width: 100,
+                    height: 34,
+                    child: TextFormField(
+                      controller: searchController,
+                      style: Dimens.smallTextStyle,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.only(left: 4.0),
+                        hintText: 'Search',
+                        border: OutlineInputBorder(borderSide: const BorderSide(width: 1.4), borderRadius: BorderRadius.circular(4.0)),
+                      ),
+                      onFieldSubmitted: (value) async {
+                        await viewModel.onSearch(value);
+                      },
+                    ),
+                  ),
+                  Dimens.smallSizedBox,
+                  ButtonWithIcon(
+                      text: 'Search',
+                      onPressed: () {
+                        viewModel.onSearch(searchController.text);
+                      },
+                      icon: Icons.search,
+                      dark: true),
+                  Dimens.smallSizedBox,
+                  CancelButton(
+                      text: 'Clear',
+                      onPressed: () {
+                        viewModel.onSearch('');
+                      })
+                ],
               ),
             ),
             if (viewModel.searchValue != '')
-              Row(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 20.0),
-                      child: Stack(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.only(right: 50.0),
-                            child: Wrap(
-                              children: [
-                                const Text('Showing results for ', style: Dimens.smallTextStyle),
-                                Text(viewModel.searchValue, style: Dimens.smallHeadTextStyle),
-                              ],
-                            ),
-                          ),
-                          Positioned(
-                            right: 0.0,
-                            child: TextButton(
-                              style: Dimens.clearButtonStyle,
-                              onPressed: () {
-                                viewModel.onSearch('');
-                              },
-                              child: const Icon(Icons.clear, color: AppColors.darkCyan, size: 16),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                child: Wrap(
+                  children: [
+                    const Text('Showing results for ', style: Dimens.mediumTextStyle),
+                    Text(viewModel.searchValue, style: Dimens.mediumHeadTextStyle),
+                  ],
+                ),
               ),
             Padding(
               padding: const EdgeInsets.only(bottom: 10.0),

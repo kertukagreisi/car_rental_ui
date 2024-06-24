@@ -43,7 +43,7 @@ class AdminCarsPage extends ViewModelWidget<AdminCarsViewModel> {
                     dark: false)
               ],
             ),
-            Dimens.mediumSizedBox,
+            Dimens.largeSizedBox,
             Row(
               children: [
                 Expanded(

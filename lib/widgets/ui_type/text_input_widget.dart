@@ -60,7 +60,7 @@ class TextInputWidget extends StatelessWidget {
               style: const TextStyle(fontSize: 16.0, color: AppColors.darkCyan, fontFamily: Fonts.openSans),
             ),
           ),
-        Dimens.smallSizedBox,
+        Dimens.mediumSizedBox,
         SizedBox(
           height: showLabel ? height + 20 : height,
           width: width ?? 150,

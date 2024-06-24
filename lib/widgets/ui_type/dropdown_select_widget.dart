@@ -49,7 +49,7 @@ class _DropDownSelectWidgetState extends State<DropDownSelectWidget> {
                   style: const TextStyle(fontSize: 16.0, color: AppColors.darkCyan, fontFamily: Fonts.openSans),
                 ),
               ),
-            if (widget.showLabel ?? false) Dimens.smallSizedBox,
+            if (widget.showLabel ?? false) Dimens.mediumSizedBox,
             Row(
               children: [
                 Expanded(

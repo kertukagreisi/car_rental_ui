@@ -1,3 +1,4 @@
+import 'package:car_rental_ui/generated_code/lib/api.dart';
 import 'package:car_rental_ui/navigation/nav_extensions.dart';
 import 'package:car_rental_ui/shared/extensions.dart';
 import 'package:flutter/material.dart';
@@ -21,28 +22,61 @@ class CarRentalScaffold extends StatefulWidget {
 }
 
 class _CarRentalScaffoldState extends State<CarRentalScaffold> {
+  late User? user;
   final _isRailExtended = ValueNotifier(false);
   int _selectedIndex = 0;
+  List<_NavigationElement> navElements = [];
 
   @override
   void initState() {
     super.initState();
-  }
-
-  List<_NavigationElement> get _navElements => [
+    var authService = AuthService();
+    user = authService.user;
+    if (user == null) {
+      navElements = [
         _NavigationElement(
           label: 'Cars',
           route: NavRoute.home,
         ),
         _NavigationElement(
-          label: 'Bookings',
-          route: NavRoute.bookingsOverview,
-        ),
-        _NavigationElement(
-          label: 'User',
-          route: NavRoute.profile,
+          label: 'Login',
+          route: NavRoute.login,
         ),
       ];
+    } else {
+      if (user?.role == Role.USER) {
+        navElements = [
+          _NavigationElement(
+            label: 'Home',
+            route: NavRoute.home,
+          ),
+          _NavigationElement(
+            label: 'Bookings',
+            route: NavRoute.bookingsOverview,
+          ),
+          _NavigationElement(
+            label: 'Profile',
+            route: NavRoute.profile,
+          ),
+        ];
+      } else {
+        navElements = [
+          _NavigationElement(
+            label: 'Bookings',
+            route: NavRoute.adminBookings,
+          ),
+          _NavigationElement(
+            label: 'Cars',
+            route: NavRoute.adminCars,
+          ),
+          _NavigationElement(
+            label: 'Users',
+            route: NavRoute.adminUsers,
+          ),
+        ];
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,17 +140,43 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4.0),
+                      border: Border.all(color: AppColors.gray, width: 2.0),
                       color: Colors.white,
-                      boxShadow: const [BoxShadow(color: AppColors.gray, spreadRadius: 2.0, blurRadius: 2.0)]),
+                      boxShadow: const [BoxShadow(color: AppColors.lightGray, spreadRadius: 1.0, blurRadius: 2.0)]),
                   padding: const EdgeInsets.all(8.0),
-                  child: const Row(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Padding(
-                        padding: EdgeInsets.only(right: 4.0),
-                        child: Icon(Icons.logout, color: AppColors.darkCyan, size: 20),
-                      ),
-                      Text('Log Out', style: Dimens.smallHeadTextStyle),
+                      if (user != null) ...[
+                        const Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(right: 4.0),
+                              child: Icon(Icons.account_box, color: AppColors.darkCyan, size: 20),
+                            ),
+                            Text('Profile', style: Dimens.smallHeadTextStyle),
+                          ],
+                        ),
+                        const Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(right: 4.0),
+                              child: Icon(Icons.logout, color: AppColors.darkCyan, size: 20),
+                            ),
+                            Text('Log Out', style: Dimens.smallHeadTextStyle),
+                          ],
+                        ),
+                      ],
+                      if (user == null)
+                        const Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(right: 4.0),
+                              child: Icon(Icons.login, color: AppColors.darkCyan, size: 20),
+                            ),
+                            Text('Log In', style: Dimens.smallHeadTextStyle),
+                          ],
+                        ),
                     ],
                   ),
                 ),
@@ -130,13 +190,18 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
         height: 16.0,
         child: Align(
           alignment: Alignment.centerLeft,
-          child: Text(
-            context.getAppBarTitle(),
-            style: Dimens.extraSmallHeadTextStyle.copyWith(
-              fontSize: 14,
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 0.01 * 12,
+          child: GestureDetector(
+            onTap: () async {
+              await context.navigateToPreviousLevel();
+            },
+            child: Text(
+              context.getAppBarTitle(),
+              style: Dimens.extraSmallHeadTextStyle.copyWith(
+                fontSize: 14,
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 0.01 * 12,
+              ),
             ),
           ),
         ),
@@ -171,27 +236,19 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
 
   BottomNavigationBar _buildBottomNavBar(BuildContext context) {
     return BottomNavigationBar(
-      items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home, size: 30),
-          label: 'Cars',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.list_alt_sharp, size: 30),
-          label: 'Bookings',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person, size: 30),
-          label: 'Profile',
-        ),
-      ],
+      items: navElements
+          .map((navElement) => BottomNavigationBarItem(
+                icon: const Icon(Icons.home, size: 30),
+                label: navElement.label,
+              ))
+          .toList(),
       backgroundColor: AppColors.darkCyan,
       currentIndex: _selectedIndex,
       selectedItemColor: Colors.white,
       unselectedItemColor: AppColors.lightCyan,
       onTap: (index) {
         _selectedIndex = index;
-        var navElement = _navElements[index];
+        var navElement = navElements[index];
         navElement.route?.let((route) => context.goNamedRoute(route));
       },
     );

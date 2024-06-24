@@ -5,6 +5,7 @@ import 'fonts.dart';
 
 class Dimens {
   const Dimens._();
+
   static const tableCellPadding = EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0);
   static const buttonPadding = EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0);
   static const smallPadding = EdgeInsets.all(8.0);
@@ -12,9 +13,9 @@ class Dimens {
   static const largePadding = EdgeInsets.all(24);
 
   static const extraSmallSvgPictureSize = 16.0;
-  static const smallSizedBox = SizedBox(width: 8, height: 8);
-  static const mediumSizedBox = SizedBox(width: 24, height: 24);
-  static const largeSizedBox = SizedBox(width: 48, height: 48);
+  static const smallSizedBox = SizedBox(width: 4, height: 4);
+  static const mediumSizedBox = SizedBox(width: 8, height: 8);
+  static const largeSizedBox = SizedBox(width: 24, height: 24);
   static const smallBorderRadius = 4.0;
   static const defaultElevation = 8.0;
   static const defaultScrollbarThickness = 8.0;
@@ -32,13 +33,13 @@ class Dimens {
   static ButtonStyle saveButtonStyle = TextButton.styleFrom(
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
       backgroundColor: AppColors.darkCyan,
-      side: const BorderSide(color: AppColors.darkCyan, width: 2.0),
+      side: const BorderSide(color: AppColors.darkCyan, width: 1.4),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)));
 
   static ButtonStyle cancelButtonStyle = TextButton.styleFrom(
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
       backgroundColor: Colors.white,
-      side: const BorderSide(color: AppColors.darkCyan, width: 2.0),
+      side: const BorderSide(color: AppColors.darkCyan, width: 1.4),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)));
 
   static const headTextStyle = TextStyle(
