@@ -92,6 +92,7 @@ class TextInputWidget extends StatelessWidget {
       labelText: showLabel ? label : null,
       hintText: placeholder,
       floatingLabelBehavior: FloatingLabelBehavior.always,
+      floatingLabelStyle: Constants.extraSmallTextStyle,
       labelStyle: Constants.smallHeadTextStyle.copyWith(color: AppColors.darkCyan),
       hintStyle: Constants.smallTextStyle.copyWith(color: AppColors.gray),
       errorStyle: Constants.extraSmallTextStyle.copyWith(fontSize: 8.0, color: AppColors.red),

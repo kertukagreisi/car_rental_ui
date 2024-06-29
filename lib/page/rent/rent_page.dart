@@ -3,6 +3,7 @@ import 'package:car_rental_ui/navigation/nav_extensions.dart';
 import 'package:car_rental_ui/navigation/nav_route.dart';
 import 'package:car_rental_ui/shared/locator.dart';
 import 'package:car_rental_ui/shared/mvvm/view_model_widgets.dart';
+import 'package:car_rental_ui/widgets/save_button_widget.dart';
 import 'package:car_rental_ui/widgets/ui_type/date_picker_widget.dart';
 import 'package:car_rental_ui/widgets/ui_type/text_input_widget.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../resources/app_colors.dart';
 import '../../resources/constants.dart';
+import '../../widgets/cancel_button_widget.dart';
 import 'rent_view_model.dart';
 
 class RentPage extends ViewModelWidget<RentViewModel> {
@@ -31,60 +33,9 @@ class RentPage extends ViewModelWidget<RentViewModel> {
           children: [
             const Padding(
               padding: EdgeInsets.only(bottom: 12.0),
-              child: Text('Select your options', style: Constants.mediumTextStyle),
+              child: Text('Select your options', style: Constants.headTextStyle),
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: FormBuilder(
-                key: formKey,
-                child: Wrap(
-                  spacing: 8.0,
-                  runSpacing: 12.0,
-                  children: [
-                    TextInputWidget(
-                      label: 'Name',
-                      mandatory: true,
-                      onChange: (value) {},
-                      showLabel: true,
-                    ),
-                    TextInputWidget(
-                      label: 'Last Name',
-                      mandatory: true,
-                      onChange: (value) {},
-                      showLabel: true,
-                    ),
-                    TextInputWidget(
-                      label: 'Email',
-                      mandatory: true,
-                      onChange: (value) {},
-                      showLabel: true,
-                    ),
-                    TextInputWidget(
-                      label: 'Phone',
-                      mandatory: true,
-                      onChange: (value) {},
-                      showLabel: true,
-                    ),
-                    DatePickerWidget(
-                        label: 'Start Date',
-                        mandatory: true,
-                        initialValue: viewModel.startDate,
-                        startsFromToday: true,
-                        onChange: (value) {
-                          viewModel.setTotalToBePayed(true, value);
-                        }),
-                    DatePickerWidget(
-                        label: 'End Date',
-                        mandatory: true,
-                        initialValue: viewModel.endDate,
-                        startsFromToday: true,
-                        onChange: (value) {
-                          viewModel.setTotalToBePayed(false, value);
-                        })
-                  ],
-                ),
-              ),
-            ),
+            _buildInputFields(viewModel, formKey),
             if (viewModel.datesDifference <= 0)
               Padding(
                 padding: const EdgeInsets.only(bottom: 12.0),
@@ -93,49 +44,127 @@ class RentPage extends ViewModelWidget<RentViewModel> {
                   style: Constants.smallTextStyle.copyWith(color: AppColors.red),
                 ),
               ),
-            Padding(
-              padding: const EdgeInsets.only(top: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('${viewModel.totalPrice} €', style: Constants.headTextStyle),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(backgroundColor: AppColors.darkCyan, padding: const EdgeInsets.all(8.0)),
-                            onPressed: viewModel.datesDifference > 0
-                                ? () async {
-                                    formKey.currentState?.save();
-                                    if (formKey.currentState!.validate()) {
-                                      await viewModel
-                                          .rentCar(formKey.currentState!.value, context)
-                                          .then((value) => context.goNamedRoute(NavRoute.home));
-                                    }
-                                  }
-                                : null,
-                            child: Text('Rent', style: Constants.mediumTextStyle.copyWith(color: Colors.white)),
-                          ),
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(backgroundColor: Colors.white, padding: const EdgeInsets.all(8.0)),
-                          onPressed: () {
-                            context.goNamedRoute(NavRoute.home);
-                          },
-                          child: Text('Cancel', style: Constants.mediumTextStyle.copyWith(color: AppColors.darkCyan)),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            _buildButtonsWidget(viewModel, context, formKey)
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildInputFields(RentViewModel viewModel, GlobalKey<FormBuilderState> formKey) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: FormBuilder(
+        key: formKey,
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: TextInputWidget(
+                    initialValue: viewModel.user.name,
+                    label: 'Name',
+                    mandatory: true,
+                    onChange: (value) {},
+                    showLabel: true,
+                    iconData: Icons.person,
+                  ),
+                ),
+                Constants.largeSizedBox,
+                Expanded(
+                  child: TextInputWidget(
+                    initialValue: viewModel.user.lastName,
+                    label: 'Last Name',
+                    mandatory: true,
+                    onChange: (value) {},
+                    showLabel: true,
+                    iconData: Icons.person,
+                  ),
+                ),
+              ],
+            ),
+            TextInputWidget(
+              initialValue: viewModel.user.email,
+              label: 'Email',
+              mandatory: true,
+              onChange: (value) {},
+              showLabel: true,
+              iconData: Icons.email,
+            ),
+            TextInputWidget(
+              initialValue: viewModel.user.phone,
+              label: 'Phone',
+              mandatory: true,
+              onChange: (value) {},
+              showLabel: true,
+              iconData: Icons.phone,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: DatePickerWidget(
+                      initialValue: viewModel.startDate,
+                      label: 'Start Date',
+                      mandatory: true,
+                      startsFromToday: true,
+                      onChange: (value) {
+                        viewModel.setTotalToBePayed(true, value);
+                      },
+                      iconData: Icons.calendar_month),
+                ),
+                Constants.largeSizedBox,
+                Expanded(
+                  child: DatePickerWidget(
+                      initialValue: viewModel.endDate,
+                      label: 'End Date',
+                      mandatory: true,
+                      startsFromToday: true,
+                      onChange: (value) {
+                        viewModel.setTotalToBePayed(false, value);
+                      },
+                      iconData: Icons.calendar_month),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildButtonsWidget(RentViewModel viewModel, BuildContext context, GlobalKey<FormBuilderState> formKey) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          viewModel.totalPrice >= 0 ? Text('Total: ${viewModel.totalPrice} €', style: Constants.headTextStyle): const SizedBox.shrink(),
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: SaveButton(
+                      text: 'Rent',
+                      onPressed: () async {
+                        if (viewModel.datesDifference > 0) {
+                          formKey.currentState?.save();
+                          if (formKey.currentState!.validate()) {
+                            await viewModel.rentCar(formKey.currentState!.value, context);
+                          }
+                        }
+                      }),
+                ),
+                CancelButton(onPressed: () {
+                  context.goNamedRoute(NavRoute.carDetails, queryParams: args);
+                })
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

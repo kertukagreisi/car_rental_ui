@@ -24,8 +24,6 @@ class CarDetailsPage extends ViewModelWidget<CarDetailsViewModel> {
       children: [
         SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildCarouselWidget(viewModel, context),
               Container(
@@ -36,18 +34,16 @@ class CarDetailsPage extends ViewModelWidget<CarDetailsViewModel> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(bottom: 12.0),
-                      child: Column(
-                        children: [
-                          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                            _buildRatingWidget(viewModel.car.averageRating!),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 2.0),
-                              child: Text('Rating: ${viewModel.car.averageRating!} (${viewModel.car.reviewsCount!})',
-                                  style: Constants.smallHeadTextStyle.copyWith(color: AppColors.orange)),
-                            ),
-                          ]),
-                        ],
-                      ),
+                      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                        if (viewModel.car.averageRating != 0.0) ...[
+                          _buildRatingWidget(viewModel.car.averageRating!),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 2.0),
+                            child: Text('Rating: ${viewModel.car.averageRating!} (${viewModel.car.reviewsCount!})',
+                                style: Constants.titleTextStyle.copyWith(fontWeight: FontWeight.w600, color: AppColors.orange)),
+                          ),
+                        ]
+                      ]),
                     ),
                     ..._buildCarDetails(viewModel)
                   ],
@@ -134,7 +130,7 @@ class CarDetailsPage extends ViewModelWidget<CarDetailsViewModel> {
   Widget _buildRatingWidget(double averageRating) {
     List<Widget> stars = [];
     for (var index = 4; index >= 0; index--) {
-      stars.add(Icon(index > 4 - averageRating.floor() ? Icons.star : Icons.star_border_outlined, color: AppColors.orange, size: 18.0));
+      stars.add(Icon(index > 4 - averageRating.floor() ? Icons.star : Icons.star_border_outlined, color: AppColors.orange, size: 20.0));
     }
 
     return Row(mainAxisAlignment: MainAxisAlignment.start, children: stars);

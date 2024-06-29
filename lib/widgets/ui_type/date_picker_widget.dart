@@ -12,6 +12,9 @@ class DatePickerWidget extends StatefulWidget {
   final bool mandatory;
   final Function(dynamic) onChange;
   final String? toolTip;
+  final double? width;
+  final bool enabled;
+  final IconData? iconData;
   final bool? startsFromToday;
   final dynamic initialValue;
 
@@ -20,6 +23,9 @@ class DatePickerWidget extends StatefulWidget {
     required this.mandatory,
     required this.onChange,
     this.toolTip,
+    this.width,
+    this.enabled = true,
+    this.iconData,
     this.startsFromToday,
     super.key,
     this.initialValue,
@@ -56,24 +62,29 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
   }
 
   InputDecoration _buildDatePickerInputDecoration(String label) {
-    const outlineInputBorder = OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(2.0)),
+    const outlineInputBorder = UnderlineInputBorder(
       borderSide: BorderSide(
         color: AppColors.darkCyan,
       ),
     );
     return InputDecoration(
       labelText: label + (widget.mandatory ? ' *' : ''),
-      floatingLabelBehavior: FloatingLabelBehavior.always,
       hintText: 'mm/dd/yyyy',
+      floatingLabelBehavior: FloatingLabelBehavior.always,
+      labelStyle: Constants.smallHeadTextStyle.copyWith(color: AppColors.darkCyan),
       floatingLabelStyle: Constants.extraSmallTextStyle,
-      labelStyle: Constants.extraSmallTextStyle,
-      errorStyle: const TextStyle(fontSize: 9, backgroundColor: AppColors.lightBlue),
+      hintStyle: Constants.smallTextStyle.copyWith(color: AppColors.gray),
+      errorStyle: Constants.extraSmallTextStyle.copyWith(fontSize: 8.0, color: AppColors.red),
+      suffixIcon: Icon(widget.iconData, size: 16),
+      iconColor: AppColors.lightGray,
+      hoverColor: Colors.white,
       errorMaxLines: 1,
       enabledBorder: outlineInputBorder,
       focusedBorder: outlineInputBorder,
       errorBorder: outlineInputBorder,
       focusedErrorBorder: outlineInputBorder,
+      filled: widget.enabled ? true : null,
+      fillColor: widget.enabled ? AppColors.lightGray : null,
     );
   }
 }
