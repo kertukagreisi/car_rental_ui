@@ -17,7 +17,7 @@ class BookingsOverviewPage extends ViewModelWidget<BookingsOverviewViewModel> {
     return SingleChildScrollView(
       child: Container(
         color: Colors.white,
-        padding: const EdgeInsets.all(18.0),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
         child: ValueListenableBuilder(
           valueListenable: tabNotifier,
           builder: (BuildContext context, BookingStatus value, Widget? child) {
