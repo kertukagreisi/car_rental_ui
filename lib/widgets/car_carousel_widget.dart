@@ -106,7 +106,7 @@ class CarCarouselWidget extends StatelessWidget {
                         ),
                         height: 130,
                         width: 150,
-                        child: Image.asset(Images.aurisImage, alignment: Alignment.center, fit: BoxFit.cover),
+                        child: Image.asset(Images.aurisImage, alignment: Alignment.center, fit: BoxFit.fitWidth),
                       ),
                     ],
                   ),

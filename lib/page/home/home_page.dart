@@ -57,7 +57,7 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
       child: CarouselSlider(
         options: CarouselOptions(
           enableInfiniteScroll: false,
-          height: 220,
+          height: 200,
           viewportFraction: 300 / MediaQuery.of(context).size.width,
           autoPlay: true,
         ),
@@ -109,12 +109,7 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
           SizedBox(
             height: 34.0,
             child: IconButton(
-              style: IconButton.styleFrom(
-                backgroundColor: AppColors.darkCyan,
-                padding: const EdgeInsets.all(0.0),
-                side: const BorderSide(color: AppColors.darkCyan, width: 1.2),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
-              ),
+              style: Constants.darkIconButtonStyle,
               onPressed: () {
                 viewModel.onSearch(searchController.text);
               },
@@ -125,12 +120,7 @@ class HomePage extends ViewModelWidget<HomeViewModel> {
           SizedBox(
             height: 34.0,
             child: IconButton(
-              style: IconButton.styleFrom(
-                backgroundColor: Colors.white,
-                padding: const EdgeInsets.all(0),
-                side: const BorderSide(color: AppColors.darkCyan, width: 1.2),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
-              ),
+              style: Constants.lightIconButtonStyle,
               onPressed: () {
                 viewModel.onSearch('');
               },

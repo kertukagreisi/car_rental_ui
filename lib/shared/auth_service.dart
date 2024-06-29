@@ -59,7 +59,7 @@ class AuthService with ChangeNotifier {
 
   Future<void> logout() async {
     _removeUser();
-    removeTokenFromSecureStorage();
+    await removeTokenFromSecureStorage();
   }
 
   void _removeUser() {

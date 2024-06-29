@@ -10,19 +10,20 @@ import '../shared/auth_service.dart';
 import '../shared/locator.dart';
 
 class CarRentalScaffold extends StatefulWidget {
-  const CarRentalScaffold({
+  CarRentalScaffold({
     super.key,
     required this.body,
   });
 
   final Widget body;
 
+  final AuthService _authService = getIt.get<AuthService>();
+
   @override
   State<CarRentalScaffold> createState() => _CarRentalScaffoldState();
 }
 
 class _CarRentalScaffoldState extends State<CarRentalScaffold> {
-  late User? user;
   final _isRailExtended = ValueNotifier(false);
   int _selectedIndex = 0;
   List<_NavigationElement> navElements = [];
@@ -30,48 +31,62 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
   @override
   void initState() {
     super.initState();
-    var authService = AuthService();
-    user = authService.user;
-    if (user == null) {
+  }
+
+  void _getNavRoutes() {
+    if (!widget._authService.isAuthenticated) {
       navElements = [
         _NavigationElement(
           label: 'Cars',
           route: NavRoute.home,
+          iconData: Icons.car_rental,
         ),
         _NavigationElement(
           label: 'Login',
           route: NavRoute.login,
+          iconData: Icons.login,
         ),
       ];
     } else {
-      if (user?.role == Role.USER) {
+      if (widget._authService.user?.role == Role.USER) {
         navElements = [
           _NavigationElement(
             label: 'Home',
             route: NavRoute.home,
+            iconData: Icons.home,
           ),
           _NavigationElement(
             label: 'Bookings',
             route: NavRoute.bookingsOverview,
+            iconData: Icons.list,
           ),
           _NavigationElement(
             label: 'Profile',
             route: NavRoute.profile,
+            iconData: Icons.person,
           ),
         ];
       } else {
         navElements = [
           _NavigationElement(
+            label: 'Home',
+            route: NavRoute.home,
+            iconData: Icons.home,
+          ),
+          _NavigationElement(
             label: 'Bookings',
             route: NavRoute.adminBookings,
+            iconData: Icons.list,
           ),
           _NavigationElement(
             label: 'Cars',
             route: NavRoute.adminCars,
+            iconData: Icons.list_alt,
           ),
           _NavigationElement(
             label: 'Users',
             route: NavRoute.adminUsers,
+            iconData: Icons.group,
           ),
         ];
       }
@@ -93,7 +108,7 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
                 ),
               ],
             ),
-            SizedBox(width: 120, child: _buildTopNavPopup()),
+            _buildTopNavPopup(),
           ],
         ));
   }
@@ -124,31 +139,27 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
   ValueListenableBuilder _buildTopNavPopup() => ValueListenableBuilder<bool>(
       valueListenable: _isRailExtended,
       builder: (_, extended, __) {
-        final authService = getIt<AuthService>();
         return _isRailExtended.value
-            ? TextButton(
-                style: TextButton.styleFrom(
-                  minimumSize: Size.zero,
-                ),
-                onPressed: () async {
-                  _isRailExtended.value = false;
-                  await authService.logout();
-                  if (mounted) {
-                    if (!context.mounted) return;
-                    context.goNamedRoute(NavRoute.login);
-                  }
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.gray, width: 2.0),
-                      color: Colors.white,
-                      boxShadow: const [BoxShadow(color: AppColors.lightGray, spreadRadius: 1.0, blurRadius: 2.0)]),
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (user != null) ...[
-                        const Row(
+            ? Container(
+                width: 130,
+                decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.gray, width: 2.0),
+                    color: Colors.white,
+                    boxShadow: const [BoxShadow(color: AppColors.lightGray, spreadRadius: 1.0, blurRadius: 2.0)]),
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (widget._authService.isAuthenticated) ...[
+                      TextButton(
+                        style: Constants.clearButtonStyle,
+                        onPressed: () {
+                          _isRailExtended.value = false;
+                          context.goNamedRoute(NavRoute.profile);
+                        },
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             Padding(
                               padding: EdgeInsets.only(right: 4.0),
@@ -157,7 +168,24 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
                             Text('Profile', style: Constants.smallHeadTextStyle),
                           ],
                         ),
-                        const Row(
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 2.0),
+                        height: 1.0,
+                        color: AppColors.cyan,
+                      ),
+                      TextButton(
+                        style: Constants.clearButtonStyle,
+                        onPressed: () async {
+                          _isRailExtended.value = false;
+                          await widget._authService.logout();
+                          _selectedIndex = 0;
+                          if (mounted) {
+                            context.goNamedRoute(NavRoute.home);
+                          }
+                        },
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             Padding(
                               padding: EdgeInsets.only(right: 4.0),
@@ -166,9 +194,16 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
                             Text('Log Out', style: Constants.smallHeadTextStyle),
                           ],
                         ),
-                      ],
-                      if (user == null)
-                        const Row(
+                      ),
+                    ],
+                    if (!widget._authService.isAuthenticated)
+                      TextButton(
+                        style: Constants.clearButtonStyle,
+                        onPressed: () {
+                          _isRailExtended.value = false;
+                          context.goNamedRoute(NavRoute.login);
+                        },
+                        child: const Row(
                           children: [
                             Padding(
                               padding: EdgeInsets.only(right: 4.0),
@@ -177,8 +212,8 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
                             Text('Log In', style: Constants.smallHeadTextStyle),
                           ],
                         ),
-                    ],
-                  ),
+                      ),
+                  ],
                 ),
               )
             : const SizedBox.shrink();
@@ -209,18 +244,22 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
     });
   }
 
-  Widget _buildAppBarLeading() => Container(
-        margin: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: GestureDetector(
-          onTap: () {
-            _isRailExtended.value = !_isRailExtended.value;
-          },
-          child: const Icon(
-            Icons.menu,
-            size: 24,
+  Widget _buildAppBarLeading() => ValueListenableBuilder(
+      valueListenable: _isRailExtended,
+      builder: (BuildContext context, bool extended, _) {
+        return Container(
+          margin: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: GestureDetector(
+            onTap: () {
+              _isRailExtended.value = !_isRailExtended.value;
+            },
+            child: Icon(
+              extended ? Icons.menu_open : Icons.menu,
+              size: 24,
+            ),
           ),
-        ),
-      );
+        );
+      });
 
   List<Widget> _buildAppBarActions() {
     return [
@@ -234,23 +273,34 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
     ];
   }
 
-  NavigationBar _buildBottomNavBar(BuildContext context) {
-    return NavigationBar(
-      destinations: navElements
-          .map((navElement) => NavigationDestination(
-                icon: const Icon(Icons.home, size: 30, color: AppColors.gray),
-                label: navElement.label,
-                selectedIcon: const Icon(Icons.car_crash, size: 30, color: AppColors.darkCyan),
-              ))
-          .toList(),
-      backgroundColor: AppColors.darkCyan,
-      selectedIndex: _selectedIndex,
-      indicatorColor: Colors.white,
-      onDestinationSelected: (index) {
-        _selectedIndex = index;
-        var navElement = navElements[index];
-        navElement.route?.let((route) => context.goNamedRoute(route));
-      },
+  NavigationBarTheme _buildBottomNavBar(BuildContext context) {
+    _getNavRoutes();
+    return NavigationBarTheme(
+      data: NavigationBarThemeData(
+        labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>(
+          (Set<WidgetState> states) =>
+              states.contains(WidgetState.selected) ? const TextStyle(color: Colors.white) : TextStyle(color: AppColors.lightGray.withOpacity(0.6)),
+        ),
+      ),
+      child: NavigationBar(
+        destinations: navElements
+            .map((navElement) => NavigationDestination(
+                  tooltip: navElement.label,
+                  icon: Icon(navElement.iconData, size: 30, color: AppColors.lightGray.withOpacity(0.6)),
+                  label: navElement.label,
+                  selectedIcon: Icon(navElement.iconData, size: 30, color: Colors.white),
+                ))
+            .toList(),
+        selectedIndex: _selectedIndex,
+        backgroundColor: AppColors.darkCyan,
+        indicatorColor: AppColors.darkCyan,
+        surfaceTintColor: AppColors.darkCyan,
+        onDestinationSelected: (index) {
+          _selectedIndex = index;
+          var navElement = navElements[index];
+          navElement.route?.let((route) => context.goNamedRoute(route));
+        },
+      ),
     );
   }
 }
@@ -258,9 +308,11 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
 class _NavigationElement {
   _NavigationElement({
     required this.label,
+    required this.iconData,
     this.route,
   });
 
   final String label;
   final NavRoute? route;
+  final IconData iconData;
 }
