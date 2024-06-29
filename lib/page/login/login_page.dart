@@ -19,24 +19,25 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
     final signUpFormKey = GlobalKey<FormBuilderState>();
     return Container(
       color: Colors.white,
-      padding: const EdgeInsets.all(24.0),
+      padding: const EdgeInsets.all(20.0),
       child: SingleChildScrollView(
         child: FormBuilder(
           key: viewModel.isOnLoginForm ? loginFormKey : signUpFormKey,
           child: Container(
-            margin: viewModel.isOnLoginForm ? const EdgeInsets.symmetric(horizontal: 24.0) : const EdgeInsets.symmetric(horizontal: 10.0),
+            width: MediaQuery.of(context).size.width > 400 ? 400 : null,
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(28.0),
+              borderRadius: BorderRadius.circular(8.0),
               boxShadow: const [
-                BoxShadow(color: AppColors.cyan, spreadRadius: 1.0, blurRadius: 8.0),
+                BoxShadow(color: AppColors.cyan, spreadRadius: 0.1, blurRadius: 16.0),
               ],
             ),
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: Icon(viewModel.isOnLoginForm ? Icons.login : Icons.person, color: AppColors.darkCyan, size: 80),
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: Text(viewModel.isOnLoginForm ? 'Login' : 'Sign Up', style: Constants.mediumHeadTextStyle),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10.0),
@@ -44,54 +45,7 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
                     children: _buildInputFields(viewModel.isOnLoginForm),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20.0),
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      viewModel.isOnLoginForm ? loginFormKey.currentState?.save() : signUpFormKey.currentState?.save();
-                      if (viewModel.isOnLoginForm) {
-                        if (loginFormKey.currentState!.validate()) {
-                          await viewModel.login(
-                              loginFormKey.currentState?.fields['Username']?.value, loginFormKey.currentState?.fields['Password']?.value, context);
-                        }
-                      } else {
-                        if (signUpFormKey.currentState!.validate()) {
-                          await viewModel.signUp(signUpFormKey.currentState!.value, context);
-                        }
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.darkCyan,
-                      shadowColor: AppColors.cyan,
-                      padding: viewModel.isOnLoginForm
-                          ? const EdgeInsets.symmetric(horizontal: 45.0, vertical: 12.0)
-                          : const EdgeInsets.symmetric(horizontal: 94.0, vertical: 12.0),
-                    ),
-                    child: Text(
-                      viewModel.isOnLoginForm ? 'Login' : 'Sign Up',
-                      style: Constants.headTextStyle.copyWith(color: Colors.white),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20.0),
-                  child: Wrap(
-                    children: [
-                      viewModel.isOnLoginForm
-                          ? const Text('Don\'t have an account?  ', style: Constants.smallTextStyle)
-                          : const Text('Have an account?  ', style: Constants.smallTextStyle),
-                      TextButton(
-                        style: Constants.clearButtonStyle,
-                        onPressed: () {
-                          viewModel.setForm = !viewModel.isOnLoginForm;
-                        },
-                        child: viewModel.isOnLoginForm
-                            ? const Text('Sign Up', style: Constants.smallHeadTextStyle)
-                            : const Text('Login', style: Constants.smallHeadTextStyle),
-                      ),
-                    ],
-                  ),
-                ),
+                ..._buildButtons(viewModel, context, signUpFormKey, loginFormKey)
               ],
             ),
           ),
@@ -113,6 +67,7 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
           placeholder: 'Username',
           mandatory: true,
           onChange: (value) {},
+          iconData: Icons.person,
         ),
         TextInputWidget(
           label: 'Password',
@@ -120,82 +75,144 @@ class LoginPage extends ViewModelWidget<LoginViewModel> {
           mandatory: true,
           obscureText: true,
           onChange: (value) {},
+          iconData: Icons.security,
         ),
       ];
     } else {
       return [
-        Wrap(
-          spacing: 16.0,
-          runSpacing: 16.0,
+        Row(
           children: [
-            TextInputWidget(
-              width: 128,
-              label: 'Name',
-              placeholder: 'Name',
-              mandatory: true,
-              onChange: (value) {},
+            Expanded(
+              child: TextInputWidget(
+                label: 'Name',
+                placeholder: 'Name',
+                mandatory: true,
+                onChange: (value) {},
+              ),
             ),
-            TextInputWidget(
-              width: 128,
-              label: 'Last Name',
-              placeholder: 'Last Name',
-              mandatory: true,
-              onChange: (value) {},
+            Constants.mediumSizedBox,
+            Expanded(
+              child: TextInputWidget(
+                label: 'Last Name',
+                placeholder: 'Last Name',
+                mandatory: true,
+                onChange: (value) {},
+              ),
             ),
           ],
         ),
-        Wrap(
-          spacing: 16.0,
-          runSpacing: 16.0,
+        Constants.mediumSizedBox,
+        Row(
           children: [
-            TextInputWidget(
-              width: 128,
-              label: 'Email',
-              placeholder: 'Email',
-              mandatory: true,
-              onChange: (value) {},
-              inputType: 'Email',
+            Expanded(
+              child: TextInputWidget(
+                label: 'Email',
+                placeholder: 'Email',
+                mandatory: true,
+                onChange: (value) {},
+                inputType: 'Email',
+              ),
             ),
-            TextInputWidget(
-              width: 128,
-              label: 'Phone',
-              placeholder: 'Phone',
-              mandatory: true,
-              onChange: (value) {},
-              inputType: 'Phone Number',
+            Constants.mediumSizedBox,
+            Expanded(
+              child: TextInputWidget(
+                label: 'Phone',
+                placeholder: 'Phone',
+                mandatory: true,
+                onChange: (value) {},
+                inputType: 'Phone Number',
+              ),
             ),
           ],
         ),
+        Constants.mediumSizedBox,
         TextInputWidget(
-          width: 272,
           label: 'Username',
           placeholder: 'Username',
           mandatory: true,
           onChange: (value) {},
         ),
-        Wrap(
-          spacing: 16.0,
-          runSpacing: 16.0,
+        Constants.mediumSizedBox,
+        Row(
           children: [
-            TextInputWidget(
-              width: 128,
-              label: 'Password',
-              placeholder: 'Password',
-              obscureText: true,
-              mandatory: true,
-              onChange: (value) {},
+            Expanded(
+              child: TextInputWidget(
+                label: 'Password',
+                placeholder: 'Password',
+                obscureText: true,
+                mandatory: true,
+                onChange: (value) {},
+              ),
             ),
-            TextInputWidget(
-              width: 128,
-              label: 'Retype Password',
-              placeholder: 'Retype Password',
-              obscureText: true,
-              mandatory: true,
-              onChange: (value) {},
+            Constants.mediumSizedBox,
+            Expanded(
+              child: TextInputWidget(
+                label: 'Retype Password',
+                placeholder: 'Retype Password',
+                obscureText: true,
+                mandatory: true,
+                onChange: (value) {},
+              ),
             ),
           ],
         ),
       ];
     }
+  }
+
+  List<Widget> _buildButtons(
+      LoginViewModel viewModel, BuildContext context, GlobalKey<FormBuilderState> signUpFormKey, GlobalKey<FormBuilderState> loginFormKey) {
+    return [
+      Padding(
+        padding: const EdgeInsets.only(bottom: 16.0),
+        child: ElevatedButton(
+          onPressed: () async {
+            viewModel.isOnLoginForm ? loginFormKey.currentState?.save() : signUpFormKey.currentState?.save();
+            if (viewModel.isOnLoginForm) {
+              if (loginFormKey.currentState!.validate()) {
+                await viewModel.login(
+                    loginFormKey.currentState?.fields['Username']?.value, loginFormKey.currentState?.fields['Password']?.value, context);
+              }
+            } else {
+              if (signUpFormKey.currentState!.validate()) {
+                await viewModel.signUp(signUpFormKey.currentState!.value, context);
+              }
+            }
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.darkCyan,
+            shadowColor: AppColors.cyan,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                viewModel.isOnLoginForm ? 'Login' : 'Sign Up',
+                style: Constants.smallHeadTextStyle.copyWith(color: Colors.white),
+              ),
+            ],
+          ),
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.only(bottom: 20.0),
+        child: Wrap(
+          children: [
+            viewModel.isOnLoginForm
+                ? const Text('Don\'t have an account?  ', style: Constants.smallTextStyle)
+                : const Text('Have an account?  ', style: Constants.smallTextStyle),
+            TextButton(
+              style: Constants.clearButtonStyle,
+              onPressed: () {
+                viewModel.setForm = !viewModel.isOnLoginForm;
+              },
+              child: viewModel.isOnLoginForm
+                  ? const Text('Sign Up', style: Constants.smallHeadTextStyle)
+                  : const Text('Login', style: Constants.smallHeadTextStyle),
+            ),
+          ],
+        ),
+      )
+    ];
   }
 }

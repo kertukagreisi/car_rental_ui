@@ -1,4 +1,3 @@
-import 'package:car_rental_ui/resources/fonts.dart';
 import 'package:car_rental_ui/widgets/ui_type/regex.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,7 +12,7 @@ class TextInputWidget extends StatelessWidget {
   final Function(String?) onChange;
   final bool? allowOnlyNumbers;
   final dynamic initialValue;
-  final bool? enabled;
+  final bool enabled;
   final List<TextInputFormatter>? validations;
   final String placeholder;
   final bool obscureText;
@@ -21,6 +20,7 @@ class TextInputWidget extends StatelessWidget {
   final double? width;
   final bool showLabel;
   final String? inputType;
+  final IconData? iconData;
 
   const TextInputWidget(
       {super.key,
@@ -29,14 +29,15 @@ class TextInputWidget extends StatelessWidget {
       required this.onChange,
       this.allowOnlyNumbers,
       this.initialValue,
-      this.enabled,
+      this.enabled = true,
       this.validations,
       this.placeholder = 'Placeholder',
       this.obscureText = false,
       this.width,
-      this.height = 75.0,
+      this.height = 54,
       this.showLabel = true,
-      this.inputType});
+      this.inputType,
+      this.iconData});
 
   @override
   Widget build(BuildContext context) {
@@ -52,27 +53,19 @@ class TextInputWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (showLabel)
-          SizedBox(
-            height: 20.0,
-            child: Text(
-              '$label ${mandatory ? ' *' : ''}',
-              style: const TextStyle(fontSize: 16.0, color: AppColors.darkCyan, fontFamily: Fonts.openSans),
-            ),
-          ),
-        Constants.mediumSizedBox,
         SizedBox(
           height: showLabel ? height + 20 : height,
-          width: width ?? 150,
+          width: width,
           child: Column(
             children: [
               Container(
                 color: Colors.white,
                 child: FormBuilderTextField(
                   obscureText: obscureText,
-                  enabled: enabled ?? true,
+                  enabled: enabled,
                   name: label,
-                  decoration: _buildInputDecoration(label, placeholder),
+                  decoration: _buildInputDecoration(),
+                  style: Constants.smallTextStyle,
                   onChanged: onChange,
                   initialValue:
                       (allowOnlyNumbers != null && allowOnlyNumbers!) ? (initialValue != null ? initialValue.toString() : '') : initialValue,
@@ -87,26 +80,31 @@ class TextInputWidget extends StatelessWidget {
     );
   }
 
-  InputDecoration _buildInputDecoration(String label, String placeholder) {
-    const outlineInputBorder = OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(2.0)),
+  InputDecoration _buildInputDecoration() {
+    const outlineInputBorder = UnderlineInputBorder(
       borderSide: BorderSide(
         color: AppColors.darkCyan,
       ),
     );
 
     return InputDecoration(
-      labelText: showLabel ? label + (mandatory ? ' *' : '') : null,
-      floatingLabelBehavior: FloatingLabelBehavior.never,
+      contentPadding: const EdgeInsets.only(left: 4.0),
+      labelText: showLabel ? label : null,
       hintText: placeholder,
+      floatingLabelBehavior: FloatingLabelBehavior.always,
+      labelStyle: Constants.smallHeadTextStyle.copyWith(color: AppColors.darkCyan),
+      hintStyle: Constants.smallTextStyle.copyWith(color: AppColors.gray),
+      errorStyle: Constants.extraSmallTextStyle.copyWith(fontSize: 8.0, color: AppColors.red),
+      suffixIcon: Icon(iconData, size: 16),
+      iconColor: AppColors.lightGray,
       hoverColor: Colors.white,
       enabledBorder: outlineInputBorder,
       focusedBorder: outlineInputBorder,
       disabledBorder: outlineInputBorder,
       errorBorder: outlineInputBorder,
       focusedErrorBorder: outlineInputBorder,
-      filled: (enabled != null && !(enabled!)) ? true : null,
-      fillColor: (enabled != null && !(enabled!)) ? AppColors.lightBlue : null,
+      filled: enabled ? true : null,
+      fillColor: enabled ? AppColors.lightGray : null,
     );
   }
 
@@ -116,6 +114,6 @@ class TextInputWidget extends StatelessWidget {
     } else if (inputType == 'Email') {
       return validateEmail(value ?? '');
     }
-    return mandatory && (value == null || value.isEmpty) ? 'Required' : null;
+    return mandatory && (value == null || value.isEmpty) ? '$label is required' : null;
   }
 }

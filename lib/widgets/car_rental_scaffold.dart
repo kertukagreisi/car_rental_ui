@@ -234,19 +234,19 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
     ];
   }
 
-  BottomNavigationBar _buildBottomNavBar(BuildContext context) {
-    return BottomNavigationBar(
-      items: navElements
-          .map((navElement) => BottomNavigationBarItem(
-                icon: const Icon(Icons.home, size: 30),
+  NavigationBar _buildBottomNavBar(BuildContext context) {
+    return NavigationBar(
+      destinations: navElements
+          .map((navElement) => NavigationDestination(
+                icon: const Icon(Icons.home, size: 30, color: AppColors.gray),
                 label: navElement.label,
+                selectedIcon: const Icon(Icons.car_crash, size: 30, color: AppColors.darkCyan),
               ))
           .toList(),
       backgroundColor: AppColors.darkCyan,
-      currentIndex: _selectedIndex,
-      selectedItemColor: Colors.white,
-      unselectedItemColor: AppColors.lightCyan,
-      onTap: (index) {
+      selectedIndex: _selectedIndex,
+      indicatorColor: Colors.white,
+      onDestinationSelected: (index) {
         _selectedIndex = index;
         var navElement = navElements[index];
         navElement.route?.let((route) => context.goNamedRoute(route));

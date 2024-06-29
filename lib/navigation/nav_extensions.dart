@@ -63,7 +63,7 @@ extension NavControllerHelper on BuildContext {
 
     switch (navRoute) {
       case NavRoute.home:
-        return '';
+        return 'Home';
       case NavRoute.rent:
         return 'Car Details';
       default:

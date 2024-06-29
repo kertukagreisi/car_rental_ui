@@ -12,8 +12,6 @@ import 'package:url_strategy/url_strategy.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setPathUrlStrategy();
-  //comment this out when testing locally
-  //await dotenv.load();
   setupLogger();
   setupLocator();
   await dotenv.load(fileName: '.env');
