@@ -4,6 +4,7 @@ import 'package:car_rental_ui/navigation/nav_route.dart';
 import 'package:car_rental_ui/shared/locator.dart';
 import 'package:car_rental_ui/shared/mvvm/view_model_widgets.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../resources/app_colors.dart';
@@ -40,7 +41,7 @@ class CarDetailsPage extends ViewModelWidget<CarDetailsViewModel> {
                           Padding(
                             padding: const EdgeInsets.only(left: 2.0),
                             child: Text('Rating: ${viewModel.car.averageRating!} (${viewModel.car.reviewsCount!})',
-                                style: Constants.titleTextStyle.copyWith(fontWeight: FontWeight.w600, color: AppColors.orange)),
+                                style: Constants.largeHeadTextStyle.copyWith(fontWeight: FontWeight.w600, color: AppColors.orange)),
                           ),
                         ]
                       ]),
@@ -91,11 +92,11 @@ class CarDetailsPage extends ViewModelWidget<CarDetailsViewModel> {
 
   Widget _buildHeaderWidget(CarDetailsViewModel viewModel, BuildContext context) {
     return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       decoration: const BoxDecoration(
         color: AppColors.darkCyan,
-        boxShadow: [BoxShadow(color: AppColors.lightGray, blurRadius: 4.0, spreadRadius: 0.2)],
         border: Border(
-          top: BorderSide(color: Colors.white),
+          top: BorderSide(color: AppColors.gray),
         ),
       ),
       child: Row(
@@ -114,8 +115,8 @@ class CarDetailsPage extends ViewModelWidget<CarDetailsViewModel> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(viewModel.car.brand.value, style: Constants.smallHeadTextStyle.copyWith(fontSize: 10.0, color: AppColors.gray)),
-              Text(viewModel.car.model, style: Constants.mediumTextStyle.copyWith(fontWeight: FontWeight.w600, color: Colors.white)),
+              Text(viewModel.car.brand.value, style: Constants.mediumHeadTextStyle.copyWith(fontSize: 10.0, color: AppColors.gray)),
+              Text(viewModel.car.model, style: Constants.largeTextStyle.copyWith(fontWeight: FontWeight.w600, color: Colors.white)),
             ],
           ),
           Padding(
@@ -138,32 +139,35 @@ class CarDetailsPage extends ViewModelWidget<CarDetailsViewModel> {
 
   Widget _buildBottomWidget(CarDetailsViewModel viewModel, BuildContext context) {
     return Positioned(
-        right: 0.0,
-        left: 0.0,
-        bottom: 0.0,
-        child: InkWell(
-          onTap: () {
-            context.goNamedRoute(NavRoute.rent, queryParams: {'id': '${viewModel.car.id}'});
-          },
-          child: Container(
-              height: 40,
-              alignment: Alignment.center,
-              decoration: const BoxDecoration(
-                color: AppColors.darkCyan,
-                boxShadow: [BoxShadow(color: AppColors.lightGray, blurRadius: 4.0, spreadRadius: 0.2)],
-                border: Border(
-                  bottom: BorderSide(color: Colors.white),
-                ),
+      left: 32,
+      right: 32,
+      bottom: 24,
+      child: InkWell(
+        onTap: () {
+          context.goNamedRoute(NavRoute.rent, queryParams: {'id': '${viewModel.car.id}'});
+        },
+        child: Container(
+            width: 150,
+            height: 40,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(6.0),
+              color: AppColors.darkCyan,
+              boxShadow: const [BoxShadow(color: AppColors.lightGray, blurRadius: 4.0, spreadRadius: 0.2)],
+              border: const Border(
+                bottom: BorderSide(color: Colors.white),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.edit_calendar_sharp, size: 18, color: Colors.white),
-                  Constants.smallSizedBox,
-                  Text('Rent Car', style: Constants.mediumHeadTextStyle.copyWith(color: Colors.white)),
-                ],
-              )),
-        ));
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.edit_calendar_sharp, size: 22, color: Colors.white),
+                Constants.mediumSizedBox,
+                Text('Rent Car', style: Constants.largeHeadTextStyle.copyWith(color: Colors.white)),
+              ],
+            )),
+      ),
+    );
   }
 
   List<Widget> _buildCarDetails(CarDetailsViewModel viewModel) {
@@ -218,7 +222,7 @@ class CarDetailsPage extends ViewModelWidget<CarDetailsViewModel> {
         children: [
           Icon(Icons.color_lens, color: getTextColor(true, viewModel.car.color.value), size: 20),
           Padding(
-            padding: const EdgeInsets.only(left: 6.0, bottom: 12.0),
+            padding: const EdgeInsets.only(left: 6.0, bottom: 40.0),
             child: Text(viewModel.car.color.value, style: Constants.mediumTextStyle.copyWith(color: getTextColor(true, viewModel.car.color.value))),
           ),
         ],

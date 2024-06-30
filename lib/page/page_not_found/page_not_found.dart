@@ -26,7 +26,7 @@ class PageNotFound extends StatelessWidget {
               const Spacer(),
               Text(
                 'Page not found',
-                style: Constants.titleTextStyle.copyWith(
+                style: Constants.largeHeadTextStyle.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -45,7 +45,7 @@ class PageNotFound extends StatelessWidget {
                   icon: const Icon(Icons.arrow_back),
                   label: Text(
                     'GO TO HOME',
-                    style: Constants.titleTextStyle.copyWith(color: AppColors.darkCyan, fontWeight: FontWeight.bold),
+                    style: Constants.largeHeadTextStyle.copyWith(color: AppColors.darkCyan, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),

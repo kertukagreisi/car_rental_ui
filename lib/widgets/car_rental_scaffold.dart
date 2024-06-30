@@ -114,7 +114,7 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
   }
 
   AppBar _buildAppBar(BuildContext context) => AppBar(
-        leading: context.currentRoute != NavRoute.home.path
+        leading: context.currentRoute != NavRoute.home.path && context.currentRoute != NavRoute.carDetails.path
             ? GestureDetector(
                 onTap: () async {
                   await context.navigateToPreviousLevel();

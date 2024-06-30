@@ -59,19 +59,6 @@ class Constants {
   static BoxDecoration popUpHeaderDecoration =
       const BoxDecoration(color: AppColors.darkCyan, borderRadius: BorderRadius.only(topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0)));
 
-  static const headTextStyle = TextStyle(
-    color: AppColors.darkCyan,
-    fontSize: 24,
-    fontFamily: Fonts.openSansHead,
-    fontWeight: FontWeight.bold,
-  );
-
-  static const screenTitleStyle = TextStyle(
-    color: AppColors.lightGray,
-    fontSize: 24,
-    fontFamily: Fonts.openSansHead,
-  );
-
   static const extraSmallHeadTextStyle = TextStyle(
     color: AppColors.darkCyan,
     fontSize: 12,
@@ -79,11 +66,25 @@ class Constants {
     fontWeight: FontWeight.bold,
   );
 
+  static const extraSmallTextStyle = TextStyle(
+    color: AppColors.darkCyan,
+    fontSize: 12,
+    fontFamily: Fonts.openSans,
+    fontWeight: FontWeight.normal,
+  );
+
   static const smallHeadTextStyle = TextStyle(
     color: AppColors.darkCyan,
     fontSize: 14,
     fontFamily: Fonts.openSansHead,
     fontWeight: FontWeight.bold,
+  );
+
+  static const smallTextStyle = TextStyle(
+    color: AppColors.darkCyan,
+    fontSize: 14,
+    fontFamily: Fonts.openSans,
+    fontWeight: FontWeight.normal,
   );
 
   static const mediumHeadTextStyle = TextStyle(
@@ -101,24 +102,24 @@ class Constants {
     letterSpacing: 0.01 * 16,
   );
 
-  static const smallTextStyle = TextStyle(
+  static const largeHeadTextStyle = TextStyle(
     color: AppColors.darkCyan,
-    fontSize: 14,
-    fontFamily: Fonts.openSans,
-    fontWeight: FontWeight.normal,
+    fontSize: 18,
+    fontFamily: Fonts.openSansHead,
+    fontWeight: FontWeight.bold,
   );
 
-  static const extraSmallTextStyle = TextStyle(
-    color: AppColors.darkCyan,
-    fontSize: 12,
-    fontFamily: Fonts.openSans,
-    fontWeight: FontWeight.normal,
-  );
-
-  static const titleTextStyle = TextStyle(
+  static const largeTextStyle = TextStyle(
     color: AppColors.darkCyan,
     fontSize: 18,
     fontFamily: Fonts.openSansHead,
     fontWeight: FontWeight.normal,
+  );
+
+  static const headTextStyle = TextStyle(
+    color: AppColors.darkCyan,
+    fontSize: 24,
+    fontFamily: Fonts.openSansHead,
+    fontWeight: FontWeight.bold,
   );
 }
