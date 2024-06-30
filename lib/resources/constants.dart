@@ -43,18 +43,21 @@ class Constants {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)));
 
   static ButtonStyle darkIconButtonStyle = IconButton.styleFrom(
-  backgroundColor: AppColors.darkCyan,
-  padding: const EdgeInsets.all(0.0),
-  side: const BorderSide(color: AppColors.darkCyan, width: 1.2),
-  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
+    backgroundColor: AppColors.darkCyan,
+    padding: const EdgeInsets.all(0.0),
+    side: const BorderSide(color: AppColors.darkCyan, width: 1.2),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
   );
 
-  static ButtonStyle lightIconButtonStyle= IconButton.styleFrom(
+  static ButtonStyle lightIconButtonStyle = IconButton.styleFrom(
     backgroundColor: Colors.white,
     padding: const EdgeInsets.all(0),
     side: const BorderSide(color: AppColors.darkCyan, width: 1.2),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
   );
+
+  static BoxDecoration popUpHeaderDecoration =
+      const BoxDecoration(color: AppColors.darkCyan, borderRadius: BorderRadius.only(topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0)));
 
   static const headTextStyle = TextStyle(
     color: AppColors.darkCyan,

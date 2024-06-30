@@ -20,4 +20,6 @@ class CarRentalApi {
   static final RatingEndpointApi ratingEndpointApi = RatingEndpointApi(_apiClient);
 
   static final UserEndpointApi userEndpointApi = UserEndpointApi(_apiClient);
+
+  static final FileEndpointApi fileEndpointApi = FileEndpointApi(_apiClient);
 }

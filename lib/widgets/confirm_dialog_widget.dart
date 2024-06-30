@@ -2,7 +2,6 @@ import 'package:car_rental_ui/resources/constants.dart';
 import 'package:car_rental_ui/widgets/save_button_widget.dart';
 import 'package:flutter/material.dart';
 
-import '../resources/app_colors.dart';
 import 'cancel_button_widget.dart';
 
 class ConfirmDialog extends StatelessWidget {
@@ -27,8 +26,7 @@ class ConfirmDialog extends StatelessWidget {
     return AlertDialog(
       title: Container(
           padding: Constants.smallPadding,
-          decoration: const BoxDecoration(
-              color: AppColors.darkCyan, borderRadius: BorderRadius.only(topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
+          decoration: Constants.popUpHeaderDecoration,
           child: Text(title, style: Constants.mediumHeadTextStyle.copyWith(color: Colors.white))),
       content: Container(color: Colors.white, padding: Constants.mediumPadding, child: Text(message, style: Constants.smallTextStyle)),
       actions: [

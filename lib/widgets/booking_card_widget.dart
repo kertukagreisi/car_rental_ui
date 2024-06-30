@@ -94,9 +94,7 @@ class BookingCardWidget extends StatelessWidget {
                           Expanded(
                             child: Container(
                               padding: Constants.mediumPadding,
-                              decoration: const BoxDecoration(
-                                  color: AppColors.darkCyan,
-                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
+                              decoration: Constants.popUpHeaderDecoration,
                               child: booking.bookingStatus == BookingStatus.COMPLETED && booking.rating == null
                                   ? Text('Leave a rating for yor booking!', style: Constants.smallHeadTextStyle.copyWith(color: Colors.white))
                                   : Text('Booking Details', style: Constants.smallHeadTextStyle.copyWith(color: Colors.white)),

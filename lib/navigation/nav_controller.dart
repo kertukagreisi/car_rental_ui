@@ -3,7 +3,7 @@ import 'package:car_rental_ui/page/admin-pages/admin-bookings/admin_bookings_pag
 import 'package:car_rental_ui/page/admin-pages/admin-cars/admin_cars_page.dart';
 import 'package:car_rental_ui/page/admin-pages/admin-users/admin_users_page.dart';
 import 'package:car_rental_ui/page/bookings_overview/bookings_overview_page.dart';
-import 'package:car_rental_ui/page/user/profile_page.dart';
+import 'package:car_rental_ui/page/profile/profile_page.dart';
 import 'package:car_rental_ui/shared/snackbar_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
