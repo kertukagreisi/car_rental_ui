@@ -1,4 +1,5 @@
 import 'package:car_rental_ui/api-client/api_client.dart';
+import 'package:car_rental_ui/endpoint/booking_endpoint.dart';
 import 'package:car_rental_ui/generated_code/lib/api.dart';
 import 'package:car_rental_ui/shared/snackbar_service.dart';
 
@@ -60,7 +61,8 @@ class AdminBookingsViewModel extends ViewModel {
   }
 
   Future<void> deleteBooking(int bookingId) async {
-    await CarRentalApi.bookingEndpointApi.bookingsDeleteIdDelete(bookingId).then((value) async {
+    final BookingService bookingService = BookingService();
+    await bookingService.deleteBooking(bookingId).then((value) async {
       showSnackBar(SnackBarLevel.success, 'Deleted booking sucessfully!');
       await loadData();
       notifyListeners();

@@ -55,7 +55,7 @@ class AdminBookingsPage extends ViewModelWidget<AdminBookingsViewModel> {
         context: context,
         builder: (BuildContext context) => ConfirmDialog(
               title: '${convertToCamelCase(button)} Booking',
-              message: 'Are you sure you want to ${isPending ? 'activate' : 'complete'} this booking?',
+              message: 'Are you sure you want to ${button == 'approve' ? isPending ? 'activate' : 'complete' : button} this booking?',
               confirmCallback: () async {
                 if (button == 'approve') {
                   await viewModel.approveBooking(id);

@@ -10,9 +10,10 @@ class DropDownSelectWidget extends StatefulWidget {
   final List<String> items;
   final Function(String?) onDropDownChange;
   final bool mandatory;
+  final double? width;
   final String? toolTip;
   final String? initialValue;
-  final bool? enabled;
+  final bool enabled;
   final bool? showLabel;
 
   const DropDownSelectWidget({
@@ -21,9 +22,10 @@ class DropDownSelectWidget extends StatefulWidget {
     required this.items,
     required this.onDropDownChange,
     required this.mandatory,
+    this.width,
     this.toolTip,
     this.initialValue,
-    this.enabled,
+    this.enabled = true,
     this.showLabel,
   });
 
@@ -35,13 +37,13 @@ class _DropDownSelectWidgetState extends State<DropDownSelectWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        width: Constants.filterButtonWidth,
-        height: (widget.showLabel ?? false) ? null : 60.0,
+        width: widget.width,
+        height: (widget.showLabel ?? false) ? null : 70.0,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (widget.showLabel ?? false)
+            if (widget.showLabel ?? false) ...[
               SizedBox(
                 height: 20.0,
                 child: Text(
@@ -49,8 +51,10 @@ class _DropDownSelectWidgetState extends State<DropDownSelectWidget> {
                   style: const TextStyle(fontSize: 16.0, color: AppColors.darkCyan, fontFamily: Fonts.openSans),
                 ),
               ),
-            if (widget.showLabel ?? false) Constants.mediumSizedBox,
+              Constants.mediumSizedBox,
+            ],
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
                   child: ColoredBox(
@@ -62,7 +66,7 @@ class _DropDownSelectWidgetState extends State<DropDownSelectWidget> {
                         Icons.keyboard_arrow_down_outlined,
                         color: AppColors.darkCyan,
                       ),
-                      enabled: widget.items.isNotEmpty && (widget.enabled ?? true),
+                      enabled: widget.items.isNotEmpty && (widget.enabled),
                       iconDisabledColor: AppColors.gray,
                       onChanged: widget.onDropDownChange,
                       items: widget.items
@@ -73,8 +77,8 @@ class _DropDownSelectWidgetState extends State<DropDownSelectWidget> {
                             ),
                           )
                           .toList(),
-                      decoration: _buildInputDecoration(widget.label),
-                      validator: (value) => widget.mandatory && value == null ? 'Field required' : null,
+                      decoration: _buildInputDecoration(),
+                      validator: (value) => widget.mandatory && value == null ? '${widget.label} is required' : null,
                     ),
                   ),
                 ),
@@ -84,30 +88,30 @@ class _DropDownSelectWidgetState extends State<DropDownSelectWidget> {
         ));
   }
 
-  InputDecoration _buildInputDecoration(String label) {
-    const outlineInputBorder = OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(2.0)),
+  InputDecoration _buildInputDecoration() {
+    const outlineInputBorder = UnderlineInputBorder(
       borderSide: BorderSide(
         color: AppColors.darkCyan,
       ),
     );
 
     return InputDecoration(
-      labelText: (widget.showLabel ?? false) ? label + (widget.mandatory ? ' *' : '') : null,
-      floatingLabelBehavior: FloatingLabelBehavior.never,
-      hintText: 'Select',
+      contentPadding: const EdgeInsets.only(left: 4.0),
+      labelText: (widget.showLabel ?? false) ? widget.label + (widget.mandatory ? ' *' : '') : null,
+      hintText: widget.label,
+      floatingLabelBehavior: FloatingLabelBehavior.always,
+      floatingLabelStyle: Constants.extraSmallTextStyle,
+      labelStyle: Constants.smallHeadTextStyle.copyWith(color: AppColors.darkCyan),
+      hintStyle: Constants.smallTextStyle.copyWith(color: AppColors.gray),
+      errorStyle: Constants.extraSmallTextStyle.copyWith(fontSize: 8.0, color: AppColors.red),
       hoverColor: Colors.white,
-      contentPadding: const EdgeInsets.only(
-        left: 16,
-        bottom: 11,
-        top: 11,
-        right: 16,
-      ),
       enabledBorder: outlineInputBorder,
       focusedBorder: outlineInputBorder,
       disabledBorder: outlineInputBorder,
       errorBorder: outlineInputBorder,
       focusedErrorBorder: outlineInputBorder,
+      filled: widget.enabled ? true : null,
+      fillColor: widget.enabled ? AppColors.lightGray : null,
     );
   }
 }

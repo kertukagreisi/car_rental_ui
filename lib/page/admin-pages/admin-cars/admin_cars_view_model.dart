@@ -26,22 +26,22 @@ class AdminCarsViewModel extends ViewModel {
   }
 
   Future<void> addCar(Map<String, dynamic> formValue) async {
-    var brand = Brand.values.firstWhere((brand) => brand.value == formValue['brand']);
-    var fuelType = FuelType.values.firstWhere((fuelType) => fuelType.value == formValue['fuelType']);
-    var color = Color.values.firstWhere((color) => color.value == formValue['color']);
-    var transmission = Transmission.values.firstWhere((transmission) => transmission.value == formValue['transmission']);
+    var brand = Brand.values.firstWhere((brand) => brand.value == formValue['Brand']);
+    var fuelType = FuelType.values.firstWhere((fuelType) => fuelType.value == formValue['Fuel Type']);
+    var color = Color.values.firstWhere((color) => color.value == formValue['Color']);
+    var transmission = Transmission.values.firstWhere((transmission) => transmission.value == formValue['Transmission']);
     var createdCar = Car(
-        model: formValue['model'],
+        model: formValue['Model'],
         brand: brand,
-        engine: formValue['engine'],
+        engine: formValue['Engine'],
         fuelType: fuelType,
-        doors: int.parse(formValue['doors']),
+        doors: int.parse(formValue['Doors']),
         color: color,
         transmission: transmission,
-        seats: int.parse(formValue['seats']),
-        year: int.parse(formValue['year']),
-        licencePlate: formValue['licencePlate'],
-        price: double.parse(formValue['price']),
+        seats: int.parse(formValue['Seats']),
+        year: int.parse(formValue['Year']),
+        licencePlate: formValue['Licence Plate'],
+        price: double.parse(formValue['Price']),
         averageRating: 0.0,
         reviewsCount: 0);
     await CarRentalApi.carEndpointApi.carsCreatePost(car: createdCar).then((response) async {
@@ -54,23 +54,23 @@ class AdminCarsViewModel extends ViewModel {
   }
 
   Future<void> editCar(Map<String, dynamic> formValue, Car car) async {
-    var brand = Brand.values.firstWhere((brand) => brand.value == formValue['brand']);
-    var fuelType = FuelType.values.firstWhere((fuelType) => fuelType.value == formValue['fuelType']);
-    var color = Color.values.firstWhere((color) => color.value == formValue['color']);
-    var transmission = Transmission.values.firstWhere((transmission) => transmission.value == formValue['transmission']);
+    var brand = Brand.values.firstWhere((brand) => brand.value == formValue['Brand']);
+    var fuelType = FuelType.values.firstWhere((fuelType) => fuelType.value == formValue['Fuel Type']);
+    var color = Color.values.firstWhere((color) => color.value == formValue['Color']);
+    var transmission = Transmission.values.firstWhere((transmission) => transmission.value == formValue['Transmission']);
     var editedCar = Car(
         id: car.id,
-        model: formValue['model'],
+        model: formValue['Model'],
         brand: brand,
-        engine: formValue['engine'],
+        engine: formValue['Engine'],
         fuelType: fuelType,
-        doors: int.parse(formValue['doors']),
+        doors: int.parse(formValue['Doors']),
         color: color,
         transmission: transmission,
-        seats: int.parse(formValue['seats']),
-        year: int.parse(formValue['year']),
-        licencePlate: formValue['licencePlate'],
-        price: double.parse(formValue['price']),
+        seats: int.parse(formValue['Seats']),
+        year: int.parse(formValue['Year']),
+        licencePlate: formValue['Licence Plate'],
+        price: double.parse(formValue['Price']),
         averageRating: car.averageRating,
         reviewsCount: car.reviewsCount,
         picturePath: car.picturePath);

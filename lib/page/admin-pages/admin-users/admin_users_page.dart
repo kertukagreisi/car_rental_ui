@@ -87,43 +87,68 @@ class AdminUsersPage extends ViewModelWidget<AdminUsersViewModel> {
   AlertDialog _showAddUserDialog(AdminUsersViewModel viewModel, BuildContext context) {
     final formKey = GlobalKey<FormBuilderState>();
     return AlertDialog(
-      title: const Text('Add User', style: Constants.headTextStyle),
-      content: FormBuilder(
-        key: formKey,
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              TextInputWidget(label: 'name', mandatory: true, onChange: (value) {}),
-              TextInputWidget(label: 'lastName', mandatory: true, onChange: (value) {}),
-              TextInputWidget(label: 'email', mandatory: true, onChange: (value) {}),
-              TextInputWidget(label: 'phone', mandatory: true, onChange: (value) {}),
-              TextInputWidget(label: 'username', mandatory: true, onChange: (value) {}),
-              TextInputWidget(label: 'password', mandatory: true, onChange: (value) {}, obscureText: true),
-              DropDownSelectWidget(label: 'role', items: roleValues, onDropDownChange: (value) {}, mandatory: true),
-            ],
+      titlePadding: const EdgeInsets.all(0.0),
+      contentPadding: const EdgeInsets.all(0.0),
+      actionsPadding: const EdgeInsets.all(0.0),
+      title: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Expanded(
+              child: Container(
+                  padding: Constants.mediumPadding,
+                  decoration: Constants.popUpHeaderDecoration,
+                  child: Text('Add User', style: Constants.headTextStyle.copyWith(color: Colors.white)))),
+        ],
+      ),
+      content: Container(
+        color: Colors.white,
+        padding: const EdgeInsets.all(16.0),
+        child: FormBuilder(
+          key: formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                TextInputWidget(label: 'Name', mandatory: true, onChange: (value) {}, iconData: Icons.person),
+                TextInputWidget(label: 'Last Name', mandatory: true, onChange: (value) {}, iconData: Icons.person),
+                TextInputWidget(label: 'Email', mandatory: true, onChange: (value) {}, iconData: Icons.email),
+                TextInputWidget(label: 'Phone', mandatory: true, onChange: (value) {}, iconData: Icons.phone),
+                TextInputWidget(label: 'Username', mandatory: true, onChange: (value) {}, iconData: Icons.person),
+                TextInputWidget(label: 'Password', mandatory: true, onChange: (value) {}, obscureText: true, iconData: Icons.person),
+                DropDownSelectWidget(label: 'Role', items: roleValues, onDropDownChange: (value) {}, mandatory: true),
+              ],
+            ),
           ),
         ),
       ),
       actions: [
-        SaveButton(
-            text: 'Add',
-            onPressed: () async {
-              formKey.currentState?.save();
-              if (formKey.currentState!.validate()) {
-                await viewModel.addUser(formKey.currentState!.value);
-                if (context.mounted) {
-                  Navigator.of(context).pop();
-                }
-              }
-            }),
-        CancelButton(onPressed: () {
-          Navigator.of(context).pop();
-        }),
+        Container(
+          padding: const EdgeInsets.all(16.0),
+          decoration: const BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.only(bottomLeft: Radius.circular(4.0), bottomRight: Radius.circular(4.0))),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              SaveButton(
+                  text: 'Add',
+                  onPressed: () async {
+                    formKey.currentState?.save();
+                    if (formKey.currentState!.validate()) {
+                      await viewModel.addUser(formKey.currentState!.value);
+                      if (context.mounted) {
+                        Navigator.of(context).pop();
+                      }
+                    }
+                  }),
+              Constants.smallSizedBox,
+              CancelButton(onPressed: () {
+                Navigator.of(context).pop();
+              }),
+            ],
+          ),
+        ),
       ],
-      titlePadding: Constants.mediumPadding,
-      contentPadding: Constants.mediumPadding,
-      actionsPadding: Constants.mediumPadding,
     );
   }
 
@@ -131,43 +156,68 @@ class AdminUsersPage extends ViewModelWidget<AdminUsersViewModel> {
     final formKey = GlobalKey<FormBuilderState>();
     User user = viewModel.users.firstWhere((user) => user.id == userId);
     return AlertDialog(
-      title: const Text('Edit User', style: Constants.headTextStyle),
-      content: FormBuilder(
-        key: formKey,
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              TextInputWidget(label: 'name', mandatory: true, onChange: (value) {}, initialValue: user.name),
-              TextInputWidget(label: 'lastName', mandatory: true, onChange: (value) {}, initialValue: user.lastName),
-              TextInputWidget(label: 'email', mandatory: true, onChange: (value) {}, initialValue: user.email),
-              TextInputWidget(label: 'phone', mandatory: true, onChange: (value) {}, initialValue: user.phone),
-              TextInputWidget(label: 'username', mandatory: true, onChange: (value) {}, initialValue: user.username),
-              TextInputWidget(label: 'password', mandatory: true, onChange: (value) {}, obscureText: true),
-              DropDownSelectWidget(label: 'role', items: roleValues, onDropDownChange: (value) {}, mandatory: true, initialValue: user.role!.value),
-            ],
+      titlePadding: const EdgeInsets.all(0.0),
+      contentPadding: const EdgeInsets.all(0.0),
+      actionsPadding: const EdgeInsets.all(0.0),
+      title: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Expanded(
+              child: Container(
+                  padding: Constants.mediumPadding,
+                  decoration: Constants.popUpHeaderDecoration,
+                  child: Text('Edit User', style: Constants.headTextStyle.copyWith(color: Colors.white)))),
+        ],
+      ),
+      content: Container(
+        color: Colors.white,
+        padding: const EdgeInsets.all(16.0),
+        child: FormBuilder(
+          key: formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                TextInputWidget(label: 'Name', mandatory: true, onChange: (value) {}, initialValue: user.name, iconData: Icons.person),
+                TextInputWidget(label: 'Last Name', mandatory: true, onChange: (value) {}, initialValue: user.lastName, iconData: Icons.person),
+                TextInputWidget(label: 'Email', mandatory: true, onChange: (value) {}, initialValue: user.email, iconData: Icons.email),
+                TextInputWidget(label: 'Phone', mandatory: true, onChange: (value) {}, initialValue: user.phone, iconData: Icons.phone),
+                TextInputWidget(label: 'Username', mandatory: true, onChange: (value) {}, initialValue: user.username, iconData: Icons.person),
+                TextInputWidget(label: 'Password', mandatory: true, onChange: (value) {}, obscureText: true),
+                DropDownSelectWidget(label: 'Role', items: roleValues, onDropDownChange: (value) {}, mandatory: true, initialValue: user.role!.value),
+              ],
+            ),
           ),
         ),
       ),
       actions: [
-        SaveButton(
-            text: 'Edit',
-            onPressed: () async {
-              formKey.currentState?.save();
-              if (formKey.currentState!.validate()) {
-                await viewModel.editUser(formKey.currentState!.value, user);
-                if (context.mounted) {
-                  Navigator.of(context).pop();
-                }
-              }
-            }),
-        CancelButton(onPressed: () {
-          Navigator.of(context).pop();
-        }),
+        Container(
+          padding: const EdgeInsets.all(16.0),
+          decoration: const BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.only(bottomLeft: Radius.circular(4.0), bottomRight: Radius.circular(4.0))),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              SaveButton(
+                  text: 'Edit',
+                  onPressed: () async {
+                    formKey.currentState?.save();
+                    if (formKey.currentState!.validate()) {
+                      await viewModel.editUser(formKey.currentState!.value, user);
+                      if (context.mounted) {
+                        Navigator.of(context).pop();
+                      }
+                    }
+                  }),
+              Constants.smallSizedBox,
+              CancelButton(onPressed: () {
+                Navigator.of(context).pop();
+              }),
+            ],
+          ),
+        ),
       ],
-      titlePadding: Constants.mediumPadding,
-      contentPadding: Constants.mediumPadding,
-      actionsPadding: Constants.mediumPadding,
     );
   }
 

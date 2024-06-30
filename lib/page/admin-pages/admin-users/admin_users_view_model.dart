@@ -34,14 +34,14 @@ class AdminUsersViewModel extends ViewModel {
   }
 
   Future<void> addUser(Map<String, dynamic> formValue) async {
-    var role = Role.values.firstWhere((role) => role.value == formValue['role']);
+    var role = Role.values.firstWhere((role) => role.value == formValue['Role']);
     var createdUser = User(
-        name: formValue['name'],
-        lastName: formValue['lastName'],
-        email: formValue['email'],
-        phone: formValue['phone'],
-        username: formValue['username'],
-        password: formValue['password'],
+        name: formValue['Name'],
+        lastName: formValue['Last Name'],
+        email: formValue['Email'],
+        phone: formValue['Phone'],
+        username: formValue['Username'],
+        password: formValue['Password'],
         role: role);
     await CarRentalApi.userEndpointApi.userCreatePost(user: createdUser).then((response) async {
       showSnackBar(SnackBarLevel.success, 'Created user successfully!');
@@ -53,15 +53,15 @@ class AdminUsersViewModel extends ViewModel {
   }
 
   Future<void> editUser(Map<String, dynamic> formValue, User user) async {
-    var role = Role.values.firstWhere((role) => role.value == formValue['role']);
+    var role = Role.values.firstWhere((role) => role.value == formValue['Role']);
     var editedUser = User(
         id: user.id,
-        name: formValue['name'],
-        lastName: formValue['lastName'],
-        email: formValue['email'],
-        phone: formValue['phone'],
-        username: formValue['username'],
-        password: formValue['password'],
+        name: formValue['Name'],
+        lastName: formValue['Last Name'],
+        email: formValue['Email'],
+        phone: formValue['Phone'],
+        username: formValue['Username'],
+        password: formValue['Password'],
         role: role,
         profilePicturePath: user.profilePicturePath);
     await CarRentalApi.userEndpointApi.userUpdatePut(user: editedUser).then((response) async {

@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:car_rental_ui/api-client/api_client.dart';
-import 'package:car_rental_ui/endpoint/file_endpoint_api.dart';
+import 'package:car_rental_ui/endpoint/file_endpoint.dart';
 import 'package:car_rental_ui/generated_code/lib/api.dart';
 import 'package:car_rental_ui/shared/snackbar_service.dart';
 

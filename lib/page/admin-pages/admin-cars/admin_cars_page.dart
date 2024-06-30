@@ -24,7 +24,7 @@ class AdminCarsPage extends ViewModelWidget<AdminCarsViewModel> {
   Widget builder(BuildContext context, AdminCarsViewModel viewModel, Widget? child) {
     return Container(
       color: Colors.white,
-      padding: const EdgeInsets.all(24.0),
+      padding: const EdgeInsets.all(16.0),
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -87,47 +87,72 @@ class AdminCarsPage extends ViewModelWidget<AdminCarsViewModel> {
   AlertDialog _showAddCarDialog(AdminCarsViewModel viewModel, BuildContext context) {
     final formKey = GlobalKey<FormBuilderState>();
     return AlertDialog(
-      title: const Text('Add Car', style: Constants.headTextStyle),
-      content: FormBuilder(
-        key: formKey,
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              TextInputWidget(label: 'model', mandatory: true, onChange: (value) {}),
-              DropDownSelectWidget(label: 'brand', items: brandValues, onDropDownChange: (value) {}, mandatory: true),
-              TextInputWidget(label: 'engine', mandatory: true, onChange: (value) {}),
-              DropDownSelectWidget(label: 'fuelType', items: fuelTypeValues, onDropDownChange: (value) {}, mandatory: true),
-              TextInputWidget(label: 'doors', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true),
-              DropDownSelectWidget(label: 'color', items: colorValues, onDropDownChange: (value) {}, mandatory: true),
-              DropDownSelectWidget(label: 'transmission', items: transmissionValues, onDropDownChange: (value) {}, mandatory: true),
-              TextInputWidget(label: 'seats', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true),
-              TextInputWidget(label: 'year', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true),
-              TextInputWidget(label: 'licencePlate', mandatory: true, onChange: (value) {}),
-              TextInputWidget(label: 'price', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true),
-            ],
+      titlePadding: const EdgeInsets.all(0.0),
+      contentPadding: const EdgeInsets.all(0.0),
+      actionsPadding: const EdgeInsets.all(0.0),
+      title: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Expanded(
+              child: Container(
+                  padding: Constants.mediumPadding,
+                  decoration: Constants.popUpHeaderDecoration,
+                  child: Text('Add Car', style: Constants.headTextStyle.copyWith(color: Colors.white)))),
+        ],
+      ),
+      content: Container(
+        color: Colors.white,
+        padding: const EdgeInsets.all(16.0),
+        child: FormBuilder(
+          key: formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                TextInputWidget(label: 'Model', mandatory: true, onChange: (value) {}),
+                DropDownSelectWidget(label: 'Brand', items: brandValues, onDropDownChange: (value) {}, mandatory: true),
+                TextInputWidget(label: 'Engine', mandatory: true, onChange: (value) {}),
+                DropDownSelectWidget(label: 'Fuel Type', items: fuelTypeValues, onDropDownChange: (value) {}, mandatory: true),
+                TextInputWidget(label: 'Doors', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true),
+                DropDownSelectWidget(label: 'Color', items: colorValues, onDropDownChange: (value) {}, mandatory: true),
+                DropDownSelectWidget(label: 'Transmission', items: transmissionValues, onDropDownChange: (value) {}, mandatory: true),
+                TextInputWidget(label: 'Seats', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true),
+                TextInputWidget(label: 'Year', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true),
+                TextInputWidget(label: 'Licence Plate', mandatory: true, onChange: (value) {}),
+                TextInputWidget(label: 'Price', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true),
+              ],
+            ),
           ),
         ),
       ),
       actions: [
-        SaveButton(
-            text: 'Add',
-            onPressed: () async {
-              formKey.currentState?.save();
-              if (formKey.currentState!.validate()) {
-                await viewModel.addCar(formKey.currentState!.value);
-                if (context.mounted) {
-                  Navigator.of(context).pop();
-                }
-              }
-            }),
-        CancelButton(onPressed: () {
-          Navigator.of(context).pop();
-        }),
+        Container(
+          padding: const EdgeInsets.all(16.0),
+          decoration: const BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.only(bottomLeft: Radius.circular(4.0), bottomRight: Radius.circular(4.0))),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              SaveButton(
+                  text: 'Add',
+                  onPressed: () async {
+                    formKey.currentState?.save();
+                    if (formKey.currentState!.validate()) {
+                      await viewModel.addCar(formKey.currentState!.value);
+                      if (context.mounted) {
+                        Navigator.of(context).pop();
+                      }
+                    }
+                  }),
+              Constants.smallSizedBox,
+              CancelButton(onPressed: () {
+                Navigator.of(context).pop();
+              }),
+            ],
+          ),
+        ),
       ],
-      titlePadding: Constants.mediumPadding,
-      contentPadding: Constants.mediumPadding,
-      actionsPadding: Constants.mediumPadding,
     );
   }
 
@@ -135,53 +160,80 @@ class AdminCarsPage extends ViewModelWidget<AdminCarsViewModel> {
     final formKey = GlobalKey<FormBuilderState>();
     Car car = viewModel.cars.firstWhere((car) => car.id == carId);
     return AlertDialog(
-      title: const Text('Edit Car', style: Constants.headTextStyle),
-      content: FormBuilder(
-        key: formKey,
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              TextInputWidget(label: 'model', mandatory: true, onChange: (value) {}, initialValue: car.model),
-              DropDownSelectWidget(label: 'brand', items: brandValues, onDropDownChange: (value) {}, mandatory: true, initialValue: car.brand.value),
-              TextInputWidget(label: 'engine', mandatory: true, onChange: (value) {}, initialValue: car.engine),
-              DropDownSelectWidget(
-                  label: 'fuelType', items: fuelTypeValues, onDropDownChange: (value) {}, mandatory: true, initialValue: car.fuelType.value),
-              TextInputWidget(label: 'doors', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true, initialValue: car.doors),
-              DropDownSelectWidget(label: 'color', items: colorValues, onDropDownChange: (value) {}, mandatory: true, initialValue: car.color.value),
-              DropDownSelectWidget(
-                  label: 'transmission',
-                  items: transmissionValues,
-                  onDropDownChange: (value) {},
-                  mandatory: true,
-                  initialValue: car.transmission.value),
-              TextInputWidget(label: 'seats', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true, initialValue: car.seats),
-              TextInputWidget(label: 'year', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true, initialValue: car.year),
-              TextInputWidget(label: 'licencePlate', mandatory: true, onChange: (value) {}, initialValue: car.licencePlate),
-              TextInputWidget(label: 'price', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true, initialValue: car.price),
-            ],
+      titlePadding: const EdgeInsets.all(0.0),
+      contentPadding: const EdgeInsets.all(0.0),
+      actionsPadding: const EdgeInsets.all(0.0),
+      title: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Expanded(
+              child: Container(
+                  padding: Constants.mediumPadding,
+                  decoration: Constants.popUpHeaderDecoration,
+                  child: Text('Edit Car', style: Constants.headTextStyle.copyWith(color: Colors.white)))),
+        ],
+      ),
+      content: Container(
+        color: Colors.white,
+        padding: const EdgeInsets.all(16.0),
+        child: FormBuilder(
+          key: formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                TextInputWidget(label: 'Model', mandatory: true, onChange: (value) {}, initialValue: car.model),
+                DropDownSelectWidget(
+                    label: 'Brand', items: brandValues, onDropDownChange: (value) {}, mandatory: true, initialValue: car.brand.value),
+                TextInputWidget(label: 'Engine', mandatory: true, onChange: (value) {}, initialValue: car.engine),
+                DropDownSelectWidget(
+                    label: 'Fuel Type', items: fuelTypeValues, onDropDownChange: (value) {}, mandatory: true, initialValue: car.fuelType.value),
+                TextInputWidget(label: 'Doors', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true, initialValue: car.doors),
+                DropDownSelectWidget(
+                    label: 'Color', items: colorValues, onDropDownChange: (value) {}, mandatory: true, initialValue: car.color.value),
+                DropDownSelectWidget(
+                    label: 'Transmission',
+                    items: transmissionValues,
+                    onDropDownChange: (value) {},
+                    mandatory: true,
+                    initialValue: car.transmission.value),
+                TextInputWidget(label: 'Seats', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true, initialValue: car.seats),
+                TextInputWidget(label: 'Year', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true, initialValue: car.year),
+                TextInputWidget(label: 'Licence Plate', mandatory: true, onChange: (value) {}, initialValue: car.licencePlate),
+                TextInputWidget(label: 'Price', mandatory: true, onChange: (value) {}, allowOnlyNumbers: true, initialValue: car.price),
+              ],
+            ),
           ),
         ),
       ),
       actions: [
-        SaveButton(
-            text: 'Edit',
-            onPressed: () async {
-              formKey.currentState?.save();
-              if (formKey.currentState!.validate()) {
-                await viewModel.editCar(formKey.currentState!.value, car);
-                if (context.mounted) {
-                  Navigator.of(context).pop();
-                }
-              }
-            }),
-        CancelButton(onPressed: () {
-          Navigator.of(context).pop();
-        }),
+        Container(
+          padding: const EdgeInsets.all(16.0),
+          decoration: const BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.only(bottomLeft: Radius.circular(4.0), bottomRight: Radius.circular(4.0))),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              SaveButton(
+                  text: 'Edit',
+                  onPressed: () async {
+                    formKey.currentState?.save();
+                    if (formKey.currentState!.validate()) {
+                      await viewModel.editCar(formKey.currentState!.value, car);
+                      if (context.mounted) {
+                        Navigator.of(context).pop();
+                      }
+                    }
+                  }),
+              Constants.smallSizedBox,
+              CancelButton(onPressed: () {
+                Navigator.of(context).pop();
+              }),
+            ],
+          ),
+        ),
       ],
-      titlePadding: Constants.mediumPadding,
-      contentPadding: Constants.mediumPadding,
-      actionsPadding: Constants.mediumPadding,
     );
   }
 
