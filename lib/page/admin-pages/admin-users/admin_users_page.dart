@@ -52,6 +52,7 @@ class AdminUsersPage extends ViewModelWidget<AdminUsersViewModel> {
                     source: UsersTableDatasource(
                         users: viewModel.users,
                         columnsMap: viewModel.columnsMap,
+                        userId: viewModel.user.id!,
                         onButtonClick: (button, id) {
                           if (button == 'edit') {
                             showDialog(context: context, builder: (context) => _showEditUserDialog(viewModel, context, button, id));

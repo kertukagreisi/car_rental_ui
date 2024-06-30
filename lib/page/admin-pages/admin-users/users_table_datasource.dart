@@ -8,9 +8,10 @@ import '../../../shared/helpers.dart';
 class UsersTableDatasource extends DataTableSource {
   final List<User> users;
   final Map<String, String> columnsMap;
+  final int userId;
   final Function(String button, int carId) onButtonClick;
 
-  UsersTableDatasource({required this.users, required this.columnsMap, required this.onButtonClick});
+  UsersTableDatasource({required this.users, required this.columnsMap, required this.userId, required this.onButtonClick});
 
   @override
   int get rowCount => users.length;
@@ -83,10 +84,8 @@ class UsersTableDatasource extends DataTableSource {
         DataCell(
           Padding(
             padding: Constants.tableCellPadding,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
+            child: Row(mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.end, children: [
+              if (userId != users[index].id!) ...[
                 TextButton(
                     style: Constants.clearButtonStyle,
                     onPressed: () => onButtonClick('edit', users[index].id!),
@@ -96,7 +95,7 @@ class UsersTableDatasource extends DataTableSource {
                     onPressed: () => onButtonClick('delete', users[index].id!),
                     child: const Icon(Icons.delete, color: AppColors.red)),
               ],
-            ),
+            ]),
           ),
         ),
       ],

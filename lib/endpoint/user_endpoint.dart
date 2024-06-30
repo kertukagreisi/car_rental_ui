@@ -10,8 +10,7 @@ class UserService {
   static String baseURL = dotenv.get('BACKEND_PATH');
 
   Future<void> deleteUser(int userId) async {
-    final response =
-        await http.delete(Uri.parse('$baseURL/users/delete/$userId'), headers: {'Authorization': 'Bearer ${getIt<AuthService>().token}'});
+    final response = await http.delete(Uri.parse('$baseURL/user/delete/$userId'), headers: {'Authorization': 'Bearer ${getIt<AuthService>().token}'});
 
     if (response.statusCode == 204) {
       return Future.value();

@@ -1,4 +1,5 @@
 import 'package:car_rental_ui/api-client/api_client.dart';
+import 'package:car_rental_ui/endpoint/car_endpoint.dart';
 import 'package:car_rental_ui/generated_code/lib/api.dart';
 
 import '../../../shared/mvvm/view_model.dart';
@@ -84,8 +85,9 @@ class AdminCarsViewModel extends ViewModel {
   }
 
   Future<void> deleteCar(int carId) async {
-    await CarRentalApi.carEndpointApi.carsDeleteIdDelete(carId).then((response) async {
-      showSnackBar(SnackBarLevel.success, 'Deleted car successfully!');
+    final CarService carService = CarService();
+    await carService.deleteCar(carId).then((value) async {
+      showSnackBar(SnackBarLevel.success, 'Deleted car sucessfully!');
       await _fetchCars();
       notifyListeners();
     }).onError((error, stackTrace) {

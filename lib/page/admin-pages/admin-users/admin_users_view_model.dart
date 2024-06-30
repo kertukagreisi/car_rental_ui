@@ -1,6 +1,9 @@
 import 'package:car_rental_ui/api-client/api_client.dart';
 import 'package:car_rental_ui/generated_code/lib/api.dart';
 
+import '../../../endpoint/user_endpoint.dart';
+import '../../../shared/auth_service.dart';
+import '../../../shared/locator.dart';
 import '../../../shared/mvvm/view_model.dart';
 import '../../../shared/snackbar_service.dart';
 
@@ -8,6 +11,7 @@ class AdminUsersViewModel extends ViewModel {
   final Map<String, String> args;
   late List<User> _fetchedUsers = [];
   List<User> users = [];
+  late User user;
   final Map<String, String> columnsMap = {
     'id': 'ID',
     'fullName': 'Name',
@@ -31,6 +35,7 @@ class AdminUsersViewModel extends ViewModel {
   Future<void> _fetchUsers() async {
     _fetchedUsers = await CarRentalApi.userEndpointApi.userAllGet() ?? [];
     users = _fetchedUsers;
+    user = getIt.get<AuthService>().user;
   }
 
   Future<void> addUser(Map<String, dynamic> formValue) async {
@@ -74,8 +79,9 @@ class AdminUsersViewModel extends ViewModel {
   }
 
   Future<void> deleteUser(int userId) async {
-    await CarRentalApi.userEndpointApi.userDeleteIdDelete(userId).then((response) async {
-      showSnackBar(SnackBarLevel.success, 'Deleted user successfully!');
+    final UserService userService = UserService();
+    await userService.deleteUser(userId).then((value) async {
+      showSnackBar(SnackBarLevel.success, 'Deleted user sucessfully!');
       await _fetchUsers();
       notifyListeners();
     }).onError((error, stackTrace) {
