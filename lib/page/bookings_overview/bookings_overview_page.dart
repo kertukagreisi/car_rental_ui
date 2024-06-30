@@ -20,7 +20,7 @@ class BookingsOverviewPage extends ViewModelWidget<BookingsOverviewViewModel> {
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
         child: ValueListenableBuilder(
           valueListenable: tabNotifier,
-          builder: (BuildContext context, BookingStatus value, Widget? child) {
+          builder: (BuildContext context, BookingStatus selectedTab, Widget? child) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,14 +40,14 @@ class BookingsOverviewPage extends ViewModelWidget<BookingsOverviewViewModel> {
                             margin: const EdgeInsets.only(right: 4.0),
                             padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 4.0),
                             decoration: BoxDecoration(
-                                color: value.value == status.value ? AppColors.darkCyan : Colors.white,
+                                color: selectedTab.value == status.value ? AppColors.darkCyan : Colors.white,
                                 boxShadow: const [BoxShadow(color: AppColors.cyan, blurRadius: 1)],
                                 border: Border.all(color: AppColors.cyan),
                                 borderRadius: BorderRadius.circular(4.0)),
                             child: Text(
                               '${status.value} (${viewModel.bookings.where((booking) => booking.bookingStatus == status).length})',
                               style: Constants.extraSmallTextStyle
-                                  .copyWith(fontWeight: FontWeight.w600, color: value.value == status.value ? Colors.white : AppColors.darkCyan),
+                                  .copyWith(fontWeight: FontWeight.w600, color: selectedTab.value == status.value ? Colors.white : AppColors.darkCyan),
                             ),
                           ),
                         );
@@ -59,7 +59,7 @@ class BookingsOverviewPage extends ViewModelWidget<BookingsOverviewViewModel> {
                   padding: const EdgeInsets.only(bottom: 12.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: viewModel.bookings.where((booking) => booking.bookingStatus == value).map((filteredBooking) {
+                    children: viewModel.bookings.where((booking) => booking.bookingStatus == selectedTab).map((filteredBooking) {
                       return Container(
                         margin: const EdgeInsets.symmetric(horizontal: 4.0),
                         padding: const EdgeInsets.only(bottom: 24.0),

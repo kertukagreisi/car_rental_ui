@@ -82,37 +82,7 @@ class BookingCardWidget extends StatelessWidget {
             style: Constants.clearButtonStyle,
             onPressed: () {
               onBookingCardItemClick(booking.id!);
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      titlePadding: const EdgeInsets.all(0.0),
-                      contentPadding: const EdgeInsets.all(0.0),
-                      title: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Expanded(
-                            child: Container(
-                              padding: Constants.mediumPadding,
-                              decoration: Constants.popUpHeaderDecoration,
-                              child: booking.bookingStatus == BookingStatus.COMPLETED && booking.rating == null
-                                  ? Text('Leave a rating for yor booking!', style: Constants.smallHeadTextStyle.copyWith(color: Colors.white))
-                                  : Text('Booking Details', style: Constants.smallHeadTextStyle.copyWith(color: Colors.white)),
-                            ),
-                          ),
-                        ],
-                      ),
-                      content: Container(
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(4.0)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: _buildPopupContentWidgets(context),
-                        ),
-                      ),
-                    );
-                  });
+              showDialog(context: context, builder: (BuildContext context) => _buildPopupDialog(context));
             },
             child: ColoredBox(
               color: AppColors.gray,
@@ -153,11 +123,60 @@ class BookingCardWidget extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildPopupContentWidgets(BuildContext context) {
+  Widget _buildPopupDialog(BuildContext context) {
+    return AlertDialog(
+      titlePadding: const EdgeInsets.all(0.0),
+      contentPadding: const EdgeInsets.all(0.0),
+      title: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Expanded(
+            child: Container(
+              padding: Constants.mediumPadding,
+              decoration: Constants.popUpHeaderDecoration,
+              child: booking.bookingStatus == BookingStatus.COMPLETED && booking.rating == null
+                  ? Text('Leave a rating for yor booking!', style: Constants.smallHeadTextStyle.copyWith(color: Colors.white))
+                  : Text('Booking Details', style: Constants.smallHeadTextStyle.copyWith(color: Colors.white)),
+            ),
+          ),
+        ],
+      ),
+      content: Container(
+        padding: const EdgeInsets.all(8.0),
+        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(4.0)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: _buildPopupDetails(context),
+        ),
+      ),
+    );
+  }
+
+  List<Widget> _buildPopupDetails(BuildContext context) {
     final ValueNotifier<int> ratingNotifier = ValueNotifier(0);
     final ratingFormKey = GlobalKey<FormBuilderState>();
     List<Widget> popupColumns = [];
-    popupColumns.add(Padding(
+    popupColumns.add(_buildPopUpHeader());
+
+    if (booking.bookingStatus == BookingStatus.COMPLETED && booking.rating == null) {
+      popupColumns.add(_buildRatingPopup(context, ratingFormKey, ratingNotifier));
+    } else {
+      popupColumns.add(
+        Container(
+            margin: const EdgeInsets.only(top: 14.0),
+            child: CancelButton(
+                text: 'Close',
+                onPressed: () {
+                  Navigator.of(context).pop();
+                })),
+      );
+    }
+    return popupColumns;
+  }
+
+  Widget _buildPopUpHeader() {
+    return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Wrap(
         spacing: 25.0,
@@ -230,78 +249,65 @@ class BookingCardWidget extends StatelessWidget {
           ),
         ],
       ),
-    ));
+    );
+  }
 
-    if (booking.bookingStatus == BookingStatus.COMPLETED && booking.rating == null) {
-      popupColumns.add(
-        FormBuilder(
-          key: ratingFormKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              ValueListenableBuilder(
-                valueListenable: ratingNotifier,
-                builder: (BuildContext context, value, Widget? child) {
-                  List<Widget> starWidgets = [];
-                  for (var index = 4; index >= 0; index--) {
-                    starWidgets.add(TextButton(
-                      style: Constants.clearButtonStyle,
-                      onPressed: () {
-                        ratingNotifier.value = 4 - index;
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: Icon(index > 3 - value ? Icons.star : Icons.star_border_outlined, color: AppColors.yellow),
-                      ),
-                    ));
-                  }
-                  return Wrap(children: starWidgets);
-                },
-              ),
-              TextInputWidget(label: 'Comment', mandatory: false, placeholder: 'Comment', width: 250, onChange: (value) {}),
-              Wrap(
-                children: [
-                  Padding(
-                      padding: const EdgeInsets.only(
-                        right: 8.0,
-                      ),
-                      child: SaveButton(onPressed: () async {
-                        ratingFormKey.currentState!.save();
-                        Rating rating = Rating(
-                            rating: ratingNotifier.value + 1,
-                            comment: ratingFormKey.currentState?.value['Comment'],
-                            timeStamp: DateTime.now(),
-                            car: booking.car,
-                            user: booking.user);
-                        await CarRentalApi.ratingEndpointApi
-                            .ratingsCreatePost(bookingId: booking.id, carId: booking.car.id, userId: booking.user.id, rating: rating)
-                            .then((value) => showSnackBar(SnackBarLevel.success, 'Rating saved successfully!'))
-                            .onError((error, stackTrace) => showSnackBar(SnackBarLevel.error, 'Couldn\'t save booking! There was an error!'));
-                        if (context.mounted) {
-                          Navigator.of(context).pop();
-                        }
-                      })),
-                  CancelButton(onPressed: () {
-                    Navigator.of(context).pop();
-                  }),
-                ],
-              )
-            ],
+  Widget _buildRatingPopup(BuildContext context, GlobalKey<FormBuilderState> ratingFormKey, ValueNotifier<int> ratingNotifier) {
+    return FormBuilder(
+      key: ratingFormKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          ValueListenableBuilder(
+            valueListenable: ratingNotifier,
+            builder: (BuildContext context, value, Widget? child) {
+              List<Widget> starWidgets = [];
+              for (var index = 4; index >= 0; index--) {
+                starWidgets.add(TextButton(
+                  style: Constants.clearButtonStyle,
+                  onPressed: () {
+                    ratingNotifier.value = 4 - index;
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Icon(index > 3 - value ? Icons.star : Icons.star_border_outlined, color: AppColors.yellow),
+                  ),
+                ));
+              }
+              return Wrap(children: starWidgets);
+            },
           ),
-        ),
-      );
-    } else {
-      popupColumns.add(
-        Container(
-            margin: const EdgeInsets.only(top: 14.0),
-            child: CancelButton(
-                text: 'Close',
-                onPressed: () {
-                  Navigator.of(context).pop();
-                })),
-      );
-    }
-    return popupColumns;
+          TextInputWidget(label: 'Comment', mandatory: false, placeholder: 'Comment', width: 250, onChange: (value) {}),
+          Wrap(
+            children: [
+              Padding(
+                  padding: const EdgeInsets.only(
+                    right: 8.0,
+                  ),
+                  child: SaveButton(onPressed: () async {
+                    ratingFormKey.currentState!.save();
+                    Rating rating = Rating(
+                        rating: ratingNotifier.value + 1,
+                        comment: ratingFormKey.currentState?.value['Comment'],
+                        timeStamp: DateTime.now(),
+                        car: booking.car,
+                        user: booking.user);
+                    await CarRentalApi.ratingEndpointApi
+                        .ratingsCreatePost(bookingId: booking.id, carId: booking.car.id, userId: booking.user.id, rating: rating)
+                        .then((value) => showSnackBar(SnackBarLevel.success, 'Rating saved successfully!'))
+                        .onError((error, stackTrace) => showSnackBar(SnackBarLevel.error, 'Couldn\'t save booking! There was an error!'));
+                    if (context.mounted) {
+                      Navigator.of(context).pop();
+                    }
+                  })),
+              CancelButton(onPressed: () {
+                Navigator.of(context).pop();
+              }),
+            ],
+          )
+        ],
+      ),
+    );
   }
 
   Widget _buildRatingWidget(int rating) {
