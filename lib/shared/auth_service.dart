@@ -24,7 +24,7 @@ class AuthService with ChangeNotifier {
   }
 
   Future<void> _fetchAsyncData() async {
-    _token.value = await getTokenFromSecureStorage();
+    _token.value = await getFromSecureStorage('token');
     if (_token.value != null) {
       _decodeToken(token);
     }
@@ -34,7 +34,7 @@ class AuthService with ChangeNotifier {
     LoginRequest loginRequest = LoginRequest(username: username, password: password);
     await CarRentalApi.userEndpointApi.userLoginPost(loginRequest: loginRequest).then((loginResponse) {
       _decodeToken(loginResponse!.token);
-      saveTokenToSecureStorage(token);
+      saveToSecureStorage('token', token);
       showSnackBar(SnackBarLevel.success, 'Logged in successfully!');
     }).onError((error, stackTrace) {
       showSnackBar(SnackBarLevel.error, getErrorMessage(error));
@@ -59,7 +59,7 @@ class AuthService with ChangeNotifier {
 
   Future<void> logout() async {
     _removeUser();
-    await removeTokenFromSecureStorage();
+    await clearSecureStorage();
   }
 
   void _removeUser() {

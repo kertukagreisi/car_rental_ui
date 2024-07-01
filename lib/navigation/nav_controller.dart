@@ -4,6 +4,7 @@ import 'package:car_rental_ui/page/admin-pages/admin-cars/admin_cars_page.dart';
 import 'package:car_rental_ui/page/admin-pages/admin-users/admin_users_page.dart';
 import 'package:car_rental_ui/page/bookings_overview/bookings_overview_page.dart';
 import 'package:car_rental_ui/page/profile/profile_page.dart';
+import 'package:car_rental_ui/shared/flutter_secure_storage_service.dart';
 import 'package:car_rental_ui/shared/snackbar_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -128,6 +129,7 @@ class NavController {
     }
   }
 
+  // This method guards routes for unauthorized users
   Future<String> _guard(BuildContext context, GoRouterState state) async {
     final authService = getIt<AuthService>();
     final isLoggedIn = await authService.isAuthenticated;
@@ -136,6 +138,10 @@ class NavController {
     }
     // Redirect to login if not authenticated (except login route)
     else if (!isLoggedIn && state.uri.path != NavRoute.login.path) {
+      await saveToSecureStorage('path', state.uri.path);
+      if (state.uri.queryParameters.isNotEmpty) {
+        await saveToSecureStorage('query', state.uri.query);
+      }
       return NavRoute.login.path;
     }
     // Redirect to home if user is authenticated and tries to go to login
@@ -157,10 +163,10 @@ class NavController {
     return _getFullPath(state);
   }
 
-  Future<String> _getFullPath(GoRouterState state) async {
+  String _getFullPath(GoRouterState state) {
     if (state.uri.queryParameters.isNotEmpty) {
-      return Future.value('${state.uri.path}?${state.uri.query}');
+      return '${state.uri.path}?${state.uri.query}';
     }
-    return Future.value(state.uri.path);
+    return state.uri.path;
   }
 }

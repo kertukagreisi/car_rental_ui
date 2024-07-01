@@ -8,6 +8,7 @@ import 'package:car_rental_ui/shared/snackbar_service.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../shared/auth_service.dart';
+import '../../shared/flutter_secure_storage_service.dart';
 import '../../shared/helpers.dart';
 import '../../shared/locator.dart';
 import '../../shared/mvvm/view_model.dart';
@@ -27,7 +28,20 @@ class LoginViewModel extends ViewModel {
   Future<void> login(String username, String password, BuildContext context) async {
     final authService = getIt<AuthService>();
     if (await authService.login(username, password) && context.mounted) {
-      context.goNamedRoute(NavRoute.home);
+      NavRoute route = NavRoute.home;
+      Map<String, String> queryParams = {};
+      String? path = await getFromSecureStorage('path');
+
+      if (path != null) {
+        route = NavRoute.values.firstWhere((navRoute) => path == navRoute.path);
+        String? query = await getFromSecureStorage('query');
+        if (query != null) {
+          queryParams = Uri.splitQueryString(query);
+        }
+        await removeFromSecureStorage('path');
+        await removeFromSecureStorage('query');
+      }
+      context.goNamedRoute(route, queryParams: queryParams);
     }
   }
 

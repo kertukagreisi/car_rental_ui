@@ -20,8 +20,7 @@ npm install @openapitools/openapi-generator-cli -g
 npx @openapitools/openapi-generator-cli generate -i api_clients/openapi.yaml -g dart -o lib/generated_code
 ```
 
-To test on emulator, put this string on backend path on api_client.dart (it references the machine
-ip):
+To test on emulator, set backend path on api_client.dart (it references the machine ip):
 static String baseURL = 'http://10.0.2.2:8081';
 
 Flutter

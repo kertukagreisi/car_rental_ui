@@ -39,7 +39,7 @@ Color getTextColor(bool isMainColor, String value) {
       case 'GREEN':
         return Colors.green;
       case 'RED':
-        return AppColors.darkRed;
+        return AppColors.red;
       case 'YELLOW':
         return Colors.yellow;
       case 'WHITE':

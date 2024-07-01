@@ -54,18 +54,25 @@ extension NavControllerHelper on BuildContext {
       );
 
   String getAppBarTitle() {
-    return _getAppBarTitleByRoute(currentRoute, currentRouteParams);
-  }
-
-  String _getAppBarTitleByRoute(String currentRoute, Map<String, String> routeParams) {
     var list = NavRoute.values.where((element) => element.path == currentRoute).toList();
     var navRoute = list.isNotEmpty ? list[0] : 'default';
-
     switch (navRoute) {
       case NavRoute.home:
         return 'Home';
-      case NavRoute.rent || NavRoute.carDetails:
+      case NavRoute.rent:
+        return 'Rent';
+      case NavRoute.carDetails:
         return 'Car Details';
+      case NavRoute.adminUsers:
+        return 'Users Overview';
+      case NavRoute.adminCars:
+        return 'Cars Overview';
+      case NavRoute.adminBookings:
+        return 'Bookings Overview';
+      case NavRoute.login:
+        return 'Login';
+      case NavRoute.pageNotFound:
+        return 'Page Not Found';
       default:
         return 'Home';
     }
