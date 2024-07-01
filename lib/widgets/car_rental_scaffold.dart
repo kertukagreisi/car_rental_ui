@@ -158,21 +158,21 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
                           _isRailExtended.value = false;
                           context.goNamedRoute(NavRoute.profile);
                         },
-                        child: const Row(
+                        child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Padding(
+                            const Padding(
                               padding: EdgeInsets.only(right: 4.0),
-                              child: Icon(Icons.account_box, color: AppColors.darkCyan, size: 20),
+                              child: Icon(Icons.account_box, color: AppColors.darkCyan, size: 22),
                             ),
-                            Text('Profile', style: Constants.smallHeadTextStyle),
+                            Text('Profile', style: Constants.mediumTextStyle.copyWith(fontWeight: FontWeight.w600)),
                           ],
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.symmetric(vertical: 2.0),
+                        margin: const EdgeInsets.symmetric(vertical: 4.0),
                         height: 1.0,
-                        color: AppColors.cyan,
+                        color: AppColors.cyan.withOpacity(0.5),
                       ),
                       TextButton(
                         style: Constants.clearButtonStyle,
@@ -184,14 +184,14 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
                             context.goNamedRoute(NavRoute.home);
                           }
                         },
-                        child: const Row(
+                        child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Padding(
+                            const Padding(
                               padding: EdgeInsets.only(right: 4.0),
-                              child: Icon(Icons.logout, color: AppColors.darkCyan, size: 20),
+                              child: Icon(Icons.logout, color: AppColors.darkCyan, size: 22),
                             ),
-                            Text('Log Out', style: Constants.smallHeadTextStyle),
+                            Text('Log Out', style: Constants.mediumTextStyle.copyWith(fontWeight: FontWeight.w600)),
                           ],
                         ),
                       ),
@@ -203,13 +203,13 @@ class _CarRentalScaffoldState extends State<CarRentalScaffold> {
                           _isRailExtended.value = false;
                           context.goNamedRoute(NavRoute.login);
                         },
-                        child: const Row(
+                        child: Row(
                           children: [
-                            Padding(
+                            const Padding(
                               padding: EdgeInsets.only(right: 4.0),
                               child: Icon(Icons.login, color: AppColors.darkCyan, size: 20),
                             ),
-                            Text('Log In', style: Constants.smallHeadTextStyle),
+                            Text('Log In', style: Constants.mediumTextStyle.copyWith(fontWeight: FontWeight.w600)),
                           ],
                         ),
                       ),

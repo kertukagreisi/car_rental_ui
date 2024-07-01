@@ -20,8 +20,8 @@ class Constants {
   static const defaultElevation = 8.0;
   static const defaultScrollbarThickness = 8.0;
   static const filterButtonHeight = 56.0;
-  static const filterButtonWidth = 150.0;
-  static const filePickerHeightNoFiles = 66.0;
+  static const filterButtonWidth = 200.0;
+  static const filePickerHeightNoFiles = 100.0;
   static const filePickerHeightFiles = 110.0;
 
   static ButtonStyle clearButtonStyle = TextButton.styleFrom(

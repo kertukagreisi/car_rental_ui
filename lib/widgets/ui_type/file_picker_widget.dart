@@ -9,14 +9,14 @@ class FilePickerWidget extends StatefulWidget {
   final bool mandatory;
   final Function(dynamic) onChange;
   final String? toolTip;
-  final bool? allowMultiple;
+  final bool allowMultiple;
 
   const FilePickerWidget({
     required this.label,
     required this.mandatory,
     required this.onChange,
     this.toolTip,
-    this.allowMultiple,
+    this.allowMultiple = false,
     super.key,
   });
 
@@ -25,78 +25,65 @@ class FilePickerWidget extends StatefulWidget {
 }
 
 class _FilePickerWidgetState extends State<FilePickerWidget> {
-  List<PlatformFile>? platformFiles;
+  List<PlatformFile> platformFiles = [];
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: Constants.filterButtonWidth,
-      height: (platformFiles != null && (platformFiles?.isNotEmpty)!)
-          ? ((widget.allowMultiple ?? true) ? null : Constants.filePickerHeightFiles)
+      height: platformFiles.isNotEmpty
+          ? widget.allowMultiple
+              ? null
+              : Constants.filePickerHeightFiles
           : Constants.filePickerHeightNoFiles,
       color: Colors.white,
-      child: Row(
-        children: [
-          Expanded(
-            child: FormBuilderFilePicker(
-              name: widget.label,
-              decoration: _buildFilePickerInputDecoration(widget.label),
-              validator: (value) => widget.mandatory && value == null ? 'Field required' : null,
-              onChanged: (value) {
-                if (value != null && value.isNotEmpty && value.length > 1 && !(widget.allowMultiple ?? false)) {
-                  value.removeAt(0);
-                }
-                setState(() {
-                  platformFiles = value;
-                });
-                widget.onChange(platformFiles);
-              },
-              onReset: () {
-                setState(() {});
-              },
-              allowMultiple: widget.allowMultiple ?? false,
-              customFileViewerBuilder: (platformFiles != null && (platformFiles?.isNotEmpty)!) ? _customFileViewerBuilder : null,
-              typeSelectors: const [
-                TypeSelector(
-                  type: FileType.any,
-                  selector: Row(
-                    children: <Widget>[
-                      Icon(Icons.cloud_upload_outlined),
-                      Padding(
-                        padding: EdgeInsets.only(left: 8.0),
-                        child: Text('Add documents'),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+      child: FormBuilderFilePicker(
+        name: widget.label,
+        validator: (value) => widget.mandatory && value == null ? 'Field required' : null,
+        onChanged: (value) {
+          print('changed');
+          if (value != null && value.isNotEmpty && value.length > 1 && !widget.allowMultiple) {
+            value.removeAt(0);
+          } else if (value == null || value.isEmpty) {
+            platformFiles = [];
+          }
+          setState(() {
+            platformFiles = value ?? [];
+            for (var platformFile in platformFiles) {
+              if (platformFile.size > 3 * 1024 * 1024) {
+                platformFiles.remove(platformFile);
+              }
+            }
+          });
+          widget.onChange(platformFiles);
+        },
+        onReset: () {
+          setState(() {});
+        },
+        decoration: const InputDecoration(border: InputBorder.none),
+        allowMultiple: widget.allowMultiple,
+        customFileViewerBuilder: platformFiles.isNotEmpty ? _customFileViewerBuilder : null,
+        typeSelectors: [
+          TypeSelector(
+            type: FileType.image,
+            selector: platformFiles.isEmpty
+                ? Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+                    decoration: BoxDecoration(color: AppColors.darkCyan, borderRadius: BorderRadius.circular(4.0)),
+                    child: Row(
+                      children: <Widget>[
+                        const Icon(Icons.cloud_upload_outlined, color: Colors.white, size: 20),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 6.0),
+                          child: Text('Upload', style: Constants.mediumTextStyle.copyWith(color: Colors.white, fontWeight: FontWeight.w500)),
+                        ),
+                      ],
+                    ),
+                  )
+                : const SizedBox.shrink(),
           ),
         ],
       ),
-    );
-  }
-
-  InputDecoration _buildFilePickerInputDecoration(String label) {
-    const outlineInputBorder = OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(2.0)),
-      borderSide: BorderSide(
-        color: AppColors.darkCyan,
-      ),
-    );
-    return InputDecoration(
-      labelText: label + (widget.mandatory ? ' *' : ''),
-      floatingLabelStyle: Constants.extraSmallTextStyle,
-      floatingLabelBehavior: FloatingLabelBehavior.always,
-      labelStyle: Constants.mediumTextStyle.copyWith(
-        color: Colors.black,
-      ),
-      errorStyle: const TextStyle(fontSize: 9, backgroundColor: AppColors.lightBlue),
-      errorMaxLines: 1,
-      enabledBorder: outlineInputBorder,
-      focusedBorder: outlineInputBorder,
-      errorBorder: outlineInputBorder,
-      focusedErrorBorder: outlineInputBorder,
     );
   }
 
@@ -104,26 +91,28 @@ class _FilePickerWidgetState extends State<FilePickerWidget> {
     List<PlatformFile>? files,
     FormFieldSetter<List<PlatformFile>> setter,
   ) {
-    files = platformFiles ?? [];
-    return ListView.separated(
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        final file = files?[index];
-        return ListTile(
-          title: Text(file?.name ?? ''),
-          trailing: IconButton(
-            icon: const Icon(Icons.delete),
-            onPressed: () {
-              files?.removeAt(index);
-              setter.call([...files!]);
-            },
-          ),
-        );
-      },
-      separatorBuilder: (context, index) => const Divider(
-        color: AppColors.darkCyan,
+    files = platformFiles;
+    return SingleChildScrollView(
+      child: ListView.separated(
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          final file = files?[index];
+          return ListTile(
+            title: Text(file?.name ?? '', style: Constants.mediumTextStyle.copyWith(fontWeight: FontWeight.w500), overflow: TextOverflow.ellipsis),
+            trailing: IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: () {
+                files?.removeAt(index);
+                setter.call([...files!]);
+              },
+            ),
+          );
+        },
+        separatorBuilder: (context, index) => Divider(
+          color: AppColors.cyan.withOpacity(0.6),
+        ),
+        itemCount: files.length,
       ),
-      itemCount: files.length,
     );
   }
 }

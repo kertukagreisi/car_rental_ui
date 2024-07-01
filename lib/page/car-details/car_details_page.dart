@@ -78,7 +78,7 @@ class CarDetailsPage extends ViewModelWidget<CarDetailsViewModel> {
                 child: Center(
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,
-                    child: Image.asset(Images.aurisImage, alignment: Alignment.center, fit: BoxFit.fill),
+                    child: Image.asset(Images.aurisImage, alignment: Alignment.center, fit: BoxFit.fitWidth),
                   ),
                 ),
               );

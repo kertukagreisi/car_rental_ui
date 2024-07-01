@@ -2,10 +2,13 @@ import 'package:car_rental_ui/resources/app_colors.dart';
 import 'package:car_rental_ui/resources/constants.dart';
 import 'package:car_rental_ui/shared/locator.dart';
 import 'package:car_rental_ui/shared/mvvm/view_model_widgets.dart';
+import 'package:car_rental_ui/shared/snackbar_service.dart';
 import 'package:car_rental_ui/widgets/button_with_icon_widget.dart';
 import 'package:car_rental_ui/widgets/cancel_button_widget.dart';
 import 'package:car_rental_ui/widgets/save_button_widget.dart';
+import 'package:car_rental_ui/widgets/ui_type/file_picker_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../widgets/ui_type/text_input_widget.dart';
@@ -22,115 +25,218 @@ class ProfilePage extends ViewModelWidget<ProfileViewModel> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Stack(
-              children: [
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(child: Container(height: 80, color: AppColors.darkCyan)),
-                      ],
-                    ),
-                    const SizedBox(height: 70),
-                  ],
-                ),
-                Positioned(
-                  bottom: 0.0,
-                  right: 0.0,
-                  left: 0.0,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          alignment: Alignment.bottomCenter,
-                          width: 140,
-                          height: 140,
-                          decoration: BoxDecoration(border: Border.all(color: Colors.white), color: AppColors.darkCyan, shape: BoxShape.circle),
-                          child: (viewModel.profilePicture?.length ?? 0) != 0
-                              ? CircleAvatar(
-                                  radius: 100,
-                                  backgroundColor: Colors.white,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(3), // Border radius
-                                    child: ClipOval(child: Image.memory(viewModel.profilePicture!)),
-                                  ),
-                                )
-                              : Center(child: Text('${viewModel.user.name!.isNotEmpty ? viewModel.user.name![0].toUpperCase() : ''}.${viewModel.user.lastName!.isNotEmpty ? viewModel.user.lastName![0].toUpperCase() : ''}', style: Constants.mediumTextStyle.copyWith(color: Colors.white, fontSize: 60.0))),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
+            ..._buildHeaderWidgets(viewModel, context),
             Constants.mediumSizedBox,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text('${viewModel.user.name} ${viewModel.user.lastName}', style: Constants.headTextStyle),
-                    Constants.smallSizedBox,
-                    Text(viewModel.user.role!.value, style: Constants.mediumHeadTextStyle.copyWith(color: AppColors.gray)),
-                  ],
-                )
-              ],
-            ),
-            Constants.mediumSizedBox,
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(right: 6.0),
-                        child: Icon(Icons.person, size: 20, color: AppColors.darkGray),
-                      ),
-                      Text(viewModel.user.username ?? '', style: Constants.largeTextStyle.copyWith(color: AppColors.darkCyan)),
-                    ],
-                  ),
-                  Constants.mediumSizedBox,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(right: 6.0),
-                        child: Icon(Icons.email, color: AppColors.darkGray, size: 20),
-                      ),
-                      Text(viewModel.user.email ?? '', style: Constants.largeTextStyle.copyWith(color: AppColors.darkCyan)),
-                    ],
-                  ),
-                  Constants.mediumSizedBox,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(right: 6.0),
-                        child: Icon(Icons.phone, color: AppColors.darkGray, size: 20),
-                      ),
-                      Text(viewModel.user.phone ?? '', style: Constants.largeTextStyle.copyWith(color: AppColors.darkCyan)),
-                    ],
-                  ),
-                  Constants.largeSizedBox,
-                  Row(
-                    children: [
-                      ButtonWithIcon(
-                          text: 'Edit',
-                          onPressed: () {
-                            showDialog(context: context, builder: (BuildContext context) => _buildEditDialog(viewModel, context));
-                          },
-                          icon: Icons.edit,
-                          dark: true),
-                    ],
-                  )
-                ],
-              ),
-            ),
+            _buildUserDetails(viewModel, context),
           ],
         ),
+      ),
+    );
+  }
+
+  List<Widget> _buildHeaderWidgets(ProfileViewModel viewModel, BuildContext context) {
+    return [
+      Stack(
+        children: [
+          Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(child: Container(height: 80, color: AppColors.darkCyan)),
+                ],
+              ),
+              const SizedBox(height: 70),
+            ],
+          ),
+          Positioned(
+            bottom: 0.0,
+            right: 0.0,
+            left: 0.0,
+            child: Row(
+              children: [
+                Expanded(
+                  child: InkWell(
+                    onLongPress: () {
+                      showDialog(context: context, builder: (context) => _buildProfilePictureDialog(viewModel, context));
+                    },
+                    child: Container(
+                      alignment: Alignment.bottomCenter,
+                      width: 140,
+                      height: 140,
+                      decoration: BoxDecoration(border: Border.all(color: Colors.white), color: AppColors.darkCyan, shape: BoxShape.circle),
+                      child: (viewModel.profilePicture?.length ?? 0) != 0
+                          ? CircleAvatar(
+                              radius: 100,
+                              backgroundColor: Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.all(3), // Border radius
+                                child: ClipOval(child: Image.memory(viewModel.profilePicture!)),
+                              ),
+                            )
+                          : Center(
+                              child: Text(
+                                  '${viewModel.user.name!.isNotEmpty ? viewModel.user.name![0].toUpperCase() : ''}.${viewModel.user.lastName!.isNotEmpty ? viewModel.user.lastName![0].toUpperCase() : ''}',
+                                  style: Constants.mediumTextStyle.copyWith(color: Colors.white, fontSize: 60.0))),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+      Constants.mediumSizedBox,
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text('${viewModel.user.name} ${viewModel.user.lastName}', style: Constants.headTextStyle),
+              Constants.smallSizedBox,
+              Text(viewModel.user.role!.value, style: Constants.mediumHeadTextStyle.copyWith(color: AppColors.gray)),
+            ],
+          )
+        ],
+      )
+    ];
+  }
+
+  Widget _buildProfilePictureDialog(ProfileViewModel viewModel, BuildContext context) {
+    ValueNotifier<Uint8List?> pictureNotifier = ValueNotifier(null);
+    return AlertDialog(
+      titlePadding: const EdgeInsets.all(0.0),
+      contentPadding: const EdgeInsets.all(0.0),
+      actionsPadding: const EdgeInsets.all(0.0),
+      title: Container(
+          padding: Constants.mediumPadding,
+          decoration: Constants.popUpHeaderDecoration,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Text('Change Profile Picture', style: Constants.headTextStyle.copyWith(color: Colors.white)),
+            ],
+          )),
+      content: Container(
+          color: Colors.white,
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              FilePickerWidget(
+                  label: 'Upload Picture',
+                  mandatory: true,
+                  onChange: (platformFiles) {
+                    if (platformFiles != null && platformFiles.length > 0) {
+                      pictureNotifier.value = platformFiles[0].bytes;
+                    } else {
+                      pictureNotifier.value = null;
+                    }
+                  }),
+              ValueListenableBuilder(
+                  valueListenable: pictureNotifier,
+                  builder: (BuildContext context, Uint8List? picture, _) {
+                    return picture != null
+                        ? Container(
+                            alignment: Alignment.center,
+                            width: 140,
+                            height: 140,
+                            padding: const EdgeInsets.all(3),
+                            decoration: BoxDecoration(
+                              color: AppColors.gray,
+                              borderRadius: BorderRadius.circular(4.0),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(4.0),
+                              child: Image.memory(
+                                picture,
+                                fit: BoxFit.cover,
+                                width: 140,
+                                height: 140,
+                              ),
+                            ),
+                          )
+                        : const SizedBox.shrink();
+                  })
+            ],
+          )),
+      actions: [
+        Container(
+          padding: const EdgeInsets.all(16.0),
+          decoration: const BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.only(bottomLeft: Radius.circular(4.0), bottomRight: Radius.circular(4.0))),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              SaveButton(onPressed: () async {
+                if (pictureNotifier.value != null) {
+                  viewModel.updatePicture(pictureNotifier.value!);
+                } else {
+                  showSnackBar(SnackBarLevel.warning, 'No profile picture uploaded!');
+                }
+              }),
+              Constants.smallSizedBox,
+              CancelButton(onPressed: () {
+                Navigator.of(context).pop();
+              }),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildUserDetails(ProfileViewModel viewModel, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(24.0),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(right: 6.0),
+                child: Icon(Icons.person, size: 20, color: AppColors.darkGray),
+              ),
+              Text(viewModel.user.username ?? '', style: Constants.largeTextStyle.copyWith(color: AppColors.darkCyan)),
+            ],
+          ),
+          Constants.mediumSizedBox,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(right: 6.0),
+                child: Icon(Icons.email, color: AppColors.darkGray, size: 20),
+              ),
+              Text(viewModel.user.email ?? '', style: Constants.largeTextStyle.copyWith(color: AppColors.darkCyan)),
+            ],
+          ),
+          Constants.mediumSizedBox,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(right: 6.0),
+                child: Icon(Icons.phone, color: AppColors.darkGray, size: 20),
+              ),
+              Text(viewModel.user.phone ?? '', style: Constants.largeTextStyle.copyWith(color: AppColors.darkCyan)),
+            ],
+          ),
+          Constants.largeSizedBox,
+          Row(
+            children: [
+              ButtonWithIcon(
+                  text: 'Edit',
+                  onPressed: () {
+                    showDialog(context: context, builder: (BuildContext context) => _buildEditDialog(viewModel, context));
+                  },
+                  icon: Icons.edit,
+                  dark: true),
+            ],
+          )
+        ],
       ),
     );
   }

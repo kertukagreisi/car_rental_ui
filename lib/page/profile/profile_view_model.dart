@@ -53,4 +53,8 @@ class ProfileViewModel extends ViewModel {
     });
     return Future.value(success);
   }
+
+  Future<void> updatePicture(Uint8List value) async{
+
+  }
 }
