@@ -21,6 +21,8 @@ dependencies:
   network_info_plus: 4.1.0
   global_configs: ^1.1.2
   http: ^1.2.0
+  http_parser: any
+  mime: any
   http_interceptor: ^2.0.0-beta.8
   intl: ^0.18.1
   openapi_generator: ^5.0.2

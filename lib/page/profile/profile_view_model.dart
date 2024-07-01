@@ -4,6 +4,7 @@ import 'package:car_rental_ui/api-client/api_client.dart';
 import 'package:car_rental_ui/endpoint/file_endpoint.dart';
 import 'package:car_rental_ui/generated_code/lib/api.dart';
 import 'package:car_rental_ui/shared/snackbar_service.dart';
+import 'package:form_builder_file_picker/form_builder_file_picker.dart';
 
 import '../../shared/auth_service.dart';
 import '../../shared/locator.dart';
@@ -54,7 +55,21 @@ class ProfileViewModel extends ViewModel {
     return Future.value(success);
   }
 
-  Future<void> updatePicture(Uint8List value) async{
-
+  Future<bool> updatePicture(PlatformFile platformFile) async {
+    final FileService fileService = FileService();
+    bool returnValue = false;
+    await fileService
+        .uploadProfilePicture(
+        '${user.id}',
+        platformFile)
+        .then((response) async {
+      showSnackBar(SnackBarLevel.success, 'Updated profile picture!');
+      returnValue = true;
+      await loadData();
+      notifyListeners();
+    }).onError((error, stackTrace) {
+      showSnackBar(SnackBarLevel.error, 'Error when updating profile picture!');
+    });
+    return Future.value(returnValue);
   }
 }

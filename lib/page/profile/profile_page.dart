@@ -8,8 +8,8 @@ import 'package:car_rental_ui/widgets/cancel_button_widget.dart';
 import 'package:car_rental_ui/widgets/save_button_widget.dart';
 import 'package:car_rental_ui/widgets/ui_type/file_picker_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_file_picker/form_builder_file_picker.dart';
 
 import '../../widgets/ui_type/text_input_widget.dart';
 import 'profile_view_model.dart';
@@ -103,7 +103,7 @@ class ProfilePage extends ViewModelWidget<ProfileViewModel> {
   }
 
   Widget _buildProfilePictureDialog(ProfileViewModel viewModel, BuildContext context) {
-    ValueNotifier<Uint8List?> pictureNotifier = ValueNotifier(null);
+    ValueNotifier<PlatformFile?> pictureNotifier = ValueNotifier(null);
     return AlertDialog(
       titlePadding: const EdgeInsets.all(0.0),
       contentPadding: const EdgeInsets.all(0.0),
@@ -128,14 +128,14 @@ class ProfilePage extends ViewModelWidget<ProfileViewModel> {
                   mandatory: true,
                   onChange: (platformFiles) {
                     if (platformFiles != null && platformFiles.length > 0) {
-                      pictureNotifier.value = platformFiles[0].bytes;
+                      pictureNotifier.value = platformFiles[0];
                     } else {
                       pictureNotifier.value = null;
                     }
                   }),
               ValueListenableBuilder(
                   valueListenable: pictureNotifier,
-                  builder: (BuildContext context, Uint8List? picture, _) {
+                  builder: (BuildContext context, PlatformFile? picture, _) {
                     return picture != null
                         ? Container(
                             alignment: Alignment.center,
@@ -149,7 +149,7 @@ class ProfilePage extends ViewModelWidget<ProfileViewModel> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(4.0),
                               child: Image.memory(
-                                picture,
+                                picture.bytes!,
                                 fit: BoxFit.cover,
                                 width: 140,
                                 height: 140,
@@ -171,7 +171,9 @@ class ProfilePage extends ViewModelWidget<ProfileViewModel> {
             children: [
               SaveButton(onPressed: () async {
                 if (pictureNotifier.value != null) {
-                  viewModel.updatePicture(pictureNotifier.value!);
+                  if (await viewModel.updatePicture(pictureNotifier.value!) && context.mounted) {
+                    Navigator.of(context).pop();
+                  }
                 } else {
                   showSnackBar(SnackBarLevel.warning, 'No profile picture uploaded!');
                 }
